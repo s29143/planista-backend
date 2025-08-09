@@ -21,4 +21,5 @@ server:
 app:
   jwt:
     secret: ${JWT_SECRET}
-    expiration: ${JWT_EXP}
+    access-expiration: ${JWT_EXP_ACCESS}
+    refresh-expiration: ${JWT_EXP_REFRESH}
