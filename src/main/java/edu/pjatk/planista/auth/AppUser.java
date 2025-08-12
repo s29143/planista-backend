@@ -18,13 +18,13 @@ public class AppUser implements UserDetails {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 40)
-    private String userName;
+    private String username;
 
     @Column(nullable = false, length = 50)
-    private String firstName;
+    private String firstname;
 
     @Column(nullable = false, length = 50)
-    private String lastName;
+    private String lastname;
 
     @Column(nullable = false)
     private String password;
@@ -44,7 +44,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.username;
     }
 
     @Override

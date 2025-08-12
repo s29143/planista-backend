@@ -3,7 +3,9 @@ package edu.pjatk.planista.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.pjatk.planista.auth.dto.LoginRequest;
 import edu.pjatk.planista.auth.dto.RefreshRequest;
+import edu.pjatk.planista.security.JwtService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
@@ -20,24 +22,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 public class AuthControllerTest {
 
-    private final MockMvc mvc;
-    private final ObjectMapper om;
+    @Autowired
+    private MockMvc mvc;
+
+    @Autowired
+    private ObjectMapper om;
 
     @MockitoBean
-    private final AppUserService authService;
+    private AppUserService authService;
 
-    public AuthControllerTest(MockMvc mvc, ObjectMapper om, AppUserService authService) {
-        this.mvc = mvc;
-        this.om = om;
-        this.authService = authService;
-    }
+    @MockitoBean
+    private JwtService jwtService;
 
     @Test
     void loginEndpointReturnsTokens() throws Exception {
-        when(authService.login(any(LoginRequest .class)))
+        when(authService.login(any(LoginRequest.class)))
                 .thenReturn(new AuthResponse("access-xxx", "refresh-yyy"));
 
-        mvc.perform(post("/api/auth/login")
+        mvc.perform(post("/api/v1/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(om.writeValueAsString(new LoginRequest("admin","admin123"))))
                 .andExpect(status().isOk())
@@ -50,7 +52,7 @@ public class AuthControllerTest {
         when(authService.refresh(any(RefreshRequest.class)))
                 .thenReturn(new AuthResponse("access-new", "refresh-new"));
 
-        mvc.perform(post("/api/auth/refresh")
+        mvc.perform(post("/api/v1/auth/refresh")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(om.writeValueAsString(new RefreshRequest("refresh-old"))))
                 .andExpect(status().isOk())

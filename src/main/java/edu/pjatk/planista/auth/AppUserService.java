@@ -30,7 +30,7 @@ public class AppUserService {
         String jtiHash = Jti.sha256(jti);
         Instant expiresAt = jwtService.extractExpiration(refreshToken);
         refreshTokenRepository.save(new RefreshToken(jtiHash, req.username(), expiresAt, false));
-        return new AuthResponse("Bearer " + accessToken, "Bearer " + refreshToken);
+        return new AuthResponse(accessToken, refreshToken);
     }
 
     public AuthResponse refresh(RefreshRequest req) {
@@ -51,7 +51,7 @@ public class AppUserService {
         String newAccess = jwtService.generateAccessToken(username);
         String newRefresh = jwtService.generateRefreshToken(username);
         String newJtiHash = Jti.sha256(jwtService.extractJti(newRefresh));
-        Instant expiresAt = jwtService.extractExpiration(refreshToken);
+        Instant expiresAt = jwtService.extractExpiration(newRefresh);
 
         rt.setRevoked(true);
         refreshTokenRepository.save(rt);

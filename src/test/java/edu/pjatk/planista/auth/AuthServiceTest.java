@@ -3,6 +3,7 @@ package edu.pjatk.planista.auth;
 import edu.pjatk.planista.auth.dto.LoginRequest;
 import edu.pjatk.planista.auth.dto.RefreshRequest;
 import edu.pjatk.planista.security.JwtService;
+import edu.pjatk.planista.security.RefreshToken;
 import edu.pjatk.planista.security.RefreshTokenRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,14 +60,32 @@ public class AuthServiceTest {
     @Test
     void refreshExchangesRefreshForNewPair() {
         var login = userService.login(new LoginRequest("alice", "pwd"));
+
+        ArgumentCaptor<RefreshToken> captor = ArgumentCaptor.forClass(RefreshToken.class);
+        verify(refreshTokenRepository).save(captor.capture());
+        RefreshToken savedAtLogin = captor.getValue();
+
+        when(refreshTokenRepository.findByJtiHash(savedAtLogin.getJtiHash()))
+                .thenReturn(java.util.Optional.of(
+                        new RefreshToken(savedAtLogin.getJtiHash(),
+                                savedAtLogin.getUsername(),
+                                savedAtLogin.getExpiresAt(),
+                                false)
+                ));
+
         var res = userService.refresh(new RefreshRequest(login.refreshToken()));
+
 
         assertThat(res.accessToken()).isNotBlank();
         assertThat(res.refreshToken()).isNotBlank();
         assertThat(jwtService.isAccessToken(res.accessToken())).isTrue();
         assertThat(jwtService.isRefreshToken(res.refreshToken())).isTrue();
         assertThat(res.refreshToken()).isNotEqualTo(login.refreshToken());
+
+        verify(refreshTokenRepository, times(3)).save(any(RefreshToken.class));
+        verify(refreshTokenRepository).findByJtiHash(savedAtLogin.getJtiHash());
     }
+
 
     @Test
     void refreshWithAccessTokenShouldFail() {
