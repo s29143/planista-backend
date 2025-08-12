@@ -1,4 +1,4 @@
-package edu.pjatk.Planista.auth;
+package edu.pjatk.planista.auth;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

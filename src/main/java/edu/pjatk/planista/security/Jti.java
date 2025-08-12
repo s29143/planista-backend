@@ -1,4 +1,4 @@
-package edu.pjatk.Planista.security;
+package edu.pjatk.planista.security;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

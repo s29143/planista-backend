@@ -1,11 +1,11 @@
-package edu.pjatk.Planista.auth;
+package edu.pjatk.planista.auth;
 
-import edu.pjatk.Planista.auth.dto.LoginRequest;
-import edu.pjatk.Planista.auth.dto.RefreshRequest;
-import edu.pjatk.Planista.security.Jti;
-import edu.pjatk.Planista.security.JwtService;
-import edu.pjatk.Planista.security.RefreshToken;
-import edu.pjatk.Planista.security.RefreshTokenRepository;
+import edu.pjatk.planista.auth.dto.LoginRequest;
+import edu.pjatk.planista.auth.dto.RefreshRequest;
+import edu.pjatk.planista.security.Jti;
+import edu.pjatk.planista.security.JwtService;
+import edu.pjatk.planista.security.RefreshToken;
+import edu.pjatk.planista.security.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

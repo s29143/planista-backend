@@ -1,7 +1,7 @@
-package edu.pjatk.Planista.auth;
+package edu.pjatk.planista.auth;
 
-import edu.pjatk.Planista.auth.dto.LoginRequest;
-import edu.pjatk.Planista.auth.dto.RefreshRequest;
+import edu.pjatk.planista.auth.dto.LoginRequest;
+import edu.pjatk.planista.auth.dto.RefreshRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

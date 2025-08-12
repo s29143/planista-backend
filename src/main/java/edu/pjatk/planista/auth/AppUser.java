@@ -1,4 +1,4 @@
-package edu.pjatk.Planista.auth;
+package edu.pjatk.planista.auth;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,8 +11,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
-@NoArgsConstructor
 public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

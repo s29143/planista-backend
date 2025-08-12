@@ -1,6 +1,6 @@
-package edu.pjatk.Planista.config;
+package edu.pjatk.planista.config;
 
-import edu.pjatk.Planista.auth.AppUserRepository;
+import edu.pjatk.planista.auth.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

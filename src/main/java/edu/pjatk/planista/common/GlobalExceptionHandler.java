@@ -1,4 +1,4 @@
-package edu.pjatk.Planista.common;
+package edu.pjatk.planista.common;
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;

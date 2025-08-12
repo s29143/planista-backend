@@ -1,4 +1,4 @@
-package edu.pjatk.Planista.auth.dto;
+package edu.pjatk.planista.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

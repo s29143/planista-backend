@@ -1,4 +1,4 @@
-package edu.pjatk.Planista.security;
+package edu.pjatk.planista.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

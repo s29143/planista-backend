@@ -1,4 +1,4 @@
-package edu.pjatk.Planista.security;
+package edu.pjatk.planista.security;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

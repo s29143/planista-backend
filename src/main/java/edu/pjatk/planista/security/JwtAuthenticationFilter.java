@@ -1,4 +1,4 @@
-package edu.pjatk.Planista.security;
+package edu.pjatk.planista.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
