@@ -1,7 +1,8 @@
 package edu.pjatk.planista.auth;
 
+import edu.pjatk.planista.auth.dto.AuthResponse;
 import edu.pjatk.planista.auth.dto.LoginRequest;
-import edu.pjatk.planista.auth.dto.RefreshRequest;
+import edu.pjatk.planista.auth.dto.MeResponse;
 import edu.pjatk.planista.security.Jti;
 import edu.pjatk.planista.security.JwtService;
 import edu.pjatk.planista.security.RefreshToken;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -20,6 +22,7 @@ public class AppUserService {
     private final AuthenticationManager authenticationManager;
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtService jwtService;
+    private final AppUserRepository appUserRepository;
 
     public AuthResponse login(LoginRequest req) {
         var authToken = new UsernamePasswordAuthenticationToken(req.username(), req.password());
@@ -33,8 +36,7 @@ public class AppUserService {
         return new AuthResponse(accessToken, refreshToken);
     }
 
-    public AuthResponse refresh(RefreshRequest req) {
-        String refreshToken = req.refreshToken();
+    public AuthResponse refresh(String refreshToken) {
         if (!jwtService.isRefreshToken(refreshToken)) {
             throw new BadCredentialsException("Invalid refresh token type");
         }
@@ -43,7 +45,9 @@ public class AppUserService {
         String jtiHash = Jti.sha256(jti);
         RefreshToken rt = refreshTokenRepository.findByJtiHash(jtiHash)
                 .orElseThrow(() -> new BadCredentialsException("Unknown refresh token"));
-
+        if(rt.isRevoked() || rt.getExpiresAt().isBefore(Instant.now())) {
+            throw new BadCredentialsException("Refresh token is expired");
+        }
         if (!jwtService.isTokenValid(refreshToken, username) || rt.isRevoked()) {
             throw new BadCredentialsException("Invalid refresh token");
         }
@@ -58,5 +62,16 @@ public class AppUserService {
         refreshTokenRepository.save(new RefreshToken(newJtiHash, rt.getUsername(), expiresAt, false));
 
         return new AuthResponse(newAccess, newRefresh);
+    }
+
+    public MeResponse me(String username) {
+        var user = appUserRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return new MeResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getFirstname(),
+                user.getLastname()
+        );
     }
 }

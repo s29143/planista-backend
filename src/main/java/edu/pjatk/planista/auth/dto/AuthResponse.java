@@ -1,4 +1,4 @@
-package edu.pjatk.planista.auth;
+package edu.pjatk.planista.auth.dto;
 
 public record AuthResponse(
         String accessToken,
