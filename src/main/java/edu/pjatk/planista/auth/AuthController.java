@@ -12,12 +12,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +35,7 @@ public class AuthController {
         AuthResponse authResponse = userService.login(req);
         if (isWeb) {
             ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
-                    .httpOnly(true).secure(true).sameSite("None").path("/auth").maxAge(refreshExpMs / 1000).build();
+                    .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(Duration.of(refreshExpMs, ChronoUnit.MILLIS)).build();
             resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
             authResponse = new AuthResponse(authResponse.accessToken(), "");
         }
@@ -52,7 +52,7 @@ public class AuthController {
         AuthResponse authResponse = userService.refresh(refresh);
         if (isWeb) {
             ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
-                    .httpOnly(true).secure(true).sameSite("None").path("/auth").maxAge(refreshExpMs / 1000).build();
+                    .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(refreshExpMs / 1000).build();
             resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
             authResponse = new AuthResponse(authResponse.accessToken(), "");
         }
