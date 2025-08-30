@@ -7,6 +7,7 @@ import edu.pjatk.planista.auth.dto.MeResponse;
 import edu.pjatk.planista.auth.dto.RefreshRequest;
 import edu.pjatk.planista.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.security.JwtService;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +18,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.Duration;
+
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -97,5 +101,19 @@ public class AuthControllerTest {
                 .andExpect(cookie().exists("refreshToken"))
                 .andExpect(cookie().httpOnly("refreshToken", true))
                 .andExpect(cookie().secure("refreshToken", true));
+    }
+
+    @Test
+    void logoutRemovesRefreshToken() throws Exception {
+        mvc.perform(post("/api/v1/auth/logout")
+                        .header("X-Client", "web")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .cookie(new Cookie("refreshToken", "refresh-xxx")))
+                .andExpect(status().isNoContent())
+                .andExpect(cookie().exists("refreshToken"))
+                .andExpect(cookie().maxAge("refreshToken", 0))
+                .andExpect(cookie().httpOnly("refreshToken", true))
+                .andExpect(cookie().secure("refreshToken", true));
+        verify(authService).logout(any());
     }
 }

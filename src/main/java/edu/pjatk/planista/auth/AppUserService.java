@@ -64,6 +64,15 @@ public class AppUserService {
         return new AuthResponse(newAccess, newRefresh);
     }
 
+    public void logout(String refreshToken) {
+        String jti = jwtService.extractJti(refreshToken);
+        String jtiHash = Jti.sha256(jti);
+        RefreshToken rt = refreshTokenRepository.findByJtiHash(jtiHash)
+                .orElseThrow(() -> new BadCredentialsException("Unknown refresh token"));
+        rt.setRevoked(true);
+        refreshTokenRepository.save(rt);
+    }
+
     public MeResponse me(String username) {
         var user = appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

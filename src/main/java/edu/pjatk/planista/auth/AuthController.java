@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class AuthController {
             ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
                     .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(Duration.of(refreshExpMs, ChronoUnit.MILLIS)).build();
             resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-            authResponse = new AuthResponse(authResponse.accessToken(), "");
+            authResponse = new AuthResponse(authResponse.accessToken(), null);
         }
         return ResponseEntity.ok(authResponse);
     }
@@ -49,12 +50,15 @@ public class AuthController {
                                                 HttpServletResponse resp) {
         boolean isWeb = "web".equalsIgnoreCase(client);
         String refresh = isWeb ? cookieRefresh : ( req != null ? req.refreshToken(): null);
+        if(refresh == null) {
+            return ResponseEntity.badRequest().build();
+        }
         AuthResponse authResponse = userService.refresh(refresh);
         if (isWeb) {
             ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
-                    .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(refreshExpMs / 1000).build();
+                    .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(Duration.of(refreshExpMs, ChronoUnit.MILLIS)).build();
             resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-            authResponse = new AuthResponse(authResponse.accessToken(), "");
+            authResponse = new AuthResponse(authResponse.accessToken(), null);
         }
         return ResponseEntity.ok(authResponse);
     }
@@ -65,5 +69,21 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         var response = userService.me(user.getUsername());
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@Valid @RequestBody(required = false) RefreshRequest req,
+                                       @RequestHeader(value="X-Client", required=false) String client,
+                                       @CookieValue(value="refreshToken", required=false) String cookieRefresh,
+                                       HttpServletResponse resp) {
+        boolean isWeb = "web".equalsIgnoreCase(client);
+        Optional<String> refresh = isWeb ? Optional.ofNullable(cookieRefresh) : ( req != null ? Optional.ofNullable(req.refreshToken()): Optional.empty());
+        refresh.ifPresent(userService::logout);
+        if(isWeb) {
+            ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
+                    .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(Duration.ZERO).build();
+            resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        }
+        return ResponseEntity.noContent().build();
     }
 }

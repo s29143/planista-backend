@@ -3,6 +3,7 @@ package edu.pjatk.planista.auth;
 import edu.pjatk.planista.auth.dto.AuthResponse;
 import edu.pjatk.planista.auth.dto.LoginRequest;
 import edu.pjatk.planista.auth.dto.MeResponse;
+import edu.pjatk.planista.security.Jti;
 import edu.pjatk.planista.security.JwtService;
 import edu.pjatk.planista.security.RefreshToken;
 import edu.pjatk.planista.security.RefreshTokenRepository;
@@ -171,5 +172,25 @@ public class AuthServiceTest {
 
         verify(appUserRepository).findByUsername("ghost");
         verifyNoMoreInteractions(appUserRepository);
+    }
+
+    @Test
+    void logoutSetsRevoked() {
+        String token = jwtService.generateRefreshToken("john");
+        String jti = jwtService.extractJti(token);
+        String jtiHash = Jti.sha256(jti);
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setRevoked(false);
+        when(refreshTokenRepository.findByJtiHash(jtiHash)).thenReturn(Optional.of(refreshToken));
+
+        userService.logout(token);
+
+        verify(refreshTokenRepository).findByJtiHash(jtiHash);
+
+        ArgumentCaptor<RefreshToken> captor = ArgumentCaptor.forClass(RefreshToken.class);
+        verify(refreshTokenRepository).save(captor.capture());
+        RefreshToken saved = captor.getValue();
+        assertThat(saved.isRevoked()).isTrue();
+        verifyNoMoreInteractions(refreshTokenRepository);
     }
 }
