@@ -71,7 +71,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            echo ${{ secrets.GHCR_READ_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_READ_USER }} --password-stdin
             cd ${{ secrets.REMOTE_APP_DIR }}
             docker compose pull
             docker compose up -d
