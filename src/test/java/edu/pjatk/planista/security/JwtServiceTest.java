@@ -3,6 +3,8 @@ package edu.pjatk.planista.security;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +17,7 @@ public class JwtServiceTest {
 
     @Test
     void shouldGenerateAndValidateAccessToken() {
-        var jwt = new JwtService(SECRET, 60_000, 1_200_000);
+        var jwt = new JwtService(SECRET, Duration.of(60_000, ChronoUnit.MILLIS), Duration.of(1_200_000, ChronoUnit.MILLIS));
         var token = jwt.generateAccessToken("alice");
 
         assertThat(token).isNotBlank();
@@ -26,7 +28,7 @@ public class JwtServiceTest {
 
     @Test
     void shouldGenerateRefreshWithJtiAndType() {
-        var jwt = new JwtService(SECRET, 60_000, 1_200_000);
+        var jwt = new JwtService(SECRET, Duration.of(60_000, ChronoUnit.MILLIS), Duration.of(1_200_000, ChronoUnit.MILLIS));
         var token = jwt.generateRefreshToken("bob");
 
         assertThat(token).isNotBlank();
@@ -38,7 +40,7 @@ public class JwtServiceTest {
 
     @Test
     void expiredAccessTokenIsInvalid() {
-        var jwt = new JwtService(SECRET, 0, 1_200_000);
+        var jwt = new JwtService(SECRET, Duration.ZERO, Duration.of(1_200_000, ChronoUnit.MILLIS));
         var token = jwt.generateAccessToken("carol");
         assertThat(jwt.isTokenValid(token, "carol")).isFalse();
     }

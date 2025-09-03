@@ -17,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @RestController
@@ -26,7 +25,7 @@ import java.util.Optional;
 public class AuthController {
     private final AppUserService userService;
     @Value("${app.jwt.refresh-expiration}")
-    private long refreshExpMs;
+    private Duration refreshExp;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest req,
@@ -36,7 +35,7 @@ public class AuthController {
         AuthResponse authResponse = userService.login(req);
         if (isWeb) {
             ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
-                    .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(Duration.of(refreshExpMs, ChronoUnit.MILLIS)).build();
+                    .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(refreshExp).build();
             resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
             authResponse = new AuthResponse(authResponse.accessToken(), null);
         }
@@ -56,7 +55,7 @@ public class AuthController {
         AuthResponse authResponse = userService.refresh(refresh);
         if (isWeb) {
             ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
-                    .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(Duration.of(refreshExpMs, ChronoUnit.MILLIS)).build();
+                    .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(refreshExp).build();
             resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
             authResponse = new AuthResponse(authResponse.accessToken(), null);
         }

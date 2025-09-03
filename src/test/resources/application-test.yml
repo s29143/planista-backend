@@ -1,10 +1,14 @@
+app:
+  jwt:
+    secret: "iI2C2bH5JpHf3m9Hqz0o7P6qG2Vt0yZb5t7m4y9cS8E="
+    access-expiration: 15m
+    refresh-expiration: 7d
+
 spring:
-  datasource:
-    driverClassName: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false
         format_sql: true

@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
@@ -41,7 +42,7 @@ public class AuthServiceTest {
 
         String secret = Base64.getEncoder().encodeToString(
                 "super-secret-key-which-is-long-enough-32bytes!!!".getBytes(StandardCharsets.UTF_8));
-        jwtService = new JwtService(secret, 60_000, 60 * 60 * 1000 - 1000);
+        jwtService = new JwtService(secret, Duration.of(60_000, ChronoUnit.MILLIS), Duration.of(60 * 60 * 1000 - 1000, ChronoUnit.MILLIS));
         refreshTokenRepository = mock(RefreshTokenRepository.class);
         appUserRepository = mock(AppUserRepository.class);
         userService = new AppUserService(authenticationManager, refreshTokenRepository, jwtService, appUserRepository);
