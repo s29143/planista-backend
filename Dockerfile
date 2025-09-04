@@ -2,7 +2,7 @@
 FROM gradle:8.14.3-jdk21-alpine AS build
 WORKDIR /app
 
-COPY build.gradle.kts settings.gradle.kts gradle.properties ./
+COPY build.gradle.kts settings.gradle.kts ./
 COPY gradle ./gradle
 RUN gradle --no-daemon dependencies > /dev/null 2>&1 || true
 
@@ -15,7 +15,7 @@ ENV TZ=Europe/Warsaw
 WORKDIR /app
 
 RUN addgroup -S app && adduser -S app -G app
-USER appA
+USER app
 
 COPY --from=build /app/build/libs/*.jar /app/app.jar
 
