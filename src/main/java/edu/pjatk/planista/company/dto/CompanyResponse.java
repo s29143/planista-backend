@@ -5,13 +5,6 @@ public record CompanyResponse(
         String shortName,
         String fullName,
         String nip,
-
-        Long userId,
-        Long acquiredId,
-        Long districtId,
-        Long countryId,
-        Long statusId,
-
         String postalCode,
         String street,
         String houseNumber,
@@ -19,5 +12,10 @@ public record CompanyResponse(
         String phoneNumber,
         String email,
         String wwwSite,
-        String comments
+        String comments,
+        Long userId,
+        Long acquiredId,
+        Long districtId,
+        Long countryId,
+        Long statusId
 ) {}

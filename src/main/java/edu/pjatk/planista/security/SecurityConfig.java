@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/login", "/api/v1/auth/refresh", "/api/v1/auth/logout").permitAll()
-                        .requestMatchers("/api/v1/auth/me", "/companies/**").authenticated()
+                        .requestMatchers("/api/v1/auth/me", "/api/v1/companies/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))

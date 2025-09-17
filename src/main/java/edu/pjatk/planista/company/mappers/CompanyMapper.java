@@ -8,7 +8,6 @@ import edu.pjatk.planista.company.repositories.CompanyAcquiredRepository;
 import edu.pjatk.planista.company.repositories.CompanyStatusRepository;
 import edu.pjatk.planista.company.repositories.CountryRepository;
 import edu.pjatk.planista.company.repositories.DistrictRepository;
-import lombok.RequiredArgsConstructor;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,13 +15,21 @@ import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
-@RequiredArgsConstructor
 public abstract class CompanyMapper {
-    private final AppUserRepository appUserRepository;
-    private final CompanyAcquiredRepository acquiredRepository;
-    private final DistrictRepository districtRepository;
-    private final CountryRepository countryRepository;
-    private final CompanyStatusRepository statusRepository;
+    @Autowired
+    protected AppUserRepository appUserRepository;
+
+    @Autowired
+    protected CompanyAcquiredRepository acquiredRepository;
+
+    @Autowired
+    protected DistrictRepository districtRepository;
+
+    @Autowired
+    protected CountryRepository countryRepository;
+
+    @Autowired
+    protected CompanyStatusRepository statusRepository;
 
     @Mapping(target = "userId", source = "user.id")
     @Mapping(target = "acquiredId", source = "acquired.id")
@@ -37,6 +44,10 @@ public abstract class CompanyMapper {
     @Mapping(target = "district", ignore = true)
     @Mapping(target = "country", ignore = true)
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
     public abstract Company toEntity(CompanyRequest req);
 
     @AfterMapping
@@ -58,11 +69,16 @@ public abstract class CompanyMapper {
         }
     }
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "acquired", ignore = true)
     @Mapping(target = "district", ignore = true)
     @Mapping(target = "country", ignore = true)
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
     public abstract void updateEntity(@MappingTarget Company target, CompanyRequest req);
 
     @AfterMapping
