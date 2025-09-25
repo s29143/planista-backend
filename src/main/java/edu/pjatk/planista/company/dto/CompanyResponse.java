@@ -1,5 +1,9 @@
 package edu.pjatk.planista.company.dto;
 
+import edu.pjatk.planista.shared.dto.DictItem;
+
+import java.time.Instant;
+
 public record CompanyResponse(
         Long id,
         String shortName,
@@ -13,9 +17,11 @@ public record CompanyResponse(
         String email,
         String wwwSite,
         String comments,
-        Long userId,
-        Long acquiredId,
-        Long districtId,
-        Long countryId,
-        Long statusId
+        Instant createdAt,
+        Instant updatedAt,
+        DictItem user,
+        DictItem acquired,
+        DictItem district,
+        DictItem country,
+        DictItem status
 ) {}
