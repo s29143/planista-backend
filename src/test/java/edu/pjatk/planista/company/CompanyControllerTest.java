@@ -7,6 +7,7 @@ import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.company.services.CompanyService;
 import edu.pjatk.planista.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.security.JwtService;
+import edu.pjatk.planista.shared.dto.DictItem;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.Instant;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -58,11 +60,13 @@ class CompanyControllerTest {
                 "info@abc.pl",
                 "www.abc.pl",
                 "Test comments",
-                10L,
-                20L,
-                30L,
-                40L,
-                50L
+                Instant.now(),
+                Instant.now(),
+                new DictItem(10L, "test"),
+                null,
+                new DictItem(30L, "test"),
+                null,
+                null
         );
     }
 
@@ -76,7 +80,7 @@ class CompanyControllerTest {
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.shortName").value("ABC"))
                 .andExpect(jsonPath("$.fullName").value("ABC Sp. z o.o."))
-                .andExpect(jsonPath("$.userId").value(10L));
+                .andExpect(jsonPath("$.user.id").value(10L));
     }
 
     @Test
@@ -90,7 +94,7 @@ class CompanyControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].id").value(1L))
                 .andExpect(jsonPath("$.content[0].shortName").value("ABC"))
-                .andExpect(jsonPath("$.content[0].districtId").value(30L));
+                .andExpect(jsonPath("$.content[0].district.id").value(30L));
     }
 
     @Test
@@ -159,11 +163,13 @@ class CompanyControllerTest {
                 "contact@xyz.pl",
                 "www.xyz.pl",
                 "Updated comments",
-                11L,
-                21L,
-                31L,
-                41L,
-                51L
+                Instant.now(),
+                Instant.now(),
+                new DictItem(1L, "test"),
+                null,
+                null,
+                null,
+                null
         );
 
         Mockito.when(service.update(eq(1L), any())).thenReturn(updated);
