@@ -2,7 +2,7 @@ package edu.pjatk.planista.auth;
 
 import edu.pjatk.planista.auth.dto.AuthResponse;
 import edu.pjatk.planista.auth.dto.LoginRequest;
-import edu.pjatk.planista.auth.dto.MeResponse;
+import edu.pjatk.planista.auth.dto.UserDto;
 import edu.pjatk.planista.security.Jti;
 import edu.pjatk.planista.security.JwtService;
 import edu.pjatk.planista.security.RefreshToken;
@@ -33,6 +33,7 @@ public class AuthServiceTest {
     private JwtService jwtService;
     private AppUserService userService;
     private AppUserRepository appUserRepository;
+    private AppUserMapper mapper;
 
     @BeforeEach
     void setup() {
@@ -45,7 +46,8 @@ public class AuthServiceTest {
         jwtService = new JwtService(secret, Duration.of(60_000, ChronoUnit.MILLIS), Duration.of(60 * 60 * 1000 - 1000, ChronoUnit.MILLIS));
         refreshTokenRepository = mock(RefreshTokenRepository.class);
         appUserRepository = mock(AppUserRepository.class);
-        userService = new AppUserService(authenticationManager, refreshTokenRepository, jwtService, appUserRepository);
+        mapper = mock(AppUserMapper.class);
+        userService = new AppUserService(authenticationManager, refreshTokenRepository, jwtService, appUserRepository, mapper);
     }
 
     @Test
@@ -153,7 +155,7 @@ public class AuthServiceTest {
 
         when(appUserRepository.findByUsername("jan")).thenReturn(Optional.of(user));
 
-        MeResponse res = userService.me("jan");
+        UserDto res = userService.me("jan");
 
         assertThat(res.id()).isEqualTo(7L);
         assertThat(res.username()).isEqualTo("jan");

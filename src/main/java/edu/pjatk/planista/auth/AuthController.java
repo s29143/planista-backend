@@ -2,8 +2,8 @@ package edu.pjatk.planista.auth;
 
 import edu.pjatk.planista.auth.dto.AuthResponse;
 import edu.pjatk.planista.auth.dto.LoginRequest;
-import edu.pjatk.planista.auth.dto.MeResponse;
 import edu.pjatk.planista.auth.dto.RefreshRequest;
+import edu.pjatk.planista.auth.dto.UserDto;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -63,7 +63,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<MeResponse> me(@AuthenticationPrincipal UserDetails user) {
+    public ResponseEntity<UserDto> me(@AuthenticationPrincipal UserDetails user) {
         if (user == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         var response = userService.me(user.getUsername());

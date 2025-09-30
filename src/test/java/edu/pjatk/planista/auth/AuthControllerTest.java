@@ -3,8 +3,8 @@ package edu.pjatk.planista.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.pjatk.planista.auth.dto.AuthResponse;
 import edu.pjatk.planista.auth.dto.LoginRequest;
-import edu.pjatk.planista.auth.dto.MeResponse;
 import edu.pjatk.planista.auth.dto.RefreshRequest;
+import edu.pjatk.planista.auth.dto.UserDto;
 import edu.pjatk.planista.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.security.JwtService;
 import jakarta.servlet.http.Cookie;
@@ -67,7 +67,7 @@ public class AuthControllerTest {
     @WithMockUser(username = "john", roles = "USER")
     void meReturnsDtoFromService() throws Exception {
         when(authService.me("john")).thenReturn(
-                new MeResponse(7L, "john", "John", "Doe")
+                new UserDto(7L, "john", "John", "Doe")
         );
 
         mvc.perform(get("/api/v1/auth/me"))

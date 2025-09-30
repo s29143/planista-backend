@@ -33,7 +33,8 @@ public class SecurityConfig {
 
     public static final String[] USER = {
             "/api/v1/auth/me",
-            "/api/v1/companies/**"
+            "/api/v1/companies/**",
+            "/api/v1/users/**"
     };
 
     public static final String[] DICT = {

@@ -2,12 +2,14 @@ package edu.pjatk.planista.auth;
 
 import edu.pjatk.planista.auth.dto.AuthResponse;
 import edu.pjatk.planista.auth.dto.LoginRequest;
-import edu.pjatk.planista.auth.dto.MeResponse;
+import edu.pjatk.planista.auth.dto.UserDto;
 import edu.pjatk.planista.security.Jti;
 import edu.pjatk.planista.security.JwtService;
 import edu.pjatk.planista.security.RefreshToken;
 import edu.pjatk.planista.security.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +25,7 @@ public class AppUserService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtService jwtService;
     private final AppUserRepository appUserRepository;
+    private final AppUserMapper mapper;
 
     public AuthResponse login(LoginRequest req) {
         var authToken = new UsernamePasswordAuthenticationToken(req.username(), req.password());
@@ -73,14 +76,18 @@ public class AppUserService {
         refreshTokenRepository.save(rt);
     }
 
-    public MeResponse me(String username) {
+    public UserDto me(String username) {
         var user = appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return new MeResponse(
+        return new UserDto(
                 user.getId(),
                 user.getUsername(),
                 user.getFirstname(),
                 user.getLastname()
         );
+    }
+
+    public Page<UserDto> list(Pageable pageable) {
+        return appUserRepository.findAll(pageable).map(mapper::toResponse);
     }
 }
