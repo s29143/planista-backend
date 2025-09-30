@@ -6,7 +6,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.Optional;
 
-@RepositoryRestResource
+@RepositoryRestResource(
+    path = "company-acquires"
+)
 public interface CompanyAcquiredRepository extends JpaRepository<CompanyAcquired, Long> {
     Optional<CompanyAcquired> findByNameIgnoreCase(String name);
 }

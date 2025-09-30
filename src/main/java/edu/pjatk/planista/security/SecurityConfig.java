@@ -25,13 +25,31 @@ import java.util.Objects;
 @EnableConfigurationProperties(CorsProps.class)
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
+    public static final String[] PUBLIC = {
+            "/api/v1/auth/login",
+            "/api/v1/auth/refresh",
+            "/api/v1/auth/logout"
+    };
+
+    public static final String[] USER = {
+            "/api/v1/auth/me",
+            "/api/v1/companies/**"
+    };
+
+    public static final String[] DICT = {
+            "/api/v1/districts/**",
+            "/api/v1/company-statuses/**",
+            "/api/v1/countries/**",
+            "/api/v1/company-acquires/**"
+    };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/login", "/api/v1/auth/refresh", "/api/v1/auth/logout").permitAll()
-                        .requestMatchers("/api/v1/auth/me", "/api/v1/companies/**").authenticated()
+                        .requestMatchers(SecurityConfig.PUBLIC).permitAll()
+                        .requestMatchers(SecurityConfig.USER).authenticated()
+                        .requestMatchers(SecurityConfig.DICT).authenticated()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))

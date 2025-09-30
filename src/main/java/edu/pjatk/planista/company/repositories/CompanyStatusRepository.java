@@ -6,7 +6,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.Optional;
 
-@RepositoryRestResource
+@RepositoryRestResource(
+        path = "company-statuses"
+)
 public interface CompanyStatusRepository extends JpaRepository<CompanyStatus, Long> {
     Optional<CompanyStatus> findByNameIgnoreCase(String name);
 }

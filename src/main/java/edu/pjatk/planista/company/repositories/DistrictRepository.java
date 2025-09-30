@@ -6,7 +6,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.Optional;
 
-@RepositoryRestResource
+@RepositoryRestResource(
+        path = "districts"
+)
 public interface DistrictRepository extends JpaRepository<District, Long> {
     Optional<District> findByNameIgnoreCase(String name);
 }
