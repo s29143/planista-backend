@@ -1,15 +1,16 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.5.4"
+	id("org.springframework.boot") version "3.5.6"
 	id("io.spring.dependency-management") version "1.1.7"
+    id("com.github.ben-manes.versions") version "0.53.0"
 }
 
 group = "edu.pjatk"
-version = "0.0.1-SNAPSHOT"
+version = "0.2.1-SNAPSHOT"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(25)
 	}
 }
 
@@ -30,9 +31,9 @@ dependencies {
     testImplementation("org.mapstruct:mapstruct:1.6.3")
     testAnnotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
 
-    implementation("io.jsonwebtoken:jjwt-api:0.12.6")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
+    implementation("io.jsonwebtoken:jjwt-api:0.13.0")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.13.0")
 
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
@@ -49,8 +50,10 @@ dependencies {
 
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    testImplementation("org.testcontainers:junit-jupiter:1.21.3")
-    testImplementation("org.testcontainers:postgresql:1.21.3")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql")
+
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<Test> {
