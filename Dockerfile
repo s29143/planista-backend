@@ -1,5 +1,5 @@
 # ========= BUILD STAGE =========
-FROM gradle:8.14.3-jdk21-alpine AS build
+FROM gradle:9.1.0-jdk25-alpine AS build
 WORKDIR /app
 
 COPY build.gradle.kts settings.gradle.kts ./
@@ -10,7 +10,7 @@ COPY src ./src
 RUN gradle --no-daemon clean bootJar
 
 # ========= RUNTIME STAGE =========
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 ENV TZ=Europe/Warsaw
 WORKDIR /app
 
