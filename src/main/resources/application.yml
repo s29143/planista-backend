@@ -31,3 +31,9 @@ app:
     secret: ${JWT_SECRET}
     access-expiration: ${JWT_EXP_ACCESS:15m}
     refresh-expiration: ${JWT_EXP_REFRESH:7d}
+
+#logging:
+#  level:
+#    sql: debug
+#    root: debug
+#    web: debug
