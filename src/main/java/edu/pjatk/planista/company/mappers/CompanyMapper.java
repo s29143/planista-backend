@@ -52,7 +52,9 @@ public abstract class CompanyMapper {
             @Mapping(target = "createdAt", ignore = true),
             @Mapping(target = "updatedAt", ignore = true),
             @Mapping(target = "createdBy", ignore = true),
-            @Mapping(target = "updatedBy", ignore = true)
+            @Mapping(target = "updatedBy", ignore = true),
+            @Mapping(target = "createdByUser", ignore = true),
+            @Mapping(target = "updatedByUser", ignore = true)
     })
     public abstract Company toEntity(CompanyRequest req);
 
@@ -75,7 +77,7 @@ public abstract class CompanyMapper {
         }
     }
 
-    @BeanMapping(ignoreByDefault = false)
+    @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "user", ignore = true),
@@ -86,7 +88,9 @@ public abstract class CompanyMapper {
             @Mapping(target = "createdAt", ignore = true),
             @Mapping(target = "updatedAt", ignore = true),
             @Mapping(target = "createdBy", ignore = true),
-            @Mapping(target = "updatedBy", ignore = true)
+            @Mapping(target = "updatedBy", ignore = true),
+            @Mapping(target = "createdByUser", ignore = true),
+            @Mapping(target = "updatedByUser", ignore = true)
     })
     public abstract void updateEntity(@MappingTarget Company target, CompanyRequest req);
 
@@ -94,18 +98,28 @@ public abstract class CompanyMapper {
     protected void afterUpdateEntity(CompanyRequest req, @MappingTarget Company target) {
         if (req.userId() != null) {
             target.setUser(appUserRepository.getReferenceById(req.userId()));
+        } else {
+            target.setUser(null);
         }
         if (req.acquiredId() != null) {
             target.setAcquired(acquiredRepository.getReferenceById(req.acquiredId()));
+        } else {
+            target.setAcquired(null);
         }
         if (req.districtId() != null) {
             target.setDistrict(districtRepository.getReferenceById(req.districtId()));
+        } else {
+            target.setDistrict(null);
         }
         if (req.countryId() != null) {
             target.setCountry(countryRepository.getReferenceById(req.countryId()));
+        } else {
+            target.setCountry(null);
         }
         if (req.statusId() != null) {
             target.setStatus(statusRepository.getReferenceById(req.statusId()));
+        } else {
+            target.setStatus(null);
         }
     }
 }

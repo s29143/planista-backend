@@ -16,20 +16,26 @@ import java.time.Instant;
 public abstract class Auditable {
 
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     @LastModifiedDate
-    @Column
+    @Column(name = "updated_at")
     private Instant updatedAt;
 
     @CreatedBy
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(updatable = false)
-    private AppUser createdBy;
+    @Column(name = "created_by", updatable = false)
+    private Long createdBy;
 
     @LastModifiedBy
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private AppUser updatedBy;
+    @Column(name = "updated_by")
+    private Long updatedBy;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "created_by", insertable = false, updatable = false)
+    private AppUser createdByUser;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "updated_by", insertable = false, updatable = false)
+    private AppUser updatedByUser;
 }
