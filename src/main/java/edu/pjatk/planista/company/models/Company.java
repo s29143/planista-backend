@@ -18,7 +18,7 @@ public class Company extends Auditable {
     @Column(nullable = false)
     private String shortName;
 
-    @Column(nullable = false, length = 512)
+    @Column(nullable = false, unique = true, length = 512)
     private String fullName;
 
     @Column(length = 10)
