@@ -68,4 +68,15 @@ public class GlobalExceptionHandler {
         pd.setDetail(ex.getMessage());
         return pd;
     }
+
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ProblemDetail handleException(Exception ex) {
+        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        problem.setTitle("Unexpected server error");
+        problem.setDetail(ex.getMessage());
+        problem.setProperty("exception", ex.getClass().getSimpleName());
+        return problem;
+    }
 }
