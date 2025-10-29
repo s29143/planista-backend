@@ -1,5 +1,6 @@
 package edu.pjatk.planista.company.services;
 
+import edu.pjatk.planista.company.dto.CompanyFilter;
 import edu.pjatk.planista.company.dto.CompanyRequest;
 import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.company.mappers.CompanyMapper;
@@ -9,8 +10,11 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static edu.pjatk.planista.company.specs.CompanySpecs.*;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +25,13 @@ public class CompanyService {
     private final CompanyMapper mapper;
 
     @Transactional(readOnly = true)
-    public Page<CompanyResponse> list(Pageable pageable) {
-        return companyRepository.findAll(pageable).map(mapper::toResponse);
+    public Page<CompanyResponse> list(Pageable pageable, CompanyFilter filter) {
+        Specification<Company> spec = Specification.allOf(
+                userIdIn(filter.userIds()),
+                statusIdIn(filter.statusIds()),
+                searchLike(filter.search())
+        );
+        return companyRepository.findAll(spec, pageable).map(mapper::toResponse);
     }
 
     @Transactional(readOnly = true)

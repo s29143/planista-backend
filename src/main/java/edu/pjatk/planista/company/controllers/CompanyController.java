@@ -1,5 +1,6 @@
 package edu.pjatk.planista.company.controllers;
 
+import edu.pjatk.planista.company.dto.CompanyFilter;
 import edu.pjatk.planista.company.dto.CompanyRequest;
 import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.company.services.CompanyService;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/companies")
@@ -23,8 +26,13 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CompanyResponse>> list(@PageableDefault(size = 20, sort = "id") Pageable pageable) {
-        return ResponseEntity.ok(service.list(pageable));
+    public ResponseEntity<Page<CompanyResponse>> list(@PageableDefault(size = 20, sort = "id") Pageable pageable,
+                                                      @RequestParam(required = false) List<Long> userId,
+                                                      @RequestParam(required = false) List<Long> statusId,
+                                                      @RequestParam(required = false) String search
+                                                      ) {
+        CompanyFilter filter = new CompanyFilter(userId, statusId, search);
+        return ResponseEntity.ok(service.list(pageable, filter));
     }
 
     @PostMapping
