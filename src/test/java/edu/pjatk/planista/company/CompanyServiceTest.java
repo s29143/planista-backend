@@ -1,5 +1,6 @@
 package edu.pjatk.planista.company;
 
+import edu.pjatk.planista.company.dto.CompanyFilter;
 import edu.pjatk.planista.company.dto.CompanyRequest;
 import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.company.mappers.CompanyMapper;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.time.Instant;
 import java.util.List;
@@ -175,6 +177,7 @@ class CompanyServiceTest {
     @Test
     void list_shouldReturnPagedResponses() {
         Pageable pageable = PageRequest.of(0, 2, Sort.by("id").ascending());
+        CompanyFilter companyFilter = new CompanyFilter(null, null, null);
         Company e1 = new Company(); e1.setId(1L);
         Company e2 = new Company(); e2.setId(2L);
         Page<Company> page = new PageImpl<>(List.of(e1, e2), pageable, 2);
@@ -198,11 +201,11 @@ class CompanyServiceTest {
                 null,
                 null);
 
-        given(companyRepository.findAll(pageable)).willReturn(page);
+        given(companyRepository.findAll(any(Specification.class), eq(pageable))).willReturn(page);
         given(mapper.toResponse(e1)).willReturn(r1);
         given(mapper.toResponse(e2)).willReturn(r2);
 
-        Page<CompanyResponse> result = service.list(pageable);
+        Page<CompanyResponse> result = service.list(pageable, companyFilter);
 
         assertThat(result.getTotalElements()).isEqualTo(2);
         assertThat(result.getContent()).extracting(CompanyResponse::id)

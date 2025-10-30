@@ -88,7 +88,7 @@ class CompanyControllerTest {
         var response = sampleResponse();
         var page = new PageImpl<>(List.of(response), PageRequest.of(0, 20), 1);
 
-        Mockito.when(service.list(any())).thenReturn(page);
+        Mockito.when(service.list(any(), any())).thenReturn(page);
 
         mvc.perform(get("/api/v1/companies"))
                 .andExpect(status().isOk())
