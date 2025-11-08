@@ -22,6 +22,11 @@ public final class CompanySpecs {
         return (root, cq, cb) -> root.join("status").get("id").in(ids);
     }
 
+    public static Specification<Company> districtsIdIn(Collection<Long> ids) {
+        if (ids == null || ids.isEmpty()) return null;
+        return (root, cq, cb) -> root.join("district").get("id").in(ids);
+    }
+
     public static Specification<Company> searchLike(String search) {
         if (search == null || search.isBlank()) return null;
 

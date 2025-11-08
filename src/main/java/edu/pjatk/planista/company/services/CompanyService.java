@@ -29,6 +29,7 @@ public class CompanyService {
         Specification<Company> spec = Specification.allOf(
                 userIdIn(filter.userIds()),
                 statusIdIn(filter.statusIds()),
+                districtsIdIn(filter.districtsId()),
                 searchLike(filter.search())
         );
         return companyRepository.findAll(spec, pageable).map(mapper::toResponse);

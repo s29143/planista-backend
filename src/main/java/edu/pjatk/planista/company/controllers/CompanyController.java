@@ -29,9 +29,10 @@ public class CompanyController {
     public ResponseEntity<Page<CompanyResponse>> list(@PageableDefault(size = 20, sort = "id") Pageable pageable,
                                                       @RequestParam(required = false) List<Long> userId,
                                                       @RequestParam(required = false) List<Long> statusId,
+                                                      @RequestParam(required = false) List<Long> districtId,
                                                       @RequestParam(required = false) String search
                                                       ) {
-        CompanyFilter filter = new CompanyFilter(userId, statusId, search);
+        CompanyFilter filter = new CompanyFilter(userId, districtId, statusId, search);
         return ResponseEntity.ok(service.list(pageable, filter));
     }
 

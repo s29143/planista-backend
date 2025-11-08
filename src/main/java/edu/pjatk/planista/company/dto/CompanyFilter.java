@@ -4,6 +4,7 @@ import java.util.List;
 
 public record CompanyFilter(
         List<Long> userIds,
+        List<Long> districtsId,
         List<Long> statusIds,
         String search
 ) { }
