@@ -177,7 +177,7 @@ class CompanyServiceTest {
     @Test
     void list_shouldReturnPagedResponses() {
         Pageable pageable = PageRequest.of(0, 2, Sort.by("id").ascending());
-        CompanyFilter companyFilter = new CompanyFilter(null, null, null);
+        CompanyFilter companyFilter = new CompanyFilter(null, null, null, null);
         Company e1 = new Company(); e1.setId(1L);
         Company e2 = new Company(); e2.setId(2L);
         Page<Company> page = new PageImpl<>(List.of(e1, e2), pageable, 2);
