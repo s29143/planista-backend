@@ -1,6 +1,7 @@
 package edu.pjatk.planista.company.specs;
 
 import edu.pjatk.planista.company.models.Company;
+import jakarta.persistence.criteria.JoinType;
 import org.springframework.data.jpa.domain.Specification;
 
 import jakarta.persistence.criteria.Expression;
@@ -29,13 +30,17 @@ public final class CompanySpecs {
         return (root, cq, cb) -> {
             Expression<String> shortName = cb.lower(root.get("shortName"));
             Expression<String> fullName  = cb.lower(root.get("fullName"));
+            Expression<String> nip  = root.get("nip");
+            Expression<String> district  = cb.lower(root.join("district", JoinType.LEFT).get("name"));
 
             return tokens.stream()
                     .map(tok -> {
                         String like = "%" + tok + "%";
                         return cb.or(
                                 cb.like(shortName, like),
-                                cb.like(fullName, like)
+                                cb.like(fullName, like),
+                                cb.like(nip, like),
+                                cb.like(district, like)
                         );
                     })
                     .reduce(cb::and)
