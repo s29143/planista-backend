@@ -5,7 +5,7 @@ import edu.pjatk.planista.company.models.CompanyAcquired;
 import edu.pjatk.planista.company.models.CompanyStatus;
 import edu.pjatk.planista.company.models.Country;
 import edu.pjatk.planista.company.models.District;
-import edu.pjatk.planista.shared.dto.DictItem;
+import edu.pjatk.planista.shared.dto.DictItemDto;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
@@ -13,28 +13,28 @@ import org.springframework.stereotype.Component;
 public class ClassDtoMappers {
 
     @Named("userToDict")
-    public DictItem userToDict(AppUser u) {
+    public DictItemDto userToDict(AppUser u) {
         if (u == null) return null;
-        return new DictItem(u.getId(), u.getUsername());
+        return new DictItemDto(u.getId(), u.getUsername());
     }
 
     @Named("acquiredToDict")
-    public DictItem acquiredToDict(CompanyAcquired a) {
-        return a == null ? null : new DictItem(a.getId(), a.getName());
+    public DictItemDto acquiredToDict(CompanyAcquired a) {
+        return a == null ? null : new DictItemDto(a.getId(), a.getName());
     }
 
     @Named("districtToDict")
-    public DictItem districtToDict(District d) {
-        return d == null ? null : new DictItem(d.getId(), d.getName());
+    public DictItemDto districtToDict(District d) {
+        return d == null ? null : new DictItemDto(d.getId(), d.getName());
     }
 
     @Named("statusToDict")
-    public DictItem statusToDict(CompanyStatus s) {
-        return s == null ? null : new DictItem(s.getId(), s.getName());
+    public DictItemDto statusToDict(CompanyStatus s) {
+        return s == null ? null : new DictItemDto(s.getId(), s.getName());
     }
 
     @Named("countryToDict")
-    public DictItem countryToDict(Country c) {
-        return c == null ? null : new DictItem(c.getId(), c.getName());
+    public DictItemDto countryToDict(Country c) {
+        return c == null ? null : new DictItemDto(c.getId(), c.getName());
     }
 }

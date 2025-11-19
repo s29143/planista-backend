@@ -1,18 +1,9 @@
 package edu.pjatk.planista.company.models;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import edu.pjatk.planista.shared.models.DictItem;
+import jakarta.persistence.Entity;
 
 @Entity
-@Getter
-@Setter
-public class CompanyAcquired {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false)
-    private Long id;
+public class CompanyAcquired extends DictItem {
 
-    @Column(nullable = false, unique = true)
-    private String name;
 }

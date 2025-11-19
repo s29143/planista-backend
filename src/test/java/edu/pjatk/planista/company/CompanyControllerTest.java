@@ -7,7 +7,7 @@ import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.company.services.CompanyService;
 import edu.pjatk.planista.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.security.JwtService;
-import edu.pjatk.planista.shared.dto.DictItem;
+import edu.pjatk.planista.shared.dto.DictItemDto;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +62,9 @@ class CompanyControllerTest {
                 "Test comments",
                 Instant.now(),
                 Instant.now(),
-                new DictItem(10L, "test"),
+                new DictItemDto(10L, "test"),
                 null,
-                new DictItem(30L, "test"),
+                new DictItemDto(30L, "test"),
                 null,
                 null
         );
@@ -165,7 +165,7 @@ class CompanyControllerTest {
                 "Updated comments",
                 Instant.now(),
                 Instant.now(),
-                new DictItem(1L, "test"),
+                new DictItemDto(1L, "test"),
                 null,
                 null,
                 null,

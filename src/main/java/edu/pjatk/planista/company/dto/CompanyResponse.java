@@ -1,6 +1,6 @@
 package edu.pjatk.planista.company.dto;
 
-import edu.pjatk.planista.shared.dto.DictItem;
+import edu.pjatk.planista.shared.dto.DictItemDto;
 
 import java.time.Instant;
 
@@ -19,9 +19,9 @@ public record CompanyResponse(
         String comments,
         Instant createdAt,
         Instant updatedAt,
-        DictItem user,
-        DictItem acquired,
-        DictItem district,
-        DictItem country,
-        DictItem status
+        DictItemDto user,
+        DictItemDto acquired,
+        DictItemDto district,
+        DictItemDto country,
+        DictItemDto status
 ) {}

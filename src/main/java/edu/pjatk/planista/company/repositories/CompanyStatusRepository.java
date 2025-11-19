@@ -1,14 +1,11 @@
 package edu.pjatk.planista.company.repositories;
 
 import edu.pjatk.planista.company.models.CompanyStatus;
-import org.springframework.data.jpa.repository.JpaRepository;
+import edu.pjatk.planista.shared.repositories.DictItemRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-
-import java.util.Optional;
 
 @RepositoryRestResource(
         path = "company-statuses"
 )
-public interface CompanyStatusRepository extends JpaRepository<CompanyStatus, Long> {
-    Optional<CompanyStatus> findByNameIgnoreCase(String name);
+public interface CompanyStatusRepository extends DictItemRepository<CompanyStatus> {
 }

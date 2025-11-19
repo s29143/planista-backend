@@ -7,11 +7,10 @@ import edu.pjatk.planista.company.mappers.CompanyMapper;
 import edu.pjatk.planista.company.models.Company;
 import edu.pjatk.planista.company.repositories.CompanyRepository;
 import edu.pjatk.planista.company.services.CompanyService;
-import edu.pjatk.planista.shared.dto.DictItem;
+import edu.pjatk.planista.shared.dto.DictItemDto;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -52,7 +51,7 @@ class CompanyServiceTest {
                 "00-001","Street","1","2","123456789","a@b.com","https://acme.com","notes",
                 Instant.now(),
                 Instant.now(),
-                new DictItem(1L, "test"),
+                new DictItemDto(1L, "test"),
                 null,
                 null,
                 null,
@@ -89,7 +88,7 @@ class CompanyServiceTest {
                 null,null,null,null,null,null,null,null,
                 Instant.now(),
                 Instant.now(),
-                new DictItem(1L, "test"),
+                new DictItemDto(1L, "test"),
                 null,
                 null,
                 null,
@@ -134,7 +133,7 @@ class CompanyServiceTest {
                 null,null,null,null,null,null,null,null,
                 Instant.now(),
                 Instant.now(),
-                new DictItem(1L, "test"),
+                new DictItemDto(1L, "test"),
                 null,
                 null,
                 null,
@@ -186,7 +185,7 @@ class CompanyServiceTest {
                 null,null,null,
                 Instant.now(),
                 Instant.now(),
-                new DictItem(1L, "test"),
+                new DictItemDto(1L, "test"),
                 null,
                 null,
                 null,
@@ -195,7 +194,7 @@ class CompanyServiceTest {
                 null,null,null,
                 Instant.now(),
                 Instant.now(),
-                new DictItem(1L, "test"),
+                new DictItemDto(1L, "test"),
                 null,
                 null,
                 null,
