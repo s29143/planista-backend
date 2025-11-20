@@ -5,7 +5,8 @@ import edu.pjatk.planista.shared.repositories.DictItemRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(
-        path = "company-statuses"
+        path = "company-statuses",
+        collectionResourceRel = "company-statuses"
 )
 public interface CompanyStatusRepository extends DictItemRepository<CompanyStatus> {
 }
