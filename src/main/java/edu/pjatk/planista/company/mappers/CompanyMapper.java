@@ -6,8 +6,8 @@ import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.company.models.Company;
 import edu.pjatk.planista.company.repositories.CompanyAcquiredRepository;
 import edu.pjatk.planista.company.repositories.CompanyStatusRepository;
-import edu.pjatk.planista.company.repositories.CountryRepository;
-import edu.pjatk.planista.company.repositories.DistrictRepository;
+import edu.pjatk.planista.shared.repositories.CountryRepository;
+import edu.pjatk.planista.shared.repositories.DistrictRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

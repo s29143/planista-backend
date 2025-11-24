@@ -2,6 +2,8 @@ package edu.pjatk.planista.company.models;
 
 import edu.pjatk.planista.auth.AppUser;
 import edu.pjatk.planista.config.Auditable;
+import edu.pjatk.planista.shared.models.Country;
+import edu.pjatk.planista.shared.models.District;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
