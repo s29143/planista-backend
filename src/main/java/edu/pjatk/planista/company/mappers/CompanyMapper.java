@@ -1,6 +1,6 @@
 package edu.pjatk.planista.company.mappers;
 
-import edu.pjatk.planista.auth.AppUserRepository;
+import edu.pjatk.planista.auth.AuthRepository;
 import edu.pjatk.planista.company.dto.CompanyRequest;
 import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.company.models.Company;
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 )
 public abstract class CompanyMapper {
     @Autowired
-    protected AppUserRepository appUserRepository;
+    protected AuthRepository authRepository;
 
     @Autowired
     protected CompanyAcquiredRepository acquiredRepository;
@@ -61,7 +61,7 @@ public abstract class CompanyMapper {
     @AfterMapping
     protected void afterToEntity(CompanyRequest req, @MappingTarget Company target) {
         if (req.userId() != null) {
-            target.setUser(appUserRepository.getReferenceById(req.userId()));
+            target.setUser(authRepository.getReferenceById(req.userId()));
         }
         if (req.acquiredId() != null) {
             target.setAcquired(acquiredRepository.getReferenceById(req.acquiredId()));
@@ -97,7 +97,7 @@ public abstract class CompanyMapper {
     @AfterMapping
     protected void afterUpdateEntity(CompanyRequest req, @MappingTarget Company target) {
         if (req.userId() != null) {
-            target.setUser(appUserRepository.getReferenceById(req.userId()));
+            target.setUser(authRepository.getReferenceById(req.userId()));
         } else {
             target.setUser(null);
         }

@@ -23,7 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-    private final AppUserService userService;
+    private final AuthUserService userService;
     @Value("${app.jwt.refresh-expiration}")
     private Duration refreshExp;
 

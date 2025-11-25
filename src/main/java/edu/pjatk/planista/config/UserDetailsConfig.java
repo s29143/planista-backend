@@ -1,6 +1,6 @@
 package edu.pjatk.planista.config;
 
-import edu.pjatk.planista.auth.AppUserRepository;
+import edu.pjatk.planista.auth.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class UserDetailsConfig {
-    private final AppUserRepository userRepository;
+    private final AuthRepository userRepository;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

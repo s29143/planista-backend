@@ -31,8 +31,8 @@ public class AuthServiceTest {
     private AuthenticationManager authenticationManager;
     private RefreshTokenRepository refreshTokenRepository;
     private JwtService jwtService;
-    private AppUserService userService;
-    private AppUserRepository appUserRepository;
+    private AuthUserService userService;
+    private AuthRepository authRepository;
     private AppUserMapper mapper;
 
     @BeforeEach
@@ -45,9 +45,8 @@ public class AuthServiceTest {
                 "super-secret-key-which-is-long-enough-32bytes!!!".getBytes(StandardCharsets.UTF_8));
         jwtService = new JwtService(secret, Duration.of(60_000, ChronoUnit.MILLIS), Duration.of(60 * 60 * 1000 - 1000, ChronoUnit.MILLIS));
         refreshTokenRepository = mock(RefreshTokenRepository.class);
-        appUserRepository = mock(AppUserRepository.class);
-        mapper = mock(AppUserMapper.class);
-        userService = new AppUserService(authenticationManager, refreshTokenRepository, jwtService, appUserRepository, mapper);
+        authRepository = mock(AuthRepository.class);
+        userService = new AuthUserService(authenticationManager, refreshTokenRepository, jwtService, authRepository);
     }
 
     @Test
@@ -153,7 +152,7 @@ public class AuthServiceTest {
         user.setFirstname("Jan");
         user.setLastname("Kowalski");
 
-        when(appUserRepository.findByUsername("jan")).thenReturn(Optional.of(user));
+        when(authRepository.findByUsername("jan")).thenReturn(Optional.of(user));
 
         UserDto res = userService.me("jan");
 
@@ -161,20 +160,20 @@ public class AuthServiceTest {
         assertThat(res.username()).isEqualTo("jan");
         assertThat(res.firstname()).isEqualTo("Jan");
         assertThat(res.lastname()).isEqualTo("Kowalski");
-        verify(appUserRepository).findByUsername("jan");
-        verifyNoMoreInteractions(appUserRepository);
+        verify(authRepository).findByUsername("jan");
+        verifyNoMoreInteractions(authRepository);
     }
 
     @Test
     void meThrowsWhenUserNotFound() {
-        when(appUserRepository.findByUsername("ghost")).thenReturn(Optional.empty());
+        when(authRepository.findByUsername("ghost")).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> userService.me("ghost"))
                 .isInstanceOf(UsernameNotFoundException.class)
                 .hasMessageContaining("User not found");
 
-        verify(appUserRepository).findByUsername("ghost");
-        verifyNoMoreInteractions(appUserRepository);
+        verify(authRepository).findByUsername("ghost");
+        verifyNoMoreInteractions(authRepository);
     }
 
     @Test

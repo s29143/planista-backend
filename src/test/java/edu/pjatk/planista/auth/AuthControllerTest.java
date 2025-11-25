@@ -36,7 +36,7 @@ public class AuthControllerTest {
     private ObjectMapper om;
 
     @MockitoBean
-    private AppUserService authService;
+    private AuthUserService authService;
     @Test
     void loginEndpointReturnsTokens() throws Exception {
         when(authService.login(any(LoginRequest.class)))

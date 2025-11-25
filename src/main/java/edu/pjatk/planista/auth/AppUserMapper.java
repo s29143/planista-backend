@@ -1,9 +1,10 @@
 package edu.pjatk.planista.auth;
 
 import edu.pjatk.planista.auth.dto.UserDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import edu.pjatk.planista.company.dto.CompanyRequest;
+import edu.pjatk.planista.company.models.Company;
+import edu.pjatk.planista.users.dto.UserRequest;
+import org.mapstruct.*;
 
 @Mapper(
         componentModel = "spring"
@@ -17,4 +18,22 @@ public abstract class AppUserMapper {
             @Mapping(target = "authorities", ignore = true)
     })
     public abstract AppUser toEntity(UserDto req);
+
+    @Mappings({
+            @Mapping(target = "password", ignore = true),
+            @Mapping(target = "enabled", ignore = true),
+            @Mapping(target = "authorities", ignore = true)
+    })
+    public abstract AppUser toEntity(UserRequest req);
+
+
+    @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    @Mappings({
+            @Mapping(target = "id", ignore = true)
+    })
+    public abstract void updateEntity(@MappingTarget AppUser target, UserRequest req);
+
+    @AfterMapping
+    protected void afterUpdateEntity(UserRequest req, @MappingTarget AppUser target) {
+    }
 }
