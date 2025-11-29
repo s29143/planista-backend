@@ -7,18 +7,19 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASS}
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        format_sql: true
-    show-sql: true
+        format_sql: ${JPA_SHOW_SQL:false}
+    show-sql: ${JPA_SHOW_SQL:false}
   application:
     name: Planista
 server:
   error:
-    include-message: always
-    include-binding-errors: always
+    include-message: ${SERVER_SHOW_ERROR:never}
+    include-binding-errors: ${SERVER_SHOW_ERROR:never}
   port: ${APP_PORT:8080}
 
 app:
