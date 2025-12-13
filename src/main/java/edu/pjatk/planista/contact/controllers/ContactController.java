@@ -1,6 +1,5 @@
 package edu.pjatk.planista.contact.controllers;
 
-import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.contact.dto.ContactFilter;
 import edu.pjatk.planista.contact.dto.ContactRequest;
 import edu.pjatk.planista.contact.dto.ContactResponse;
@@ -27,7 +26,7 @@ public class ContactController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CompanyResponse>> list(@PageableDefault(size = 20, sort = "id") Pageable pageable,
+    public ResponseEntity<Page<ContactResponse>> list(@PageableDefault(size = 20, sort = "id") Pageable pageable,
                                                       @RequestParam(required = false) List<Long> userId,
                                                       @RequestParam(required = false) List<Long> statusId,
                                                       @RequestParam(required = false) String company,

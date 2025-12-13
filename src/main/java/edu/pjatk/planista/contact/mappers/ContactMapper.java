@@ -1,6 +1,7 @@
 package edu.pjatk.planista.contact.mappers;
 
 import edu.pjatk.planista.auth.AuthRepository;
+import edu.pjatk.planista.company.mappers.CompanyMapper;
 import edu.pjatk.planista.company.repositories.CompanyRepository;
 import edu.pjatk.planista.contact.dto.ContactRequest;
 import edu.pjatk.planista.contact.dto.ContactResponse;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(
         componentModel = "spring",
-        uses = { ClassDtoMappers.class }
+        uses = { ClassDtoMappers.class, CompanyMapper.class }
 )
 public abstract class ContactMapper {
     @Autowired
@@ -23,12 +24,13 @@ public abstract class ContactMapper {
     @Autowired
     protected ContactStatusRepository statusRepository;
 
+    @Autowired
+    protected CompanyMapper companyMapper;
+
     @Mappings({
             @Mapping(target = "user", source = "user", qualifiedByName = "userToDict"),
-            @Mapping(target = "company", source = "company", qualifiedByName = "companyToResponse"),
+            @Mapping(target = "company", source = "company"),
             @Mapping(target = "status", source = "status", qualifiedByName = "statusToDict"),
-            @Mapping(target = "createdAt", source = "createdAt"),
-            @Mapping(target = "updatedAt", source = "updatedAt")
     })
     public abstract ContactResponse toResponse(Contact entity);
 
@@ -63,10 +65,8 @@ public abstract class ContactMapper {
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "user", ignore = true),
-            @Mapping(target = "acquired", ignore = true),
-            @Mapping(target = "district", ignore = true),
-            @Mapping(target = "country", ignore = true),
             @Mapping(target = "status", ignore = true),
+            @Mapping(target = "company", ignore = true),
             @Mapping(target = "createdAt", ignore = true),
             @Mapping(target = "updatedAt", ignore = true),
             @Mapping(target = "createdBy", ignore = true),
