@@ -50,7 +50,8 @@ dependencies {
 
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    testImplementation("org.testcontainers:junit-jupiter")
+	testImplementation("org.testcontainers:testcontainers:2.0.2")
+	testImplementation ("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

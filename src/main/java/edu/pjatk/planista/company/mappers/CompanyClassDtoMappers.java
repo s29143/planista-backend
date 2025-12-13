@@ -10,7 +10,7 @@ import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClassDtoMappers {
+public class CompanyClassDtoMappers {
 
     @Named("userToDict")
     public DictItemDto userToDict(AppUser u) {

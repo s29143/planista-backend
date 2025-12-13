@@ -7,7 +7,7 @@ import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClassDtoMappers {
+public class ContactClassDtoMappers {
 
     @Named("userToDict")
     public DictItemDto userToDict(AppUser u) {
