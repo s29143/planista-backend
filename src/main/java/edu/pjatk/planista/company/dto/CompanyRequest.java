@@ -21,7 +21,7 @@ public record CompanyRequest(
         String apartmentNumber,
         @Size(max = 15, message = "{validation.size}")
         String phoneNumber,
-        @Email
+        @Email(message = "{validation.email}")
         String email,
         @Size(max = 1024, message = "{validation.size}")
         String wwwSite,
