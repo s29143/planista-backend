@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(
         componentModel = "spring",
-        uses = { ClassDtoMappers.class }
+        uses = { CompanyClassDtoMappers.class }
 )
 public abstract class CompanyMapper {
     @Autowired
