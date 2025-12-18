@@ -38,7 +38,7 @@ public class ActionService {
     @Transactional(readOnly = true)
     public ActionResponse get(Long id) {
         Action entity = actionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Contact " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Action " + id + " not found"));
         return mapper.toResponse(entity);
     }
 
@@ -50,14 +50,14 @@ public class ActionService {
 
     public ActionResponse update(Long id, ActionRequest req) {
         Action entity = actionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Contact " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Action " + id + " not found"));
         mapper.updateEntity(entity, req);
         return mapper.toResponse(entity);
     }
 
     public void delete(Long id) {
         if (!actionRepository.existsById(id)) {
-            throw new EntityNotFoundException("Contact " + id + " not found");
+            throw new EntityNotFoundException("Action " + id + " not found");
         }
         actionRepository.deleteById(id);
     }

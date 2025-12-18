@@ -78,7 +78,6 @@ public abstract class ActionMapper {
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "user", ignore = true),
-            @Mapping(target = "status", ignore = true),
             @Mapping(target = "company", ignore = true),
             @Mapping(target = "contact", ignore = true),
             @Mapping(target = "type", ignore = true),
