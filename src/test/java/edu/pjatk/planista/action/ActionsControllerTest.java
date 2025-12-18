@@ -146,7 +146,7 @@ class ActionsControllerTest {
                         .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.email").value("jdoe@example.com"));
+                .andExpect(jsonPath("$.text").value("Some description"));
     }
 
     @Test

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public record ActionRequest(
-        @NotBlank(message = "validation.required")
+        @NotNull(message = "validation.required")
         LocalDate date,
 
         String text,
