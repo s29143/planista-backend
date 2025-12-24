@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@Table(name = "commission")
 public class Order extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
