@@ -34,6 +34,9 @@ public class SecurityConfig {
     public static final String[] USER = {
             "/api/v1/auth/me",
             "/api/v1/companies/**",
+            "/api/v1/contacts/**",
+            "/api/v1/actions/**",
+            "/api/v1/orders/**",
             "/api/v1/users/**"
     };
 
@@ -41,7 +44,10 @@ public class SecurityConfig {
             "/api/v1/districts/**",
             "/api/v1/company-statuses/**",
             "/api/v1/countries/**",
-            "/api/v1/company-acquires/**"
+            "/api/v1/company-acquires/**",
+            "/api/v1/contact-statuses/**",
+            "/api/v1/order-statuses/**",
+            "/api/v1/order-types/**",
     };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

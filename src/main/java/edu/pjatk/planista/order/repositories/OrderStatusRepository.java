@@ -5,8 +5,8 @@ import edu.pjatk.planista.shared.repositories.DictItemRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(
-        path = "order-status",
-        collectionResourceRel = "order-status"
+        path = "order-statuses",
+        collectionResourceRel = "order-statuses"
 )
 public interface OrderStatusRepository extends DictItemRepository<OrderStatus> {
 }
