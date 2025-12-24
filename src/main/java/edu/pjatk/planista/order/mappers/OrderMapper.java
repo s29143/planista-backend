@@ -1,24 +1,24 @@
-package edu.pjatk.planista.action.mappers;
+package edu.pjatk.planista.order.mappers;
 
-import edu.pjatk.planista.action.dto.ActionRequest;
-import edu.pjatk.planista.action.dto.ActionResponse;
-import edu.pjatk.planista.action.models.Action;
-import edu.pjatk.planista.auth.AuthRepository;
 import edu.pjatk.planista.company.mappers.CompanyMapper;
 import edu.pjatk.planista.company.repositories.CompanyRepository;
 import edu.pjatk.planista.contact.mappers.ContactMapper;
 import edu.pjatk.planista.contact.repositories.ContactRepository;
-import edu.pjatk.planista.action.repositories.ActionTypeRepository;
+import edu.pjatk.planista.order.dto.OrderRequest;
+import edu.pjatk.planista.order.dto.OrderResponse;
+import edu.pjatk.planista.order.models.Order;
+import edu.pjatk.planista.order.repositories.OrderStatusRepository;
+import edu.pjatk.planista.order.repositories.OrderTypeRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(
         componentModel = "spring",
-        uses = { ActionDtoMapper.class, CompanyMapper.class, ContactMapper.class }
+        uses = { OrderDtoMappers.class, CompanyMapper.class, ContactMapper.class }
 )
-public abstract class ActionMapper {
+public abstract class OrderMapper {
     @Autowired
-    protected AuthRepository authRepository;
+    protected OrderStatusRepository statusRepository;
 
     @Autowired
     protected CompanyRepository companyRepository;
@@ -27,7 +27,7 @@ public abstract class ActionMapper {
     protected ContactRepository contactRepository;
 
     @Autowired
-    protected ActionTypeRepository typeRepository;
+    protected OrderTypeRepository typeRepository;
 
     @Autowired
     protected CompanyMapper companyMapper;
@@ -36,16 +36,16 @@ public abstract class ActionMapper {
     protected ContactMapper contactMapper;
 
     @Mappings({
-            @Mapping(target = "user", source = "user", qualifiedByName = "userToDict"),
+            @Mapping(target = "status", source = "status", qualifiedByName = "statusToDict"),
             @Mapping(target = "company", source = "company"),
             @Mapping(target = "contact", source = "contact"),
             @Mapping(target = "type", source = "type", qualifiedByName = "typeToDict"),
     })
-    public abstract ActionResponse toResponse(Action entity);
+    public abstract OrderResponse toResponse(Order entity);
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "user", ignore = true),
+            @Mapping(target = "status", ignore = true),
             @Mapping(target = "company", ignore = true),
             @Mapping(target = "contact", ignore = true),
             @Mapping(target = "type", ignore = true),
@@ -56,12 +56,12 @@ public abstract class ActionMapper {
             @Mapping(target = "createdByUser", ignore = true),
             @Mapping(target = "updatedByUser", ignore = true)
     })
-    public abstract Action toEntity(ActionRequest req);
+    public abstract Order toEntity(OrderRequest req);
 
     @AfterMapping
-    protected void afterToEntity(ActionRequest req, @MappingTarget Action target) {
-        if (req.userId() != null) {
-            target.setUser(authRepository.getReferenceById(req.userId()));
+    protected void afterToEntity(OrderRequest req, @MappingTarget Order target) {
+        if (req.statusId() != null) {
+            target.setStatus(statusRepository.getReferenceById(req.statusId()));
         }
         if (req.companyId() != null) {
             target.setCompany(companyRepository.getReferenceById(req.companyId()));
@@ -77,7 +77,7 @@ public abstract class ActionMapper {
     @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "user", ignore = true),
+            @Mapping(target = "status", ignore = true),
             @Mapping(target = "company", ignore = true),
             @Mapping(target = "contact", ignore = true),
             @Mapping(target = "type", ignore = true),
@@ -88,14 +88,14 @@ public abstract class ActionMapper {
             @Mapping(target = "createdByUser", ignore = true),
             @Mapping(target = "updatedByUser", ignore = true)
     })
-    public abstract void updateEntity(@MappingTarget Action target, ActionRequest req);
+    public abstract void updateEntity(@MappingTarget Order target, OrderRequest req);
 
     @AfterMapping
-    protected void afterUpdateEntity(ActionRequest req, @MappingTarget Action target) {
-        if (req.userId() != null) {
-            target.setUser(authRepository.getReferenceById(req.userId()));
+    protected void afterUpdateEntity(OrderRequest req, @MappingTarget Order target) {
+        if (req.statusId() != null) {
+            target.setStatus(statusRepository.getReferenceById(req.statusId()));
         } else {
-            target.setUser(null);
+            target.setStatus(null);
         }
         if (req.companyId() != null) {
             target.setCompany(companyRepository.getReferenceById(req.companyId()));

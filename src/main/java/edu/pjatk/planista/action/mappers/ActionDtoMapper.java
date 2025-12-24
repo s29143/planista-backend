@@ -7,7 +7,7 @@ import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClassDtoMappers {
+public class ActionDtoMapper {
 
     @Named("userToDict")
     public DictItemDto userToDict(AppUser u) {
@@ -15,8 +15,8 @@ public class ClassDtoMappers {
         return new DictItemDto(u.getId(), u.getUsername());
     }
 
-    @Named("statusToDict")
-    public DictItemDto statusToDict(ActionType s) {
+    @Named("typeToDict")
+    public DictItemDto typeToDict(ActionType s) {
         return s == null ? null : new DictItemDto(s.getId(), s.getName());
     }
 }
