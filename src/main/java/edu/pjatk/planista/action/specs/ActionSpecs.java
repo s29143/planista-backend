@@ -16,9 +16,9 @@ public final class ActionSpecs {
         return (root, cq, cb) -> root.join("user").get("id").in(ids);
     }
 
-    public static Specification<Action> statusIdIn(Collection<Long> ids) {
+    public static Specification<Action> typeIdIn(Collection<Long> ids) {
         if (ids == null || ids.isEmpty()) return null;
-        return (root, cq, cb) -> root.join("status").get("id").in(ids);
+        return (root, cq, cb) -> root.join("type").get("id").in(ids);
     }
 
     public static Specification<Action> searchCompaniesLike(String search) {

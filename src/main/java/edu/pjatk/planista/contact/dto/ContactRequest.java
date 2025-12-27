@@ -29,10 +29,9 @@ public record ContactRequest(
 
         boolean phoneAgreement,
         boolean emailAgreement,
-
-        @NotNull(message = "validation.required")
         Long userId,
 
+        @NotNull(message = "validation.required")
         Long companyId,
         Long statusId
 ) {

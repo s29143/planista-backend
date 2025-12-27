@@ -39,30 +39,38 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleMethodArgumentNotValid(MethodArgumentNotValidException ex, Locale locale) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-
+        log.info("Handling method argument not valid exception");
         pd.setTitle(messageSource.getMessage(
                 "error.validation",
                 null,
                 "Validation error",
                 locale
         ));
-
         Map<String, List<String>> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .collect(Collectors.groupingBy(
                         FieldError::getField,
                         Collectors.mapping(
-                                err -> messageSource.getMessage(err, locale),
+                                err -> {
+                                    if(err.getDefaultMessage() == null) {
+                                        return "{field} error";
+                                    }
+                                    return messageSource.getMessage(err.getDefaultMessage(), null, "{field} error", locale);
+                                },
                                 Collectors.toList()
                         )
                 ));
 
-        // globalne błędy (np. @AssertTrue na całym obiekcie)
         List<String> globalErrors = ex.getBindingResult()
                 .getGlobalErrors()
                 .stream()
-                .map(e -> messageSource.getMessage(e, locale))
+                .map(e -> {
+                    if(e.getDefaultMessage() == null) {
+                        return "Global error";
+                    }
+                    return messageSource.getMessage(e.getDefaultMessage(), null, "Global error", locale);
+                })
                 .toList();
 
         if (!globalErrors.isEmpty()) {
@@ -76,7 +84,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BindException.class)
     public ProblemDetail handleBindException(BindException ex, Locale locale) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-
+        log.info("Handling bind exception");
         pd.setTitle(messageSource.getMessage(
                 "error.validation",
                 null,
@@ -102,7 +110,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ProblemDetail handleConstraintViolation(ConstraintViolationException ex, Locale locale) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        log.info("Hnadling constraing violation");
+        log.info("Handling constraint violation");
         pd.setTitle(messageSource.getMessage(
                 "error.validation",
                 null,
@@ -129,7 +137,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ProblemDetail handleDataIntegrityViolation(DataIntegrityViolationException ex, Locale locale) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        log.info("Hadling data integrity violation");
+        log.info("Handling data integrity violation");
 
         pd.setTitle(messageSource.getMessage(
                 "error.validation",
@@ -168,7 +176,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleException(Exception ex, Locale locale) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-
+        log.info("Handling Exception");
         pd.setTitle(messageSource.getMessage(
                 "error.internal",
                 null,

@@ -29,8 +29,8 @@ public final class ContactSpecs {
         final List<String> tokens = List.of(search.trim().toLowerCase().split("\\s+"));
 
         return (root, cq, cb) -> {
-            Expression<String> shortName = cb.lower(root.get("shortName"));
-            Expression<String> fullName  = cb.lower(root.get("fullName"));
+            Expression<String> shortName = cb.lower(root.join("company").get("shortName"));
+            Expression<String> fullName  = cb.lower(root.join("company").get("fullName"));
 
             return tokens.stream()
                     .map(tok -> {

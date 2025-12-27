@@ -46,6 +46,7 @@ public class SecurityConfig {
             "/api/v1/countries/**",
             "/api/v1/company-acquires/**",
             "/api/v1/contact-statuses/**",
+            "/api/v1/action-types/**",
             "/api/v1/order-statuses/**",
             "/api/v1/order-types/**",
     };

@@ -28,11 +28,11 @@ public class ActionController {
     @GetMapping
     public ResponseEntity<Page<ActionResponse>> list(@PageableDefault(size = 20, sort = "id") Pageable pageable,
                                                      @RequestParam(required = false) List<Long> userId,
-                                                     @RequestParam(required = false) List<Long> statusId,
+                                                     @RequestParam(required = false) List<Long> typeId,
                                                      @RequestParam(required = false) String company,
                                                      @RequestParam(required = false) String search
                                                       ) {
-        ActionFilter filter = new ActionFilter(userId, company, statusId, search);
+        ActionFilter filter = new ActionFilter(userId, company, typeId, search);
         return ResponseEntity.ok(service.list(pageable, filter));
     }
 

@@ -28,7 +28,7 @@ public class ActionService {
     public Page<ActionResponse> list(Pageable pageable, ActionFilter filter) {
         Specification<Action> spec = Specification.allOf(
                 userIdIn(filter.userIds()),
-                statusIdIn(filter.statusIds()),
+                typeIdIn(filter.typeIds()),
                 searchCompaniesLike(filter.company()),
                 searchLike(filter.search())
         );
