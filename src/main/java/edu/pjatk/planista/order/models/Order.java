@@ -22,7 +22,7 @@ public class Order extends Auditable {
     @Column(nullable = false)
     private String product;
 
-    private Long quantity;
+    private Integer quantity;
 
     private LocalDate dateFrom;
 

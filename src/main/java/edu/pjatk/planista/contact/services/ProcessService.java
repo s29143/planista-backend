@@ -19,7 +19,7 @@ import static edu.pjatk.planista.contact.specs.ContactSpecs.*;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ContactService {
+public class ProcessService {
 
     private final ContactRepository contactRepository;
     private final ContactMapper mapper;
