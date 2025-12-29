@@ -1,10 +1,13 @@
 package edu.pjatk.planista.process.mappers;
 
 import edu.pjatk.planista.order.mappers.OrderMapper;
+import edu.pjatk.planista.order.repositories.OrderRepository;
 import edu.pjatk.planista.process.dto.ProcessRequest;
 import edu.pjatk.planista.process.dto.ProcessResponse;
 import edu.pjatk.planista.process.models.Process;
 import edu.pjatk.planista.process.repositories.ProcessStatusRepository;
+import edu.pjatk.planista.process.repositories.TechnologyRepository;
+import edu.pjatk.planista.process.repositories.WorkstationRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +19,15 @@ public abstract class ProcessMapper {
 
     @Autowired
     protected ProcessStatusRepository statusRepository;
+
+    @Autowired
+    protected WorkstationRepository workstationRepository;
+
+    @Autowired
+    protected TechnologyRepository technologyRepository;
+
+    @Autowired
+    protected OrderRepository orderRepository;
 
     @Autowired
     protected OrderMapper orderMapper;
@@ -48,6 +60,15 @@ public abstract class ProcessMapper {
         if (req.statusId() != null) {
             target.setStatus(statusRepository.getReferenceById(req.statusId()));
         }
+        if (req.workstationId() != null) {
+            target.setWorkstation(workstationRepository.getReferenceById(req.workstationId()));
+        }
+        if (req.technologyId() != null) {
+            target.setTechnology(technologyRepository.getReferenceById(req.technologyId()));
+        }
+        if (req.orderId() != null) {
+            target.setOrder(orderRepository.getReferenceById(req.orderId()));
+        }
     }
 
     @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
@@ -72,6 +93,21 @@ public abstract class ProcessMapper {
             target.setStatus(statusRepository.getReferenceById(req.statusId()));
         } else {
             target.setStatus(null);
+        }
+        if (req.workstationId() != null) {
+            target.setWorkstation(workstationRepository.getReferenceById(req.workstationId()));
+        } else {
+            target.setWorkstation(null);
+        }
+        if (req.technologyId() != null) {
+            target.setTechnology(technologyRepository.getReferenceById(req.technologyId()));
+        } else {
+            target.setTechnology(null);
+        }
+        if (req.orderId() != null) {
+            target.setOrder(orderRepository.getReferenceById(req.orderId()));
+        } else {
+            target.setOrder(null);
         }
     }
 }
