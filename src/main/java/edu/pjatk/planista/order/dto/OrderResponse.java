@@ -12,7 +12,7 @@ public record OrderResponse(
         String product,
         LocalDate dateFrom,
         LocalDate dateTo,
-        Long quantity,
+        Integer quantity,
         Instant createdAt,
         Instant updatedAt,
         DictItemDto status,
