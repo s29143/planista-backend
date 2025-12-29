@@ -14,7 +14,6 @@ public record OrderRequest(
         LocalDate dateTo,
         @Min(value = 0, message = "validation.min")
         Integer quantity,
-
         Long companyId,
         Long contactId,
         Long statusId,

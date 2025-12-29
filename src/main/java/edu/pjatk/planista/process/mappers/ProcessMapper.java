@@ -1,9 +1,6 @@
 package edu.pjatk.planista.process.mappers;
 
-import edu.pjatk.planista.auth.AuthRepository;
-import edu.pjatk.planista.company.repositories.CompanyRepository;
 import edu.pjatk.planista.order.mappers.OrderMapper;
-import edu.pjatk.planista.order.repositories.OrderRepository;
 import edu.pjatk.planista.process.dto.ProcessRequest;
 import edu.pjatk.planista.process.dto.ProcessResponse;
 import edu.pjatk.planista.process.models.Process;
@@ -56,7 +53,6 @@ public abstract class ProcessMapper {
     @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "user", ignore = true),
             @Mapping(target = "status", ignore = true),
             @Mapping(target = "workstation", ignore = true),
             @Mapping(target = "technology", ignore = true),

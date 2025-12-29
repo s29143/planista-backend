@@ -1,12 +1,11 @@
-package edu.pjatk.planista.order;
+package edu.pjatk.planista.process;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pjatk.planista.company.dto.CompanyResponse;
-import edu.pjatk.planista.contact.dto.ContactResponse;
-import edu.pjatk.planista.order.controllers.OrderController;
-import edu.pjatk.planista.order.dto.OrderRequest;
 import edu.pjatk.planista.order.dto.OrderResponse;
-import edu.pjatk.planista.order.services.OrderService;
+import edu.pjatk.planista.process.controllers.ProcessController;
+import edu.pjatk.planista.process.dto.ProcessRequest;
+import edu.pjatk.planista.process.dto.ProcessResponse;
+import edu.pjatk.planista.process.services.ProcessService;
 import edu.pjatk.planista.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.security.JwtService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
@@ -21,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
@@ -31,9 +31,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(OrderController.class)
+@WebMvcTest(ProcessController.class)
 @AutoConfigureMockMvc(addFilters = false)
-class OrdersControllerTest {
+class ProcessControllerTest {
     @MockitoBean
     JwtService jwtService;
 
@@ -47,64 +47,43 @@ class OrdersControllerTest {
     ObjectMapper mapper;
 
     @MockitoBean
-    OrderService service;
+    ProcessService service;
 
-    private OrderResponse sampleResponse() {
-        CompanyResponse company = new CompanyResponse(
-            10L,"N","F","1234567890",
-            null,null,null,null,null,null,null,null,
-            Instant.now(),
-            Instant.now(),
-            new DictItemDto(1L, "test"),
-            null,
-            null,
-            null,
-            null
+    private ProcessResponse sampleResponse() {
+        OrderResponse order = new OrderResponse(
+                10L,"N", LocalDate.now(), LocalDate.now(),
+                25,
+                Instant.now(),
+                Instant.now(),
+                new DictItemDto(1L, "test"),
+                null,
+                null,
+                null
         );
 
-        ContactResponse contact = new ContactResponse(
+        return new ProcessResponse(
                 1L,
-                "John",
-                "Doe",
-                "Salary man",
-                "22 23 23 13",
-                "123 123 123",
-                "jdoe@example.com",
-                true,
-                true,
+                20,
+                Duration.ZERO,
                 Instant.now(),
                 Instant.now(),
+                order,
                 new DictItemDto(10L, "test"),
-                company,
-                new DictItemDto(30L, "test")
-        );
-
-        return new OrderResponse(
-                1L,
-                "Product",
-                LocalDate.now(),
-                LocalDate.now(),
-                50,
-                Instant.now(),
-                Instant.now(),
                 new DictItemDto(30L, "test"),
-                company,
-                contact,
-                new DictItemDto(10L, "test")
+                new DictItemDto(30L, "test")
         );
     }
 
     @Test
-    void getReturnsOrders() throws Exception {
+    void getReturnsProcesses() throws Exception {
         var response = sampleResponse();
         Mockito.when(service.get(1L)).thenReturn(response);
 
-        mvc.perform(get("/api/v1/orders/{id}", 1L))
+        mvc.perform(get("/api/v1/processes/{id}", 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.product").value("Product"))
-                .andExpect(jsonPath("$.quantity").value(50))
-                .andExpect(jsonPath("$.status.id").value(30L));
+                .andExpect(jsonPath("$.quantity").value(20))
+                .andExpect(jsonPath("$.order.id").value(10L));
     }
 
     @Test
@@ -112,79 +91,73 @@ class OrdersControllerTest {
         var response = sampleResponse();
         var page = new PageImpl<>(List.of(response), PageRequest.of(0, 20), 1);
 
-        Mockito.when(service.list(any(), any())).thenReturn(page);
+        Mockito.when(service.list(any())).thenReturn(page);
 
-        mvc.perform(get("/api/v1/orders"))
+        mvc.perform(get("/api/v1/processes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].id").value(1L))
-                .andExpect(jsonPath("$.content[0].quantity").value(50))
+                .andExpect(jsonPath("$.content[0].quantity").value(20))
                 .andExpect(jsonPath("$.content[0].status.id").value(30L));
     }
 
     @Test
-    void createReturnsCreatedOrder() throws Exception {
-        var request = new OrderRequest(
-                "Product",
-                LocalDate.now(),
-                LocalDate.now(),
-                50,
+    void createReturnsCreatedProcess() throws Exception {
+        var request = new ProcessRequest(
+                20,
+                Duration.ZERO,
+                1L,
                 10L,
                 20L,
-                30L,
-                null
+                30L
         );
         var response = sampleResponse();
 
         Mockito.when(service.create(any())).thenReturn(response);
 
-        mvc.perform(post("/api/v1/orders")
+        mvc.perform(post("/api/v1/processes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.product").value("Product"));
+                .andExpect(jsonPath("$.quantity").value(20));
     }
 
     @Test
-    void updateReturnsUpdatedOrder() throws Exception {
-        var request = new OrderRequest(
-                "Product",
-                LocalDate.now(),
-                LocalDate.now(),
-                50,
+    void updateReturnsUpdatedProcess() throws Exception {
+        var request = new ProcessRequest(
+                20,
+                Duration.ZERO,
+                1L,
                 10L,
                 20L,
-                30L,
-                null
+                30L
         );
 
-        var updated = new OrderResponse(
+        var updated = new ProcessResponse(
                 1L,
-                "Product",
-                LocalDate.now(),
-                LocalDate.now(),
-                50,
+                20,
+                Duration.ZERO,
                 Instant.now(),
                 Instant.now(),
+                null,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test"),
-                null,
-                null,
-                new DictItemDto(10L, "test")
+                new DictItemDto(30L, "test")
         );
 
         Mockito.when(service.update(eq(1L), any())).thenReturn(updated);
 
-        mvc.perform(put("/api/v1/orders/{id}", 1L)
+        mvc.perform(put("/api/v1/processes/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.product").value("Product"))
-                .andExpect(jsonPath("$.quantity").value(50));
+                .andExpect(jsonPath("$.quantity").value(20))
+                .andExpect(jsonPath("$.id").value(1L));
     }
 
     @Test
     void deleteReturnsNoContent() throws Exception {
-        mvc.perform(delete("/api/v1/orders/{id}", 1L))
+        mvc.perform(delete("/api/v1/processes/{id}", 1L))
                 .andExpect(status().isNoContent());
 
         Mockito.verify(service).delete(1L);
