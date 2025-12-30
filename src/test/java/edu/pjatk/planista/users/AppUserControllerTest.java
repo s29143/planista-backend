@@ -45,7 +45,8 @@ public class AppUserControllerTest {
                 1L,
                 "jdoe",
                 "John",
-                "Doe"
+                "Doe",
+                null
         );
     }
     @Test
@@ -84,7 +85,8 @@ public class AppUserControllerTest {
                 "John",
                 "Doe",
                 "jdoe",
-                "Ch@ngeM3123!@#"
+                "Ch@ngeM3123!@#",
+                null
         );
         mvc.perform(
                         post("/api/v1/users")
@@ -108,6 +110,7 @@ public class AppUserControllerTest {
                 "John",
                 "Doe",
                 "jdoe",
+                null,
                 null
         );
         mvc.perform(

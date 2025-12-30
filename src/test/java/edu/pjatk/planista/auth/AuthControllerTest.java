@@ -67,7 +67,7 @@ public class AuthControllerTest {
     @WithMockUser(username = "john", roles = "USER")
     void meReturnsDtoFromService() throws Exception {
         when(authService.me("john")).thenReturn(
-                new UserDto(7L, "john", "John", "Doe")
+                new UserDto(7L, "john", "John", "Doe", null)
         );
 
         mvc.perform(get("/api/v1/auth/me"))

@@ -48,7 +48,8 @@ class AppUserServiceTest {
                 "jdoe",
                 "John",
                 "Doe",
-                "Ch@ngeM3123!@#"
+                "Ch@ngeM3123!@#",
+                null
         );
 
         AppUser entityToSave = new AppUser();
@@ -59,7 +60,8 @@ class AppUserServiceTest {
                 42L,
                 "jdoe",
                 "John",
-                "Doe"
+                "Doe",
+                null
         );
 
         given(mapper.toEntity(req)).willReturn(entityToSave);
@@ -86,6 +88,7 @@ class AppUserServiceTest {
                 "jdoe",
                 "John",
                 "Doe",
+                null,
                 null
         );
 
@@ -96,7 +99,8 @@ class AppUserServiceTest {
                 id,
                 "jdoe",
                 "John",
-                "Doe"
+                "Doe",
+                null
         );
 
         given(appUserRepository.findById(id)).willReturn(Optional.of(existing));
@@ -121,7 +125,8 @@ class AppUserServiceTest {
                 "jdoe",
                 "John",
                 "Doe",
-                "NewP@ssw0rd!"
+                "NewP@ssw0rd!",
+                null
         );
 
         AppUser existing = new AppUser();
@@ -131,7 +136,8 @@ class AppUserServiceTest {
                 id,
                 "jdoe",
                 "John",
-                "Doe"
+                "Doe",
+                null
         );
 
         given(appUserRepository.findById(id)).willReturn(Optional.of(existing));
@@ -157,6 +163,7 @@ class AppUserServiceTest {
                 "jdoe",
                 "John",
                 "Doe",
+                null,
                 null
         );
         given(appUserRepository.findById(id)).willReturn(Optional.empty());
@@ -177,7 +184,8 @@ class AppUserServiceTest {
                 id,
                 "jdoe",
                 "John",
-                "Doe"
+                "Doe",
+                null
         );
 
         given(appUserRepository.findById(id)).willReturn(Optional.of(entity));
@@ -227,8 +235,8 @@ class AppUserServiceTest {
         AppUser u2 = new AppUser(); u2.setId(2L);
         Page<AppUser> page = new PageImpl<>(List.of(u1, u2), pageable, 2);
 
-        UserDto r1 = new UserDto(1L, "u1", "John", "Doe");
-        UserDto r2 = new UserDto(2L, "u2", "Jane", "Doe");
+        UserDto r1 = new UserDto(1L, "u1", "John", "Doe", null);
+        UserDto r2 = new UserDto(2L, "u2", "Jane", "Doe", null);
 
         given(appUserRepository.findAll(any(Specification.class), eq(pageable))).willReturn(page);
         given(mapper.toResponse(u1)).willReturn(r1);
