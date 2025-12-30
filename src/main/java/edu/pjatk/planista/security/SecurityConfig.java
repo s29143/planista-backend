@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -31,34 +32,16 @@ public class SecurityConfig {
             "/api/v1/auth/logout"
     };
 
-    public static final String[] USER = {
-            "/api/v1/auth/me",
-            "/api/v1/companies/**",
-            "/api/v1/contacts/**",
-            "/api/v1/actions/**",
-            "/api/v1/orders/**",
-            "/api/v1/users/**"
-    };
-
-    public static final String[] DICT = {
-            "/api/v1/districts/**",
-            "/api/v1/company-statuses/**",
-            "/api/v1/countries/**",
-            "/api/v1/company-acquires/**",
-            "/api/v1/contact-statuses/**",
-            "/api/v1/action-types/**",
-            "/api/v1/order-statuses/**",
-            "/api/v1/order-types/**",
-    };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(SecurityConfig.PUBLIC).permitAll()
-                        .requestMatchers(SecurityConfig.USER).authenticated()
-                        .requestMatchers(SecurityConfig.DICT).authenticated()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/v1/**").authenticated()
+                        .anyRequest().denyAll()
                 )
                 .exceptionHandling(c -> c
                         .authenticationEntryPoint((req, res, e) -> {
