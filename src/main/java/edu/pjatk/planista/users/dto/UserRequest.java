@@ -1,5 +1,6 @@
 package edu.pjatk.planista.users.dto;
 
+import edu.pjatk.planista.auth.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -19,6 +20,7 @@ public record UserRequest(
                 regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{8,32}$",
                 message = "{validation.password}"
         )
-        String password
+        String password,
+        UserRole role
 ) {
 }

@@ -80,7 +80,8 @@ public class AuthUserService {
                 user.getId(),
                 user.getUsername(),
                 user.getFirstname(),
-                user.getLastname()
+                user.getLastname(),
+                user.getRole()
         );
     }
 }

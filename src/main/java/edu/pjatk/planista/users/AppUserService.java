@@ -2,6 +2,7 @@ package edu.pjatk.planista.users;
 
 import edu.pjatk.planista.auth.AppUser;
 import edu.pjatk.planista.auth.AppUserMapper;
+import edu.pjatk.planista.auth.UserRole;
 import edu.pjatk.planista.auth.dto.UserDto;
 import edu.pjatk.planista.company.models.Company;
 import edu.pjatk.planista.users.dto.UserRequest;
@@ -44,6 +45,7 @@ public class AppUserService {
         if (req.password() != null && !req.password().isBlank()) {
             entity.setPassword(passwordEncoder.encode(req.password()));
         }
+        entity.setRole(req.role() != null ? req.role() : UserRole.PRODUCTION);
         AppUser saved = appUserRepository.save(entity);
         return mapper.toResponse(saved);
     }
@@ -55,6 +57,7 @@ public class AppUserService {
         if (req.password() != null && !req.password().isBlank()) {
             entity.setPassword(passwordEncoder.encode(req.password()));
         }
+        entity.setRole(req.role());
         return mapper.toResponse(entity);
     }
 
