@@ -13,7 +13,8 @@ public abstract class AppUserMapper {
     @Mappings({
             @Mapping(target = "password", ignore = true),
             @Mapping(target = "enabled", ignore = true),
-            @Mapping(target = "authorities", ignore = true)
+            @Mapping(target = "authorities", ignore = true),
+            @Mapping(target = "role", ignore = true)
     })
     public abstract AppUser toEntity(UserDto req);
 
@@ -21,7 +22,8 @@ public abstract class AppUserMapper {
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "password", ignore = true),
             @Mapping(target = "enabled", ignore = true),
-            @Mapping(target = "authorities", ignore = true)
+            @Mapping(target = "authorities", ignore = true),
+            @Mapping(target = "role", ignore = true)
     })
     public abstract AppUser toEntity(UserRequest req);
 
@@ -31,7 +33,8 @@ public abstract class AppUserMapper {
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "password", ignore = true),
             @Mapping(target = "enabled", ignore = true),
-            @Mapping(target = "authorities", ignore = true)
+            @Mapping(target = "authorities", ignore = true),
+            @Mapping(target = "role", ignore = true)
     })
     public abstract void updateEntity(@MappingTarget AppUser target, UserRequest req);
 }
