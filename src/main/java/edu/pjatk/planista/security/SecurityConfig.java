@@ -29,7 +29,8 @@ public class SecurityConfig {
     public static final String[] PUBLIC = {
             "/api/v1/auth/login",
             "/api/v1/auth/refresh",
-            "/api/v1/auth/logout"
+            "/api/v1/auth/logout",
+            "/api/v1/auth/me",
     };
 
     @Bean
@@ -42,18 +43,6 @@ public class SecurityConfig {
                         .requestMatchers(SecurityConfig.PUBLIC).permitAll()
                         .requestMatchers("/api/v1/**").authenticated()
                         .anyRequest().denyAll()
-                )
-                .exceptionHandling(c -> c
-                        .authenticationEntryPoint((req, res, e) -> {
-                            res.setStatus(401);
-                            res.setContentType("application/json");
-                            res.getWriter().write("{\"title\":\"Unauthorized\"}");
-                        })
-                        .accessDeniedHandler((req, res, e) -> {
-                            res.setStatus(403);
-                            res.setContentType("application/json");
-                            res.getWriter().write("{\"title\":\"Forbidden\"}");
-                        })
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
