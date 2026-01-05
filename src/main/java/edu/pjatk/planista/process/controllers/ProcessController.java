@@ -1,7 +1,9 @@
 package edu.pjatk.planista.process.controllers;
 
+import edu.pjatk.planista.execution.dto.ExecutionResponse;
 import edu.pjatk.planista.process.dto.ProcessRequest;
 import edu.pjatk.planista.process.dto.ProcessResponse;
+import edu.pjatk.planista.process.services.ProcessExecutionService;
 import edu.pjatk.planista.process.services.ProcessService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ProcessController {
     private final ProcessService service;
+    private final ProcessExecutionService processExecutionService;
 
     @GetMapping("/{id}")
     public ResponseEntity<ProcessResponse> get(@PathVariable Long id) {
@@ -25,6 +28,14 @@ public class ProcessController {
     @GetMapping
     public ResponseEntity<Page<ProcessResponse>> list(@PageableDefault(size = 20, sort = "id") Pageable pageable) {
         return ResponseEntity.ok(service.list(pageable));
+    }
+
+    @GetMapping("/{processId}/orders")
+    public Page<ExecutionResponse> getProcessExecutions(
+            @PathVariable Long processId,
+            Pageable pageable
+    ) {
+        return processExecutionService.getProcesses(processId, pageable);
     }
 
     @PostMapping

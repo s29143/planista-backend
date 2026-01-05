@@ -40,7 +40,7 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}/proccesses")
-    public Page<ProcessResponse> getCompanyOrders(
+    public Page<ProcessResponse> getOrderProcesses(
             @PathVariable Long orderId,
             Pageable pageable
     ) {

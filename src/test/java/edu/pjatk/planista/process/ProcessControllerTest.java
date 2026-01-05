@@ -5,6 +5,7 @@ import edu.pjatk.planista.order.dto.OrderResponse;
 import edu.pjatk.planista.process.controllers.ProcessController;
 import edu.pjatk.planista.process.dto.ProcessRequest;
 import edu.pjatk.planista.process.dto.ProcessResponse;
+import edu.pjatk.planista.process.services.ProcessExecutionService;
 import edu.pjatk.planista.process.services.ProcessService;
 import edu.pjatk.planista.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.security.JwtService;
@@ -48,6 +49,9 @@ class ProcessControllerTest {
 
     @MockitoBean
     ProcessService service;
+
+    @MockitoBean
+    ProcessExecutionService executionService;
 
     private ProcessResponse sampleResponse() {
         OrderResponse order = new OrderResponse(
