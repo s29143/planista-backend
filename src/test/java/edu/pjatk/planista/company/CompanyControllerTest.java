@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.pjatk.planista.company.controllers.CompanyController;
 import edu.pjatk.planista.company.dto.CompanyRequest;
 import edu.pjatk.planista.company.dto.CompanyResponse;
+import edu.pjatk.planista.company.services.CompanyActionService;
+import edu.pjatk.planista.company.services.CompanyContactService;
+import edu.pjatk.planista.company.services.CompanyOrderService;
 import edu.pjatk.planista.company.services.CompanyService;
 import edu.pjatk.planista.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.security.JwtService;
@@ -45,6 +48,15 @@ class CompanyControllerTest {
 
     @MockitoBean
     CompanyService service;
+
+    @MockitoBean
+    CompanyActionService actionService;
+
+    @MockitoBean
+    CompanyOrderService orderService;
+
+    @MockitoBean
+    CompanyContactService contactService;
 
     private CompanyResponse sampleResponse() {
         return new CompanyResponse(

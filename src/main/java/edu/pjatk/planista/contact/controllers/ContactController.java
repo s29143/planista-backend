@@ -1,9 +1,13 @@
 package edu.pjatk.planista.contact.controllers;
 
+import edu.pjatk.planista.action.dto.ActionResponse;
 import edu.pjatk.planista.contact.dto.ContactFilter;
 import edu.pjatk.planista.contact.dto.ContactRequest;
 import edu.pjatk.planista.contact.dto.ContactResponse;
+import edu.pjatk.planista.contact.services.ContactActionService;
+import edu.pjatk.planista.contact.services.ContactOrderService;
 import edu.pjatk.planista.contact.services.ContactService;
+import edu.pjatk.planista.order.dto.OrderResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +25,8 @@ import java.util.List;
 @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
 public class ContactController {
     private final ContactService service;
+    private final ContactActionService contactActionService;
+    private final ContactOrderService contactOrderService;
 
     @GetMapping("/{id}")
     public ResponseEntity<ContactResponse> get(@PathVariable Long id) {
@@ -36,6 +42,22 @@ public class ContactController {
                                                       ) {
         ContactFilter filter = new ContactFilter(userId, company, statusId, search);
         return ResponseEntity.ok(service.list(pageable, filter));
+    }
+
+    @GetMapping("/{contactId}/actions")
+    public Page<ActionResponse> getContactActions(
+            @PathVariable Long contactId,
+            Pageable pageable
+    ) {
+        return contactActionService.getActions(contactId, pageable);
+    }
+
+    @GetMapping("/{contactId}/orders")
+    public Page<OrderResponse> getContactOrders(
+            @PathVariable Long contactId,
+            Pageable pageable
+    ) {
+        return contactOrderService.getOrders(contactId, pageable);
     }
 
     @PostMapping

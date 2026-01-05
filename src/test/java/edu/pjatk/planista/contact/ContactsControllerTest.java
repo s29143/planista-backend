@@ -6,6 +6,8 @@ import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.contact.controllers.ContactController;
 import edu.pjatk.planista.contact.dto.ContactRequest;
 import edu.pjatk.planista.contact.dto.ContactResponse;
+import edu.pjatk.planista.contact.services.ContactActionService;
+import edu.pjatk.planista.contact.services.ContactOrderService;
 import edu.pjatk.planista.contact.services.ContactService;
 import edu.pjatk.planista.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.security.JwtService;
@@ -47,6 +49,12 @@ class ContactsControllerTest {
 
     @MockitoBean
     ContactService service;
+
+    @MockitoBean
+    ContactActionService actionService;
+
+    @MockitoBean
+    ContactOrderService orderService;
 
     private ContactResponse sampleResponse() {
         CompanyResponse company = new CompanyResponse(

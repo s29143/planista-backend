@@ -1,9 +1,15 @@
 package edu.pjatk.planista.company.controllers;
 
+import edu.pjatk.planista.action.dto.ActionResponse;
 import edu.pjatk.planista.company.dto.CompanyFilter;
 import edu.pjatk.planista.company.dto.CompanyRequest;
 import edu.pjatk.planista.company.dto.CompanyResponse;
+import edu.pjatk.planista.company.services.CompanyActionService;
+import edu.pjatk.planista.company.services.CompanyContactService;
+import edu.pjatk.planista.company.services.CompanyOrderService;
 import edu.pjatk.planista.company.services.CompanyService;
+import edu.pjatk.planista.contact.dto.ContactResponse;
+import edu.pjatk.planista.order.dto.OrderResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,7 +27,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyController {
     private final CompanyService service;
-
+    private final CompanyContactService companyContactService;
+    private final CompanyActionService companyActionService;
+    private final CompanyOrderService companyOrderService;
     @GetMapping("/{id}")
     public ResponseEntity<CompanyResponse> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.get(id));
@@ -43,6 +51,31 @@ public class CompanyController {
         CompanyResponse created = service.create(request);
         return ResponseEntity.ok(created);
     }
+
+    @GetMapping("/{companyId}/contacts")
+    public Page<ContactResponse> getCompanyContacts(
+            @PathVariable Long companyId,
+            Pageable pageable
+    ) {
+        return companyContactService.getContacts(companyId, pageable);
+    }
+
+    @GetMapping("/{companyId}/actions")
+    public Page<ActionResponse> getCompanyActions(
+            @PathVariable Long companyId,
+            Pageable pageable
+    ) {
+        return companyActionService.getActions(companyId, pageable);
+    }
+
+    @GetMapping("/{companyId}/orders")
+    public Page<OrderResponse> getCompanyOrders(
+            @PathVariable Long companyId,
+            Pageable pageable
+    ) {
+        return companyOrderService.getOrders(companyId, pageable);
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<CompanyResponse> update(@PathVariable Long id,
