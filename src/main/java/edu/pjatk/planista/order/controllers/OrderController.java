@@ -1,9 +1,11 @@
 package edu.pjatk.planista.order.controllers;
 
-import edu.pjatk.planista.order.dto.OrderRequest;
-import edu.pjatk.planista.order.services.OrderService;
 import edu.pjatk.planista.order.dto.OrderFilter;
+import edu.pjatk.planista.order.dto.OrderRequest;
 import edu.pjatk.planista.order.dto.OrderResponse;
+import edu.pjatk.planista.order.services.OrderProcessService;
+import edu.pjatk.planista.order.services.OrderService;
+import edu.pjatk.planista.process.dto.ProcessResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService service;
+    private final OrderProcessService orderProcessService;
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> get(@PathVariable Long id) {
@@ -34,6 +37,14 @@ public class OrderController {
                                                       ) {
         OrderFilter filter = new OrderFilter(statusId, product, company, search);
         return ResponseEntity.ok(service.list(pageable, filter));
+    }
+
+    @GetMapping("/{orderId}/proccesses")
+    public Page<ProcessResponse> getCompanyOrders(
+            @PathVariable Long orderId,
+            Pageable pageable
+    ) {
+        return orderProcessService.getProcesses(orderId, pageable);
     }
 
     @PostMapping

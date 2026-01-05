@@ -6,6 +6,7 @@ import edu.pjatk.planista.contact.dto.ContactResponse;
 import edu.pjatk.planista.order.controllers.OrderController;
 import edu.pjatk.planista.order.dto.OrderRequest;
 import edu.pjatk.planista.order.dto.OrderResponse;
+import edu.pjatk.planista.order.services.OrderProcessService;
 import edu.pjatk.planista.order.services.OrderService;
 import edu.pjatk.planista.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.security.JwtService;
@@ -48,6 +49,9 @@ class OrdersControllerTest {
 
     @MockitoBean
     OrderService service;
+
+    @MockitoBean
+    OrderProcessService processService;
 
     private OrderResponse sampleResponse() {
         CompanyResponse company = new CompanyResponse(
