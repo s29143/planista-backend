@@ -8,8 +8,8 @@ import java.time.Instant;
 
 public record ProcessResponse(
         Long id,
-        Integer quantity,
-        Duration plannedTime,
+        Long quantity,
+        Long plannedTimeSeconds,
         Instant createdAt,
         Instant updatedAt,
         OrderResponse order,

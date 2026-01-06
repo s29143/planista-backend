@@ -39,8 +39,8 @@ class ExecutionServiceTest {
     ProcessResponse processResponse() {
         return new ProcessResponse(
                 10L,
-                25,
-                Duration.ZERO,
+                25L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 null,
@@ -54,8 +54,8 @@ class ExecutionServiceTest {
     void create_shouldMapAndSave_andReturnResponse() {
         //given
         var req = new ExecutionRequest(
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 1L
         );
         var process = processResponse();
@@ -65,8 +65,8 @@ class ExecutionServiceTest {
 
         ExecutionResponse response = new ExecutionResponse(
                 42L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 process
@@ -92,8 +92,8 @@ class ExecutionServiceTest {
         Long id = 10L;
         var process = processResponse();
         var req = new ExecutionRequest(
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 1L
         );
 
@@ -102,8 +102,8 @@ class ExecutionServiceTest {
 
         ExecutionResponse response = new ExecutionResponse(
                 10L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 process
@@ -127,8 +127,8 @@ class ExecutionServiceTest {
         // given
         Long id = 999L;
         var req = new ExecutionRequest(
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 1L
         );
         given(executionRepository.findById(id)).willReturn(Optional.empty());
@@ -147,8 +147,8 @@ class ExecutionServiceTest {
         var process = processResponse();
         ExecutionResponse resp = new ExecutionResponse(
                 5L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 process
@@ -196,15 +196,15 @@ class ExecutionServiceTest {
 
         ExecutionResponse r1 = new ExecutionResponse(
                 1L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 process
         );
         ExecutionResponse r2 = new ExecutionResponse(2L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 process

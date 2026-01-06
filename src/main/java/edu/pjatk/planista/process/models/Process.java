@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Duration;
-
 @Entity
 @Getter
 @Setter
@@ -18,9 +16,10 @@ public class Process extends Auditable {
     private Long id;
 
     @Column(nullable = false)
-    private Integer quantity;
+    private Long quantity;
 
-    private Duration plannedTime;
+    @Column(nullable = false)
+    private Long plannedTimeSeconds;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)

@@ -32,6 +32,7 @@ public abstract class ProcessMapper {
     @Autowired
     protected OrderMapper orderMapper;
 
+
     @Mappings({
             @Mapping(target = "status", source = "status", qualifiedByName = "statusToDict"),
             @Mapping(target = "technology", source = "technology", qualifiedByName = "technologyToDict"),

@@ -56,7 +56,7 @@ class ProcessControllerTest {
     private ProcessResponse sampleResponse() {
         OrderResponse order = new OrderResponse(
                 10L,"N", LocalDate.now(), LocalDate.now(),
-                25,
+                25L,
                 Instant.now(),
                 Instant.now(),
                 new DictItemDto(1L, "test"),
@@ -67,8 +67,8 @@ class ProcessControllerTest {
 
         return new ProcessResponse(
                 1L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 order,
@@ -107,8 +107,8 @@ class ProcessControllerTest {
     @Test
     void createReturnsCreatedProcess() throws Exception {
         var request = new ProcessRequest(
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 1L,
                 10L,
                 20L,
@@ -129,8 +129,8 @@ class ProcessControllerTest {
     @Test
     void updateReturnsUpdatedProcess() throws Exception {
         var request = new ProcessRequest(
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 1L,
                 10L,
                 20L,
@@ -139,8 +139,8 @@ class ProcessControllerTest {
 
         var updated = new ProcessResponse(
                 1L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 null,

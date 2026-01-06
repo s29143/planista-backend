@@ -50,8 +50,8 @@ class ExecutionControllerTest {
     private ExecutionResponse sampleResponse() {
         ProcessResponse process = new ProcessResponse(
                 10L,
-                25,
-                Duration.ZERO,
+                25L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 null,
@@ -62,8 +62,8 @@ class ExecutionControllerTest {
 
         return new ExecutionResponse(
                 1L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 process
@@ -99,8 +99,8 @@ class ExecutionControllerTest {
     @Test
     void createReturnsCreatedExecution() throws Exception {
         var request = new ExecutionRequest(
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 1L
         );
         var response = sampleResponse();
@@ -118,8 +118,8 @@ class ExecutionControllerTest {
     @Test
     void updateReturnsUpdatedExecution() throws Exception {
         var request = new ExecutionRequest(
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 1L
         );
 

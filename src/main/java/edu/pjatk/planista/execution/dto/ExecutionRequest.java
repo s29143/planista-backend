@@ -6,9 +6,11 @@ import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
 
 public record ExecutionRequest(
-        @Min(value = 0, message = "validation.min")
-        Integer quantity,
-        Duration time,
+        @Min(value = 1, message = "validation.min")
+        Long quantity,
+        @NotNull
+        @Min(value = 1, message = "validation.min")
+        Long timeInSeconds,
         @NotNull(message = "validation.required")
         Long processId
 ) {

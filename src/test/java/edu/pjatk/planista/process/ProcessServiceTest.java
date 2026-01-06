@@ -41,7 +41,7 @@ class ProcessServiceTest {
     OrderResponse orderResponse() {
         return new OrderResponse(
                 10L,"N", LocalDate.now(), LocalDate.now(),
-                25,
+                25L,
                 Instant.now(),
                 Instant.now(),
                 new DictItemDto(1L, "test"),
@@ -55,8 +55,8 @@ class ProcessServiceTest {
     void create_shouldMapAndSave_andReturnResponse() {
         //given
         var req = new ProcessRequest(
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 1L,
                 10L,
                 20L,
@@ -69,8 +69,8 @@ class ProcessServiceTest {
 
         ProcessResponse response = new ProcessResponse(
                 42L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 order,
@@ -99,8 +99,8 @@ class ProcessServiceTest {
         Long id = 10L;
         var order = orderResponse();
         var req = new ProcessRequest(
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 1L,
                 10L,
                 20L,
@@ -112,8 +112,8 @@ class ProcessServiceTest {
 
         ProcessResponse response = new ProcessResponse(
                 10L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 order,
@@ -140,8 +140,8 @@ class ProcessServiceTest {
         // given
         Long id = 999L;
         var req = new ProcessRequest(
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 1L,
                 10L,
                 20L,
@@ -163,8 +163,8 @@ class ProcessServiceTest {
         var order = orderResponse();
         ProcessResponse resp = new ProcessResponse(
                 5L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 order,
@@ -215,8 +215,8 @@ class ProcessServiceTest {
 
         ProcessResponse r1 = new ProcessResponse(
                 1L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 order,
@@ -225,8 +225,8 @@ class ProcessServiceTest {
                 new DictItemDto(30L, "test")
         );
         ProcessResponse r2 = new ProcessResponse(2L,
-                20,
-                Duration.ZERO,
+                20L,
+                1L,
                 Instant.now(),
                 Instant.now(),
                 order,

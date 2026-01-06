@@ -7,8 +7,8 @@ import java.time.Instant;
 
 public record ExecutionResponse(
         Long id,
-        Integer quantity,
-        Duration time,
+        Long quantity,
+        Long timeInSeconds,
         Instant createdAt,
         Instant updatedAt,
         ProcessResponse process

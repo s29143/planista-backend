@@ -7,8 +7,10 @@ import java.time.Duration;
 
 public record ProcessRequest(
         @Min(value = 0, message = "validation.min")
-        Integer quantity,
-        Duration plannedTime,
+        Long quantity,
+        @NotNull
+        @Min(value = 1, message = "validation.min")
+        Long plannedTimeSeconds,
         @NotNull(message = "validation.required")
         Long orderId,
         Long workstationId,

@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Duration;
-
 @Entity
 @Getter
 @Setter
@@ -18,9 +16,9 @@ public class Execution extends Auditable {
     private Long id;
 
     @Column(nullable = false)
-    private Integer quantity;
+    private Long quantity;
 
-    private Duration time;
+    private Long timeInSeconds;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "process_id")
