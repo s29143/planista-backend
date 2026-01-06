@@ -2,7 +2,7 @@ package edu.pjatk.planista.action.models;
 
 import edu.pjatk.planista.shared.models.AppUser;
 import edu.pjatk.planista.company.models.Company;
-import edu.pjatk.planista.config.Auditable;
+import edu.pjatk.planista.config.common.Auditable;
 import edu.pjatk.planista.contact.models.Contact;
 import jakarta.persistence.*;
 import lombok.Getter;

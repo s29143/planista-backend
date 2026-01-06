@@ -6,8 +6,8 @@ import edu.pjatk.planista.execution.dto.ExecutionRequest;
 import edu.pjatk.planista.execution.dto.ExecutionResponse;
 import edu.pjatk.planista.execution.services.ExecutionService;
 import edu.pjatk.planista.process.dto.ProcessResponse;
-import edu.pjatk.planista.security.JwtAuthenticationFilter;
-import edu.pjatk.planista.security.JwtService;
+import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 

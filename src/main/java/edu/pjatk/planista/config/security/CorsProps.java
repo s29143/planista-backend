@@ -1,4 +1,4 @@
-package edu.pjatk.planista.security;
+package edu.pjatk.planista.config.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

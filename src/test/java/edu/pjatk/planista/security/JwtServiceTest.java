@@ -1,5 +1,6 @@
 package edu.pjatk.planista.security;
 
+import edu.pjatk.planista.config.security.JwtService;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;

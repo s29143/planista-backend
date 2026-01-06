@@ -1,4 +1,4 @@
-package edu.pjatk.planista.config;
+package edu.pjatk.planista.config.common;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.Type;

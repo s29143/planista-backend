@@ -1,7 +1,6 @@
 package edu.pjatk.planista.contact;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pjatk.planista.company.controllers.CompanyController;
 import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.contact.controllers.ContactController;
 import edu.pjatk.planista.contact.dto.ContactRequest;
@@ -9,8 +8,8 @@ import edu.pjatk.planista.contact.dto.ContactResponse;
 import edu.pjatk.planista.contact.services.ContactActionService;
 import edu.pjatk.planista.contact.services.ContactOrderService;
 import edu.pjatk.planista.contact.services.ContactService;
-import edu.pjatk.planista.security.JwtAuthenticationFilter;
-import edu.pjatk.planista.security.JwtService;
+import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

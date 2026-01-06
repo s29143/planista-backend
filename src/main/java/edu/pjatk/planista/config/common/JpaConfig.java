@@ -1,4 +1,4 @@
-package edu.pjatk.planista.config;
+package edu.pjatk.planista.config.common;
 
 import edu.pjatk.planista.shared.models.AppUser;
 import org.springframework.context.annotation.Bean;

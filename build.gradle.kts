@@ -55,6 +55,9 @@ dependencies {
     testImplementation("org.testcontainers:postgresql")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+	implementation("com.bucket4j:bucket4j-core:8.10.1")
+	implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
 }
 
 tasks.withType<Test> {
