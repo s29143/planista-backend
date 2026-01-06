@@ -1,6 +1,6 @@
 package edu.pjatk.planista.contact.mappers;
 
-import edu.pjatk.planista.auth.AppUser;
+import edu.pjatk.planista.shared.models.AppUser;
 import edu.pjatk.planista.contact.models.ContactStatus;
 import edu.pjatk.planista.shared.dto.DictItemDto;
 import org.mapstruct.Named;

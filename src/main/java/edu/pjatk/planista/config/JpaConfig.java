@@ -1,6 +1,6 @@
 package edu.pjatk.planista.config;
 
-import edu.pjatk.planista.auth.AppUser;
+import edu.pjatk.planista.shared.models.AppUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;

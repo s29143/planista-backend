@@ -1,6 +1,6 @@
 package edu.pjatk.planista.config;
 
-import edu.pjatk.planista.auth.AppUser;
+import edu.pjatk.planista.shared.models.AppUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

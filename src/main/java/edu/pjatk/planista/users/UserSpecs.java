@@ -1,12 +1,9 @@
 package edu.pjatk.planista.users;
 
-import edu.pjatk.planista.auth.AppUser;
-import edu.pjatk.planista.company.models.Company;
+import edu.pjatk.planista.shared.models.AppUser;
 import jakarta.persistence.criteria.Expression;
-import jakarta.persistence.criteria.JoinType;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.Collection;
 import java.util.List;
 
 public final class UserSpecs {

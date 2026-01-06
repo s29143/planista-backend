@@ -1,6 +1,6 @@
 package edu.pjatk.planista.company.mappers;
 
-import edu.pjatk.planista.auth.AppUser;
+import edu.pjatk.planista.shared.models.AppUser;
 import edu.pjatk.planista.company.models.CompanyAcquired;
 import edu.pjatk.planista.company.models.CompanyStatus;
 import edu.pjatk.planista.shared.models.Country;

@@ -7,6 +7,8 @@ import edu.pjatk.planista.security.Jti;
 import edu.pjatk.planista.security.JwtService;
 import edu.pjatk.planista.security.RefreshToken;
 import edu.pjatk.planista.security.RefreshTokenRepository;
+import edu.pjatk.planista.shared.models.AppUser;
+import edu.pjatk.planista.shared.mappers.AppUserMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

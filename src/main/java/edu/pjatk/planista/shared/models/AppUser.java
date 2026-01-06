@@ -1,5 +1,6 @@
-package edu.pjatk.planista.auth;
+package edu.pjatk.planista.shared.models;
 
+import edu.pjatk.planista.auth.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

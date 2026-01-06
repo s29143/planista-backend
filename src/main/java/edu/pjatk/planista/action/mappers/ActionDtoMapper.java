@@ -1,6 +1,6 @@
 package edu.pjatk.planista.action.mappers;
 
-import edu.pjatk.planista.auth.AppUser;
+import edu.pjatk.planista.shared.models.AppUser;
 import edu.pjatk.planista.action.models.ActionType;
 import edu.pjatk.planista.shared.dto.DictItemDto;
 import org.mapstruct.Named;
