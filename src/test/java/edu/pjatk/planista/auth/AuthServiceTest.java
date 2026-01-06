@@ -2,7 +2,7 @@ package edu.pjatk.planista.auth;
 
 import edu.pjatk.planista.auth.dto.AuthResponse;
 import edu.pjatk.planista.auth.dto.LoginRequest;
-import edu.pjatk.planista.auth.dto.UserDto;
+import edu.pjatk.planista.shared.dto.UserDto;
 import edu.pjatk.planista.config.security.Jti;
 import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.config.security.RefreshToken;

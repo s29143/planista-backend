@@ -1,6 +1,6 @@
 package edu.pjatk.planista.users;
 
-import edu.pjatk.planista.auth.dto.UserDto;
+import edu.pjatk.planista.shared.dto.UserDto;
 import edu.pjatk.planista.users.dto.UserRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

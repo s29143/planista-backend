@@ -1,6 +1,6 @@
 package edu.pjatk.planista.shared.mappers;
 
-import edu.pjatk.planista.auth.dto.UserDto;
+import edu.pjatk.planista.shared.dto.UserDto;
 import edu.pjatk.planista.shared.models.AppUser;
 import edu.pjatk.planista.users.dto.UserRequest;
 import org.mapstruct.*;

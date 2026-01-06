@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.pjatk.planista.auth.dto.AuthResponse;
 import edu.pjatk.planista.auth.dto.LoginRequest;
 import edu.pjatk.planista.auth.dto.RefreshRequest;
-import edu.pjatk.planista.auth.dto.UserDto;
+import edu.pjatk.planista.shared.dto.UserDto;
 import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import jakarta.servlet.http.Cookie;

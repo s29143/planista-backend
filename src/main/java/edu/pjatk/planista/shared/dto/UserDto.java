@@ -1,4 +1,4 @@
-package edu.pjatk.planista.auth.dto;
+package edu.pjatk.planista.shared.dto;
 
 import edu.pjatk.planista.auth.UserRole;
 

@@ -3,7 +3,7 @@ package edu.pjatk.planista.users;
 import edu.pjatk.planista.shared.models.AppUser;
 import edu.pjatk.planista.shared.mappers.AppUserMapper;
 import edu.pjatk.planista.auth.UserRole;
-import edu.pjatk.planista.auth.dto.UserDto;
+import edu.pjatk.planista.shared.dto.UserDto;
 import edu.pjatk.planista.users.dto.UserRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
