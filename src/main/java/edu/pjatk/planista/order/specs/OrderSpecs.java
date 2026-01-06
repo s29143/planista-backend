@@ -17,12 +17,12 @@ public final class OrderSpecs {
         final List<String> tokens = List.of(product.trim().toLowerCase().split("\\s+"));
 
         return (root, cq, cb) -> {
-            Expression<String> shortName = cb.lower(root.get("product"));
+            Expression<String> productName = cb.lower(root.get("product"));
 
             return tokens.stream()
                     .map(tok -> {
                         String like = "%" + tok + "%";
-                        return cb.like(shortName, like);
+                        return cb.like(productName, like);
                     })
                     .reduce(cb::and)
                     .orElseGet(cb::conjunction);
@@ -40,8 +40,8 @@ public final class OrderSpecs {
         final List<String> tokens = List.of(search.trim().toLowerCase().split("\\s+"));
 
         return (root, cq, cb) -> {
-            Expression<String> shortName = cb.lower(root.get("shortName"));
-            Expression<String> fullName  = cb.lower(root.get("fullName"));
+            Expression<String> shortName = cb.lower(root.join("company").get("shortName"));
+            Expression<String> fullName  = cb.lower(root.join("company").get("fullName"));
 
             return tokens.stream()
                     .map(tok -> {
@@ -62,17 +62,13 @@ public final class OrderSpecs {
         final List<String> tokens = List.of(search.trim().toLowerCase().split("\\s+"));
 
         return (root, cq, cb) -> {
-            Expression<String> firstName = cb.lower(root.get("firstName"));
-            Expression<String> lastName  = cb.lower(root.get("lastName"));
-            Expression<String> email  = root.get("email");
+            Expression<String> product  = cb.lower(root.get("product"));
 
             return tokens.stream()
                     .map(tok -> {
                         String like = "%" + tok + "%";
                         return cb.or(
-                                cb.like(firstName, like),
-                                cb.like(lastName, like),
-                                cb.like(email, like)
+                                cb.like(product, like)
                         );
                     })
                     .reduce(cb::and)

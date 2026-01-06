@@ -35,7 +35,7 @@ public class OrderController {
                                                      @RequestParam(required = false) String company,
                                                      @RequestParam(required = false) String search
                                                       ) {
-        OrderFilter filter = new OrderFilter(statusId, product, company, search);
+        OrderFilter filter = new OrderFilter(statusId, company, product, search);
         return ResponseEntity.ok(service.list(pageable, filter));
     }
 
