@@ -39,7 +39,7 @@ public class OrderController {
         return ResponseEntity.ok(service.list(pageable, filter));
     }
 
-    @GetMapping("/{orderId}/proccesses")
+    @GetMapping("/{orderId}/processes")
     public Page<ProcessResponse> getOrderProcesses(
             @PathVariable Long orderId,
             Pageable pageable
