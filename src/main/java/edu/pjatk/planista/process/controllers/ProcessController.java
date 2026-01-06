@@ -11,11 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/processes")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','PLANNER', 'PRODUCTION')")
 public class ProcessController {
     private final ProcessService service;
     private final ProcessExecutionService processExecutionService;
@@ -33,7 +35,7 @@ public class ProcessController {
     @GetMapping("/{processId}/orders")
     public Page<ExecutionResponse> getProcessExecutions(
             @PathVariable Long processId,
-            Pageable pageable
+            @PageableDefault(size = 20, sort = "id") Pageable pageable
     ) {
         return processExecutionService.getProcesses(processId, pageable);
     }

@@ -47,7 +47,7 @@ public class ContactController {
     @GetMapping("/{contactId}/actions")
     public Page<ActionResponse> getContactActions(
             @PathVariable Long contactId,
-            Pageable pageable
+            @PageableDefault(size = 20, sort = "id") Pageable pageable
     ) {
         return contactActionService.getActions(contactId, pageable);
     }
@@ -55,7 +55,7 @@ public class ContactController {
     @GetMapping("/{contactId}/orders")
     public Page<OrderResponse> getContactOrders(
             @PathVariable Long contactId,
-            Pageable pageable
+            @PageableDefault(size = 20, sort = "id") Pageable pageable
     ) {
         return contactOrderService.getOrders(contactId, pageable);
     }
