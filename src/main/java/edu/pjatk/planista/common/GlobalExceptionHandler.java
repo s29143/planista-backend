@@ -1,5 +1,6 @@
 package edu.pjatk.planista.common;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
@@ -211,6 +212,19 @@ public class GlobalExceptionHandler {
                 locale
         ));
 
+        return pd;
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ProblemDetail handleEntityNotFound(EntityNotFoundException ex, Locale locale) {
+        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        pd.setTitle(messageSource.getMessage(
+                "error.notFound",
+                null,
+                "Resource not found",
+                locale
+        ));
+        pd.setDetail(ex.getMessage());
         return pd;
     }
 
