@@ -1,9 +1,10 @@
 package edu.pjatk.planista.process.services;
 
-import edu.pjatk.planista.execution.dto.ExecutionResponse;
+import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import edu.pjatk.planista.execution.mappers.ExecutionMapper;
 import edu.pjatk.planista.execution.repositories.ExecutionRepository;
 import edu.pjatk.planista.process.repositories.ProcessRepository;
+import edu.pjatk.planista.shared.kernel.ports.ExecutionQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProcessExecutionService {
     private final ProcessRepository processRepository;
-    private final ExecutionRepository executionRepository;
-    private final ExecutionMapper mapper;
+    private final ExecutionQueryPort executionQueryPort;
 
     @Transactional(readOnly = true)
     public Page<ExecutionResponse> getProcesses(Long processId, Pageable pageable) {
@@ -25,8 +25,6 @@ public class ProcessExecutionService {
             throw new EntityNotFoundException("Process " + processId + " not found");
         }
 
-        return executionRepository
-                .findByProcessId(processId, pageable)
-                .map(mapper::toResponse);
+        return executionQueryPort.findByProcessId(processId, pageable);
     }
 }

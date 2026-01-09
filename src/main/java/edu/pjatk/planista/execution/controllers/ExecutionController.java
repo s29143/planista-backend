@@ -1,7 +1,7 @@
 package edu.pjatk.planista.execution.controllers;
 
 import edu.pjatk.planista.execution.dto.ExecutionRequest;
-import edu.pjatk.planista.execution.dto.ExecutionResponse;
+import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import edu.pjatk.planista.execution.services.ExecutionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

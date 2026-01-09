@@ -1,6 +1,5 @@
 package edu.pjatk.planista.contact.dto;
 
-import edu.pjatk.planista.auth.dto.UserDto;
 import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.shared.dto.DictItemDto;
 

@@ -1,7 +1,7 @@
 package edu.pjatk.planista.execution.mappers;
 
 import edu.pjatk.planista.execution.dto.ExecutionRequest;
-import edu.pjatk.planista.execution.dto.ExecutionResponse;
+import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import edu.pjatk.planista.execution.models.Execution;
 import edu.pjatk.planista.process.mappers.ProcessMapper;
 import edu.pjatk.planista.process.repositories.ProcessRepository;

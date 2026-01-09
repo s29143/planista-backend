@@ -3,7 +3,7 @@ package edu.pjatk.planista.execution;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.pjatk.planista.execution.controllers.ExecutionController;
 import edu.pjatk.planista.execution.dto.ExecutionRequest;
-import edu.pjatk.planista.execution.dto.ExecutionResponse;
+import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import edu.pjatk.planista.execution.services.ExecutionService;
 import edu.pjatk.planista.process.dto.ProcessResponse;
 import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
