@@ -1,12 +1,12 @@
 package edu.pjatk.planista.contact.mappers;
 
-import edu.pjatk.planista.auth.AuthRepository;
 import edu.pjatk.planista.company.mappers.CompanyMapper;
 import edu.pjatk.planista.company.repositories.CompanyRepository;
 import edu.pjatk.planista.contact.dto.ContactRequest;
 import edu.pjatk.planista.contact.dto.ContactResponse;
 import edu.pjatk.planista.contact.models.Contact;
 import edu.pjatk.planista.contact.repositories.ContactStatusRepository;
+import edu.pjatk.planista.users.AppUserRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,21 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = { ContactClassDtoMappers.class, CompanyMapper.class }
 )
 public abstract class ContactMapper {
-    @Autowired
-    protected AuthRepository authRepository;
+    private AppUserRepository userRepository;
 
-    @Autowired
-    protected CompanyRepository companyRepository;
+    private CompanyRepository companyRepository;
 
-    @Autowired
-    protected ContactStatusRepository statusRepository;
-
-    @Autowired
-    protected CompanyMapper companyMapper;
+    private ContactStatusRepository statusRepository;
 
     @Mappings({
             @Mapping(target = "user", source = "user", qualifiedByName = "userToDict"),
-            @Mapping(target = "company", source = "company"),
             @Mapping(target = "status", source = "status", qualifiedByName = "statusToDict"),
     })
     public abstract ContactResponse toResponse(Contact entity);
@@ -51,7 +44,7 @@ public abstract class ContactMapper {
     @AfterMapping
     protected void afterToEntity(ContactRequest req, @MappingTarget Contact target) {
         if (req.userId() != null) {
-            target.setUser(authRepository.getReferenceById(req.userId()));
+            target.setUser(userRepository.getReferenceById(req.userId()));
         }
         if (req.companyId() != null) {
             target.setCompany(companyRepository.getReferenceById(req.companyId()));
@@ -61,7 +54,7 @@ public abstract class ContactMapper {
         }
     }
 
-    @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "user", ignore = true),
@@ -79,7 +72,7 @@ public abstract class ContactMapper {
     @AfterMapping
     protected void afterUpdateEntity(ContactRequest req, @MappingTarget Contact target) {
         if (req.userId() != null) {
-            target.setUser(authRepository.getReferenceById(req.userId()));
+            target.setUser(userRepository.getReferenceById(req.userId()));
         } else {
             target.setUser(null);
         }
@@ -93,5 +86,20 @@ public abstract class ContactMapper {
         } else {
             target.setStatus(null);
         }
+    }
+
+    @Autowired
+    public void setUserRepository(AppUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setCompanyRepository(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
+
+    @Autowired
+    public void setStatusRepository(ContactStatusRepository statusRepository) {
+        this.statusRepository = statusRepository;
     }
 }

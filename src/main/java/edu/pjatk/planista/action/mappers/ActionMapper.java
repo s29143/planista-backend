@@ -3,12 +3,12 @@ package edu.pjatk.planista.action.mappers;
 import edu.pjatk.planista.action.dto.ActionRequest;
 import edu.pjatk.planista.action.dto.ActionResponse;
 import edu.pjatk.planista.action.models.Action;
-import edu.pjatk.planista.auth.AuthRepository;
+import edu.pjatk.planista.action.repositories.ActionTypeRepository;
 import edu.pjatk.planista.company.mappers.CompanyMapper;
 import edu.pjatk.planista.company.repositories.CompanyRepository;
 import edu.pjatk.planista.contact.mappers.ContactMapper;
 import edu.pjatk.planista.contact.repositories.ContactRepository;
-import edu.pjatk.planista.action.repositories.ActionTypeRepository;
+import edu.pjatk.planista.users.AppUserRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,28 +17,16 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = { ActionDtoMapper.class, CompanyMapper.class, ContactMapper.class }
 )
 public abstract class ActionMapper {
-    @Autowired
-    protected AuthRepository authRepository;
+    private AppUserRepository userRepository;
 
-    @Autowired
-    protected CompanyRepository companyRepository;
+    private CompanyRepository companyRepository;
 
-    @Autowired
-    protected ContactRepository contactRepository;
+    private ContactRepository contactRepository;
 
-    @Autowired
-    protected ActionTypeRepository typeRepository;
-
-    @Autowired
-    protected CompanyMapper companyMapper;
-
-    @Autowired
-    protected ContactMapper contactMapper;
+    private ActionTypeRepository typeRepository;
 
     @Mappings({
             @Mapping(target = "user", source = "user", qualifiedByName = "userToDict"),
-            @Mapping(target = "company", source = "company"),
-            @Mapping(target = "contact", source = "contact"),
             @Mapping(target = "type", source = "type", qualifiedByName = "typeToDict"),
     })
     public abstract ActionResponse toResponse(Action entity);
@@ -61,7 +49,7 @@ public abstract class ActionMapper {
     @AfterMapping
     protected void afterToEntity(ActionRequest req, @MappingTarget Action target) {
         if (req.userId() != null) {
-            target.setUser(authRepository.getReferenceById(req.userId()));
+            target.setUser(userRepository.getReferenceById(req.userId()));
         }
         if (req.companyId() != null) {
             target.setCompany(companyRepository.getReferenceById(req.companyId()));
@@ -74,7 +62,7 @@ public abstract class ActionMapper {
         }
     }
 
-    @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "user", ignore = true),
@@ -93,7 +81,7 @@ public abstract class ActionMapper {
     @AfterMapping
     protected void afterUpdateEntity(ActionRequest req, @MappingTarget Action target) {
         if (req.userId() != null) {
-            target.setUser(authRepository.getReferenceById(req.userId()));
+            target.setUser(userRepository.getReferenceById(req.userId()));
         } else {
             target.setUser(null);
         }
@@ -112,5 +100,25 @@ public abstract class ActionMapper {
         } else {
             target.setType(null);
         }
+    }
+
+    @Autowired
+    public void setUserRepository(AppUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setCompanyRepository(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
+
+    @Autowired
+    public void setContactRepository(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
+
+    @Autowired
+    public void setTypeRepository(ActionTypeRepository typeRepository) {
+        this.typeRepository = typeRepository;
     }
 }

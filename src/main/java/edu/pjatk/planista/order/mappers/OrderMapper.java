@@ -17,28 +17,17 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = { OrderDtoMappers.class, CompanyMapper.class, ContactMapper.class }
 )
 public abstract class OrderMapper {
-    @Autowired
-    protected OrderStatusRepository statusRepository;
+    private OrderStatusRepository statusRepository;
 
-    @Autowired
-    protected CompanyRepository companyRepository;
+    private CompanyRepository companyRepository;
 
-    @Autowired
-    protected ContactRepository contactRepository;
+    private ContactRepository contactRepository;
 
-    @Autowired
-    protected OrderTypeRepository typeRepository;
+    private OrderTypeRepository typeRepository;
 
-    @Autowired
-    protected CompanyMapper companyMapper;
-
-    @Autowired
-    protected ContactMapper contactMapper;
 
     @Mappings({
             @Mapping(target = "status", source = "status", qualifiedByName = "statusToDict"),
-            @Mapping(target = "company", source = "company"),
-            @Mapping(target = "contact", source = "contact"),
             @Mapping(target = "type", source = "type", qualifiedByName = "typeToDict"),
     })
     public abstract OrderResponse toResponse(Order entity);
@@ -112,5 +101,25 @@ public abstract class OrderMapper {
         } else {
             target.setType(null);
         }
+    }
+
+    @Autowired
+    public void setStatusRepository(OrderStatusRepository statusRepository) {
+        this.statusRepository = statusRepository;
+    }
+
+    @Autowired
+    public void setCompanyRepository(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
+
+    @Autowired
+    public void setContactRepository(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
+
+    @Autowired
+    public void setTypeRepository(OrderTypeRepository typeRepository) {
+        this.typeRepository = typeRepository;
     }
 }

@@ -1,6 +1,5 @@
 package edu.pjatk.planista.company.mappers;
 
-import edu.pjatk.planista.auth.AuthRepository;
 import edu.pjatk.planista.company.dto.CompanyRequest;
 import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.company.models.Company;
@@ -8,6 +7,7 @@ import edu.pjatk.planista.company.repositories.CompanyAcquiredRepository;
 import edu.pjatk.planista.company.repositories.CompanyStatusRepository;
 import edu.pjatk.planista.shared.repositories.CountryRepository;
 import edu.pjatk.planista.shared.repositories.DistrictRepository;
+import edu.pjatk.planista.users.AppUserRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,20 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = { CompanyClassDtoMappers.class }
 )
 public abstract class CompanyMapper {
-    @Autowired
-    protected AuthRepository authRepository;
+    private AppUserRepository appUserRepository;
 
-    @Autowired
-    protected CompanyAcquiredRepository acquiredRepository;
+    private CompanyAcquiredRepository acquiredRepository;
 
-    @Autowired
-    protected DistrictRepository districtRepository;
+    private DistrictRepository districtRepository;
 
-    @Autowired
-    protected CountryRepository countryRepository;
+    private CountryRepository countryRepository;
 
-    @Autowired
-    protected CompanyStatusRepository statusRepository;
+    private CompanyStatusRepository statusRepository;
 
     @Mappings({
             @Mapping(target = "user", source = "user", qualifiedByName = "userToDict"),
@@ -37,8 +32,6 @@ public abstract class CompanyMapper {
             @Mapping(target = "district", source = "district", qualifiedByName = "districtToDict"),
             @Mapping(target = "country", source = "country", qualifiedByName = "countryToDict"),
             @Mapping(target = "status", source = "status", qualifiedByName = "statusToDict"),
-            @Mapping(target = "createdAt", source = "createdAt"),
-            @Mapping(target = "updatedAt", source = "updatedAt")
     })
     public abstract CompanyResponse toResponse(Company entity);
 
@@ -61,7 +54,7 @@ public abstract class CompanyMapper {
     @AfterMapping
     protected void afterToEntity(CompanyRequest req, @MappingTarget Company target) {
         if (req.userId() != null) {
-            target.setUser(authRepository.getReferenceById(req.userId()));
+            target.setUser(appUserRepository.getReferenceById(req.userId()));
         }
         if (req.acquiredId() != null) {
             target.setAcquired(acquiredRepository.getReferenceById(req.acquiredId()));
@@ -77,7 +70,7 @@ public abstract class CompanyMapper {
         }
     }
 
-    @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "user", ignore = true),
@@ -97,7 +90,7 @@ public abstract class CompanyMapper {
     @AfterMapping
     protected void afterUpdateEntity(CompanyRequest req, @MappingTarget Company target) {
         if (req.userId() != null) {
-            target.setUser(authRepository.getReferenceById(req.userId()));
+            target.setUser(appUserRepository.getReferenceById(req.userId()));
         } else {
             target.setUser(null);
         }
@@ -121,5 +114,30 @@ public abstract class CompanyMapper {
         } else {
             target.setStatus(null);
         }
+    }
+
+    @Autowired
+    public void setAppUserRepository(AppUserRepository appUserRepository) {
+        this.appUserRepository = appUserRepository;
+    }
+
+    @Autowired
+    public void setAcquiredRepository(CompanyAcquiredRepository acquiredRepository) {
+        this.acquiredRepository = acquiredRepository;
+    }
+
+    @Autowired
+    public void setDistrictRepository(DistrictRepository districtRepository) {
+        this.districtRepository = districtRepository;
+    }
+
+    @Autowired
+    public void setCountryRepository(CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
+    }
+
+    @Autowired
+    public void setStatusRepository(CompanyStatusRepository statusRepository) {
+        this.statusRepository = statusRepository;
     }
 }

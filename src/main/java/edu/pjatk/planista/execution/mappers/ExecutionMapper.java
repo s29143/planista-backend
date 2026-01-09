@@ -13,16 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = { ProcessMapper.class }
 )
 public abstract class ExecutionMapper {
+    private ProcessRepository processRepository;
 
-    @Autowired
-    protected ProcessMapper processMapper;
-
-    @Autowired
-    protected ProcessRepository processRepository;
-
-    @Mappings({
-            @Mapping(target = "process", source = "process"),
-    })
     public abstract ExecutionResponse toResponse(Execution entity);
 
     @Mappings({
@@ -44,7 +36,7 @@ public abstract class ExecutionMapper {
         }
     }
 
-    @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "process", ignore = true),
@@ -64,5 +56,10 @@ public abstract class ExecutionMapper {
         } else {
             target.setProcess(null);
         }
+    }
+
+    @Autowired
+    public void setProcessRepository(ProcessRepository processRepository) {
+        this.processRepository = processRepository;
     }
 }

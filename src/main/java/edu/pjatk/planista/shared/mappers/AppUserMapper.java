@@ -29,7 +29,7 @@ public abstract class AppUserMapper {
     public abstract AppUser toEntity(UserRequest req);
 
 
-    @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "password", ignore = true),

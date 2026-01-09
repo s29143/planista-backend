@@ -17,27 +17,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 )
 public abstract class ProcessMapper {
 
-    @Autowired
-    protected ProcessStatusRepository statusRepository;
+    private ProcessStatusRepository statusRepository;
 
-    @Autowired
-    protected WorkstationRepository workstationRepository;
+    private WorkstationRepository workstationRepository;
 
-    @Autowired
-    protected TechnologyRepository technologyRepository;
+    private TechnologyRepository technologyRepository;
 
-    @Autowired
-    protected OrderRepository orderRepository;
-
-    @Autowired
-    protected OrderMapper orderMapper;
-
+    private OrderRepository orderRepository;
 
     @Mappings({
             @Mapping(target = "status", source = "status", qualifiedByName = "statusToDict"),
             @Mapping(target = "technology", source = "technology", qualifiedByName = "technologyToDict"),
             @Mapping(target = "workstation", source = "workstation", qualifiedByName = "workstationToDict"),
-            @Mapping(target = "order", source = "order"),
     })
     public abstract ProcessResponse toResponse(Process entity);
 
@@ -72,7 +63,7 @@ public abstract class ProcessMapper {
         }
     }
 
-    @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "status", ignore = true),
@@ -110,5 +101,25 @@ public abstract class ProcessMapper {
         } else {
             target.setOrder(null);
         }
+    }
+
+    @Autowired
+    public void setStatusRepository(ProcessStatusRepository statusRepository) {
+        this.statusRepository = statusRepository;
+    }
+
+    @Autowired
+    public void setWorkstationRepository(WorkstationRepository workstationRepository) {
+        this.workstationRepository = workstationRepository;
+    }
+
+    @Autowired
+    public void setTechnologyRepository(TechnologyRepository technologyRepository) {
+        this.technologyRepository = technologyRepository;
+    }
+
+    @Autowired
+    public void setOrderRepository(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 }
