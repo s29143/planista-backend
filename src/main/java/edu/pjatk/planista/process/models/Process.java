@@ -2,6 +2,8 @@ package edu.pjatk.planista.process.models;
 
 import edu.pjatk.planista.config.common.Auditable;
 import edu.pjatk.planista.order.models.Order;
+import edu.pjatk.planista.shared.models.Technology;
+import edu.pjatk.planista.shared.models.Workstation;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -6,8 +6,8 @@ import edu.pjatk.planista.process.dto.ProcessRequest;
 import edu.pjatk.planista.process.dto.ProcessResponse;
 import edu.pjatk.planista.process.models.Process;
 import edu.pjatk.planista.process.repositories.ProcessStatusRepository;
-import edu.pjatk.planista.process.repositories.TechnologyRepository;
-import edu.pjatk.planista.process.repositories.WorkstationRepository;
+import edu.pjatk.planista.shared.repositories.TechnologyRepository;
+import edu.pjatk.planista.shared.repositories.WorkstationRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

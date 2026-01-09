@@ -1,6 +1,5 @@
-package edu.pjatk.planista.process.models;
+package edu.pjatk.planista.shared.models;
 
-import edu.pjatk.planista.shared.models.DictItem;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;

@@ -41,18 +41,21 @@ public class ProcessController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'PLANNER')")
     public ResponseEntity<ProcessResponse> create(@RequestBody @Valid ProcessRequest request) {
         ProcessResponse created = service.create(request);
         return ResponseEntity.ok(created);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PLANNER')")
     public ResponseEntity<ProcessResponse> update(@PathVariable Long id,
                                                   @RequestBody @Valid ProcessRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PLANNER')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();

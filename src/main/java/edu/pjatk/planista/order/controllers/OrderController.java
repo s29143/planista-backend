@@ -20,19 +20,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/orders")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
+@PreAuthorize("hasAnyRole('ADMIN','MANAGER', 'PRODUCTION')")
 public class OrderController {
     private final OrderService service;
     private final OrderProcessService orderProcessService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'PLANNER', 'PRODUCTION')")
     public ResponseEntity<OrderResponse> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.get(id));
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'PLANNER', 'PRODUCTION')")
     public ResponseEntity<Page<OrderResponse>> list(@PageableDefault(size = 20, sort = "id") Pageable pageable,
                                                      @RequestParam(required = false) String product,
                                                      @RequestParam(required = false) List<Long> statusId,
@@ -44,7 +42,6 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}/processes")
-    @PreAuthorize("hasAnyRole('ADMIN', 'PLANNER', 'PRODUCTION')")
     public Page<ProcessResponse> getOrderProcesses(
             @PathVariable Long orderId,
             @PageableDefault(size = 20, sort = "id") Pageable pageable
@@ -53,18 +50,21 @@ public class OrderController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'PLANNER')")
     public ResponseEntity<OrderResponse> create(@RequestBody @Valid OrderRequest request) {
         OrderResponse created = service.create(request);
         return ResponseEntity.ok(created);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PLANNER')")
     public ResponseEntity<OrderResponse> update(@PathVariable Long id,
                                                  @RequestBody @Valid OrderRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PLANNER')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();

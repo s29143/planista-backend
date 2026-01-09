@@ -1,7 +1,6 @@
-package edu.pjatk.planista.process.repositories;
+package edu.pjatk.planista.shared.repositories;
 
-import edu.pjatk.planista.process.models.Technology;
-import edu.pjatk.planista.shared.repositories.DictItemRepository;
+import edu.pjatk.planista.shared.models.Technology;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(
