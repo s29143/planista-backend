@@ -41,6 +41,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(SecurityConfig.PUBLIC).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/dict/**").authenticated()
+                        .requestMatchers("/api/v1/dict/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/**").authenticated()
                         .anyRequest().denyAll()
                 )
