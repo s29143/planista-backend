@@ -2,7 +2,7 @@ package edu.pjatk.planista.process.controllers;
 
 import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import edu.pjatk.planista.process.dto.ProcessRequest;
-import edu.pjatk.planista.process.dto.ProcessResponse;
+import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import edu.pjatk.planista.process.services.ProcessExecutionService;
 import edu.pjatk.planista.process.services.ProcessService;
 import jakarta.validation.Valid;

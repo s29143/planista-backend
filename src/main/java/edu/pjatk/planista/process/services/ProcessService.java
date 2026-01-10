@@ -1,7 +1,7 @@
 package edu.pjatk.planista.process.services;
 
 import edu.pjatk.planista.process.dto.ProcessRequest;
-import edu.pjatk.planista.process.dto.ProcessResponse;
+import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import edu.pjatk.planista.process.mappers.ProcessMapper;
 import edu.pjatk.planista.process.models.Process;
 import edu.pjatk.planista.process.repositories.ProcessRepository;

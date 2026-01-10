@@ -2,7 +2,7 @@ package edu.pjatk.planista.order.services;
 
 import edu.pjatk.planista.order.dto.OrderFilter;
 import edu.pjatk.planista.order.dto.OrderRequest;
-import edu.pjatk.planista.order.dto.OrderResponse;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import edu.pjatk.planista.order.mappers.OrderMapper;
 import edu.pjatk.planista.order.models.Order;
 import edu.pjatk.planista.order.repositories.OrderRepository;

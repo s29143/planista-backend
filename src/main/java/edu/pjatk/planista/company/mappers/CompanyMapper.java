@@ -1,13 +1,13 @@
 package edu.pjatk.planista.company.mappers;
 
 import edu.pjatk.planista.company.dto.CompanyRequest;
-import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.company.models.Company;
 import edu.pjatk.planista.company.repositories.CompanyAcquiredRepository;
 import edu.pjatk.planista.company.repositories.CompanyStatusRepository;
+import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
+import edu.pjatk.planista.shared.kernel.ports.UserQueryPort;
 import edu.pjatk.planista.shared.repositories.CountryRepository;
 import edu.pjatk.planista.shared.repositories.DistrictRepository;
-import edu.pjatk.planista.users.AppUserRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = { CompanyClassDtoMappers.class }
 )
 public abstract class CompanyMapper {
-    private AppUserRepository appUserRepository;
+    private UserQueryPort userQueryPort;
 
     private CompanyAcquiredRepository acquiredRepository;
 
@@ -54,7 +54,7 @@ public abstract class CompanyMapper {
     @AfterMapping
     protected void afterToEntity(CompanyRequest req, @MappingTarget Company target) {
         if (req.userId() != null) {
-            target.setUser(appUserRepository.getReferenceById(req.userId()));
+            target.setUser(userQueryPort.getReferenceById(req.userId()));
         }
         if (req.acquiredId() != null) {
             target.setAcquired(acquiredRepository.getReferenceById(req.acquiredId()));
@@ -90,7 +90,7 @@ public abstract class CompanyMapper {
     @AfterMapping
     protected void afterUpdateEntity(CompanyRequest req, @MappingTarget Company target) {
         if (req.userId() != null) {
-            target.setUser(appUserRepository.getReferenceById(req.userId()));
+            target.setUser(userQueryPort.getReferenceById(req.userId()));
         } else {
             target.setUser(null);
         }
@@ -117,8 +117,8 @@ public abstract class CompanyMapper {
     }
 
     @Autowired
-    public void setAppUserRepository(AppUserRepository appUserRepository) {
-        this.appUserRepository = appUserRepository;
+    public void setUserQueryPort(UserQueryPort userQueryPort) {
+        this.userQueryPort = userQueryPort;
     }
 
     @Autowired

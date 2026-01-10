@@ -1,15 +1,15 @@
 package edu.pjatk.planista.company.controllers;
 
-import edu.pjatk.planista.action.dto.ActionResponse;
+import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
 import edu.pjatk.planista.company.dto.CompanyFilter;
 import edu.pjatk.planista.company.dto.CompanyRequest;
-import edu.pjatk.planista.company.dto.CompanyResponse;
+import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
 import edu.pjatk.planista.company.services.CompanyActionService;
 import edu.pjatk.planista.company.services.CompanyContactService;
 import edu.pjatk.planista.company.services.CompanyOrderService;
 import edu.pjatk.planista.company.services.CompanyService;
-import edu.pjatk.planista.contact.dto.ContactResponse;
-import edu.pjatk.planista.order.dto.OrderResponse;
+import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

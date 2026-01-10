@@ -1,10 +1,10 @@
 package edu.pjatk.planista.execution.mappers;
 
 import edu.pjatk.planista.execution.dto.ExecutionRequest;
-import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import edu.pjatk.planista.execution.models.Execution;
 import edu.pjatk.planista.process.mappers.ProcessMapper;
-import edu.pjatk.planista.process.repositories.ProcessRepository;
+import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
+import edu.pjatk.planista.shared.kernel.ports.ProcessQueryPort;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = { ProcessMapper.class }
 )
 public abstract class ExecutionMapper {
-    private ProcessRepository processRepository;
+    private ProcessQueryPort processQueryPort;
 
     public abstract ExecutionResponse toResponse(Execution entity);
 
@@ -32,7 +32,7 @@ public abstract class ExecutionMapper {
     @AfterMapping
     protected void afterToEntity(ExecutionRequest req, @MappingTarget Execution target) {
         if (req.processId() != null) {
-            target.setProcess(processRepository.getReferenceById(req.processId()));
+            target.setProcess(processQueryPort.getReferenceById(req.processId()));
         }
     }
 
@@ -52,14 +52,14 @@ public abstract class ExecutionMapper {
     @AfterMapping
     protected void afterUpdateEntity(ExecutionRequest req, @MappingTarget Execution target) {
         if (req.processId() != null) {
-            target.setProcess(processRepository.getReferenceById(req.processId()));
+            target.setProcess(processQueryPort.getReferenceById(req.processId()));
         } else {
             target.setProcess(null);
         }
     }
 
     @Autowired
-    public void setProcessRepository(ProcessRepository processRepository) {
-        this.processRepository = processRepository;
+    public void setProcessQueryPort(ProcessQueryPort processQueryPort) {
+        this.processQueryPort = processQueryPort;
     }
 }

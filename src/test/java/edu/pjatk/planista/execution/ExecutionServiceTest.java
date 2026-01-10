@@ -6,7 +6,7 @@ import edu.pjatk.planista.execution.mappers.ExecutionMapper;
 import edu.pjatk.planista.execution.models.Execution;
 import edu.pjatk.planista.execution.repositories.ExecutionRepository;
 import edu.pjatk.planista.execution.services.ExecutionService;
-import edu.pjatk.planista.process.dto.ProcessResponse;
+import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

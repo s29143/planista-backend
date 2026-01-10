@@ -1,10 +1,10 @@
 package edu.pjatk.planista.process;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pjatk.planista.order.dto.OrderResponse;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import edu.pjatk.planista.process.controllers.ProcessController;
 import edu.pjatk.planista.process.dto.ProcessRequest;
-import edu.pjatk.planista.process.dto.ProcessResponse;
+import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import edu.pjatk.planista.process.services.ProcessExecutionService;
 import edu.pjatk.planista.process.services.ProcessService;
 import edu.pjatk.planista.config.security.JwtAuthenticationFilter;

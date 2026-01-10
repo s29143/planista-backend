@@ -1,11 +1,11 @@
 package edu.pjatk.planista.process.mappers;
 
 import edu.pjatk.planista.order.mappers.OrderMapper;
-import edu.pjatk.planista.order.repositories.OrderRepository;
 import edu.pjatk.planista.process.dto.ProcessRequest;
-import edu.pjatk.planista.process.dto.ProcessResponse;
 import edu.pjatk.planista.process.models.Process;
 import edu.pjatk.planista.process.repositories.ProcessStatusRepository;
+import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
+import edu.pjatk.planista.shared.kernel.ports.OrderQueryPort;
 import edu.pjatk.planista.shared.repositories.TechnologyRepository;
 import edu.pjatk.planista.shared.repositories.WorkstationRepository;
 import org.mapstruct.*;
@@ -23,7 +23,7 @@ public abstract class ProcessMapper {
 
     private TechnologyRepository technologyRepository;
 
-    private OrderRepository orderRepository;
+    private OrderQueryPort orderQueryPort;
 
     @Mappings({
             @Mapping(target = "status", source = "status", qualifiedByName = "statusToDict"),
@@ -59,7 +59,7 @@ public abstract class ProcessMapper {
             target.setTechnology(technologyRepository.getReferenceById(req.technologyId()));
         }
         if (req.orderId() != null) {
-            target.setOrder(orderRepository.getReferenceById(req.orderId()));
+            target.setOrder(orderQueryPort.getReferenceById(req.orderId()));
         }
     }
 
@@ -97,7 +97,7 @@ public abstract class ProcessMapper {
             target.setTechnology(null);
         }
         if (req.orderId() != null) {
-            target.setOrder(orderRepository.getReferenceById(req.orderId()));
+            target.setOrder(orderQueryPort.getReferenceById(req.orderId()));
         } else {
             target.setOrder(null);
         }
@@ -119,7 +119,7 @@ public abstract class ProcessMapper {
     }
 
     @Autowired
-    public void setOrderRepository(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    public void setOrderQueryPort(OrderQueryPort orderQueryPort) {
+        this.orderQueryPort = orderQueryPort;
     }
 }

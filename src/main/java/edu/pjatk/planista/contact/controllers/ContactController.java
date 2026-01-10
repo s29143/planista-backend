@@ -1,13 +1,13 @@
 package edu.pjatk.planista.contact.controllers;
 
-import edu.pjatk.planista.action.dto.ActionResponse;
+import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
 import edu.pjatk.planista.contact.dto.ContactFilter;
 import edu.pjatk.planista.contact.dto.ContactRequest;
-import edu.pjatk.planista.contact.dto.ContactResponse;
+import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
 import edu.pjatk.planista.contact.services.ContactActionService;
 import edu.pjatk.planista.contact.services.ContactOrderService;
 import edu.pjatk.planista.contact.services.ContactService;
-import edu.pjatk.planista.order.dto.OrderResponse;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,6 +1,5 @@
-package edu.pjatk.planista.contact.dto;
+package edu.pjatk.planista.shared.kernel.dto;
 
-import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.shared.dto.DictItemDto;
 
 import java.time.Instant;

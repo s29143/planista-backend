@@ -1,12 +1,12 @@
 package edu.pjatk.planista.contact.mappers;
 
 import edu.pjatk.planista.company.mappers.CompanyMapper;
-import edu.pjatk.planista.company.repositories.CompanyRepository;
 import edu.pjatk.planista.contact.dto.ContactRequest;
-import edu.pjatk.planista.contact.dto.ContactResponse;
 import edu.pjatk.planista.contact.models.Contact;
 import edu.pjatk.planista.contact.repositories.ContactStatusRepository;
-import edu.pjatk.planista.users.AppUserRepository;
+import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
+import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
+import edu.pjatk.planista.shared.kernel.ports.UserQueryPort;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = { ContactClassDtoMappers.class, CompanyMapper.class }
 )
 public abstract class ContactMapper {
-    private AppUserRepository userRepository;
+    private UserQueryPort userQueryPort;
 
-    private CompanyRepository companyRepository;
+    private CompanyQueryPort companyQueryPort;
 
     private ContactStatusRepository statusRepository;
 
@@ -44,10 +44,10 @@ public abstract class ContactMapper {
     @AfterMapping
     protected void afterToEntity(ContactRequest req, @MappingTarget Contact target) {
         if (req.userId() != null) {
-            target.setUser(userRepository.getReferenceById(req.userId()));
+            target.setUser(userQueryPort.getReferenceById(req.userId()));
         }
         if (req.companyId() != null) {
-            target.setCompany(companyRepository.getReferenceById(req.companyId()));
+            target.setCompany(companyQueryPort.getReferenceById(req.companyId()));
         }
         if (req.statusId() != null) {
             target.setStatus(statusRepository.getReferenceById(req.statusId()));
@@ -72,12 +72,12 @@ public abstract class ContactMapper {
     @AfterMapping
     protected void afterUpdateEntity(ContactRequest req, @MappingTarget Contact target) {
         if (req.userId() != null) {
-            target.setUser(userRepository.getReferenceById(req.userId()));
+            target.setUser(userQueryPort.getReferenceById(req.userId()));
         } else {
             target.setUser(null);
         }
         if (req.companyId() != null) {
-            target.setCompany(companyRepository.getReferenceById(req.companyId()));
+            target.setCompany(companyQueryPort.getReferenceById(req.companyId()));
         } else {
             target.setCompany(null);
         }
@@ -89,13 +89,13 @@ public abstract class ContactMapper {
     }
 
     @Autowired
-    public void setUserRepository(AppUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserQueryPort(UserQueryPort userQueryPort) {
+        this.userQueryPort = userQueryPort;
     }
 
     @Autowired
-    public void setCompanyRepository(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
+    public void setCompanyQueryPort(CompanyQueryPort companyQueryPort) {
+        this.companyQueryPort = companyQueryPort;
     }
 
     @Autowired

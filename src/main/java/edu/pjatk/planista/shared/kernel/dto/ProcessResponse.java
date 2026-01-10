@@ -1,9 +1,7 @@
-package edu.pjatk.planista.process.dto;
+package edu.pjatk.planista.shared.kernel.dto;
 
-import edu.pjatk.planista.order.dto.OrderResponse;
 import edu.pjatk.planista.shared.dto.DictItemDto;
 
-import java.time.Duration;
 import java.time.Instant;
 
 public record ProcessResponse(

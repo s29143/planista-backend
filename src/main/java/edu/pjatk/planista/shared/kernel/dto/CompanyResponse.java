@@ -1,4 +1,4 @@
-package edu.pjatk.planista.company.dto;
+package edu.pjatk.planista.shared.kernel.dto;
 
 import edu.pjatk.planista.shared.dto.DictItemDto;
 

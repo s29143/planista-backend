@@ -2,10 +2,11 @@ package edu.pjatk.planista.company.services;
 
 import edu.pjatk.planista.company.dto.CompanyFilter;
 import edu.pjatk.planista.company.dto.CompanyRequest;
-import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.company.mappers.CompanyMapper;
 import edu.pjatk.planista.company.models.Company;
 import edu.pjatk.planista.company.repositories.CompanyRepository;
+import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
+import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,7 @@ import static edu.pjatk.planista.company.specs.CompanySpecs.*;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class CompanyService {
+public class CompanyService implements CompanyQueryPort {
 
     private final CompanyRepository companyRepository;
     private final CompanyMapper mapper;
@@ -60,5 +61,10 @@ public class CompanyService {
             throw new EntityNotFoundException("Company " + id + " not found");
         }
         companyRepository.deleteById(id);
+    }
+
+    @Override
+    public Company getReferenceById(Long id) {
+        return companyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Company " + id + " not found"));
     }
 }

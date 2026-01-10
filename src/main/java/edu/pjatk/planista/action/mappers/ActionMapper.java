@@ -1,14 +1,14 @@
 package edu.pjatk.planista.action.mappers;
 
 import edu.pjatk.planista.action.dto.ActionRequest;
-import edu.pjatk.planista.action.dto.ActionResponse;
 import edu.pjatk.planista.action.models.Action;
 import edu.pjatk.planista.action.repositories.ActionTypeRepository;
 import edu.pjatk.planista.company.mappers.CompanyMapper;
-import edu.pjatk.planista.company.repositories.CompanyRepository;
 import edu.pjatk.planista.contact.mappers.ContactMapper;
-import edu.pjatk.planista.contact.repositories.ContactRepository;
-import edu.pjatk.planista.users.AppUserRepository;
+import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
+import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
+import edu.pjatk.planista.shared.kernel.ports.ContactQueryPort;
+import edu.pjatk.planista.shared.kernel.ports.UserQueryPort;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,11 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = { ActionDtoMapper.class, CompanyMapper.class, ContactMapper.class }
 )
 public abstract class ActionMapper {
-    private AppUserRepository userRepository;
+    private UserQueryPort userQueryPort;
 
-    private CompanyRepository companyRepository;
+    private CompanyQueryPort companyQueryPort;
 
-    private ContactRepository contactRepository;
+    private ContactQueryPort contactQueryPort;
 
     private ActionTypeRepository typeRepository;
 
@@ -49,13 +49,13 @@ public abstract class ActionMapper {
     @AfterMapping
     protected void afterToEntity(ActionRequest req, @MappingTarget Action target) {
         if (req.userId() != null) {
-            target.setUser(userRepository.getReferenceById(req.userId()));
+            target.setUser(userQueryPort.getReferenceById(req.userId()));
         }
         if (req.companyId() != null) {
-            target.setCompany(companyRepository.getReferenceById(req.companyId()));
+            target.setCompany(companyQueryPort.getReferenceById(req.companyId()));
         }
         if (req.contactId() != null) {
-            target.setContact(contactRepository.getReferenceById(req.contactId()));
+            target.setContact(contactQueryPort.getReferenceById(req.contactId()));
         }
         if (req.typeId() != null) {
             target.setType(typeRepository.getReferenceById(req.typeId()));
@@ -81,17 +81,17 @@ public abstract class ActionMapper {
     @AfterMapping
     protected void afterUpdateEntity(ActionRequest req, @MappingTarget Action target) {
         if (req.userId() != null) {
-            target.setUser(userRepository.getReferenceById(req.userId()));
+            target.setUser(userQueryPort.getReferenceById(req.userId()));
         } else {
             target.setUser(null);
         }
         if (req.companyId() != null) {
-            target.setCompany(companyRepository.getReferenceById(req.companyId()));
+            target.setCompany(companyQueryPort.getReferenceById(req.companyId()));
         } else {
             target.setCompany(null);
         }
         if (req.contactId() != null) {
-            target.setContact(contactRepository.getReferenceById(req.contactId()));
+            target.setContact(contactQueryPort.getReferenceById(req.contactId()));
         } else {
             target.setContact(null);
         }
@@ -103,18 +103,18 @@ public abstract class ActionMapper {
     }
 
     @Autowired
-    public void setUserRepository(AppUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserQueryPort(UserQueryPort userQueryPort) {
+        this.userQueryPort = userQueryPort;
     }
 
     @Autowired
-    public void setCompanyRepository(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
+    public void setCompanyQueryPort(CompanyQueryPort companyQueryPort) {
+        this.companyQueryPort = companyQueryPort;
     }
 
     @Autowired
-    public void setContactRepository(ContactRepository contactRepository) {
-        this.contactRepository = contactRepository;
+    public void setContactQueryPort(ContactQueryPort contactQueryPort) {
+        this.contactQueryPort = contactQueryPort;
     }
 
     @Autowired

@@ -2,7 +2,7 @@ package edu.pjatk.planista.contact.services;
 
 import edu.pjatk.planista.contact.dto.ContactFilter;
 import edu.pjatk.planista.contact.dto.ContactRequest;
-import edu.pjatk.planista.contact.dto.ContactResponse;
+import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
 import edu.pjatk.planista.contact.mappers.ContactMapper;
 import edu.pjatk.planista.contact.models.Contact;
 import edu.pjatk.planista.contact.repositories.ContactRepository;

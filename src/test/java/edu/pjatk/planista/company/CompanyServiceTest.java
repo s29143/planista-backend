@@ -2,7 +2,7 @@ package edu.pjatk.planista.company;
 
 import edu.pjatk.planista.company.dto.CompanyFilter;
 import edu.pjatk.planista.company.dto.CompanyRequest;
-import edu.pjatk.planista.company.dto.CompanyResponse;
+import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
 import edu.pjatk.planista.company.mappers.CompanyMapper;
 import edu.pjatk.planista.company.models.Company;
 import edu.pjatk.planista.company.repositories.CompanyRepository;

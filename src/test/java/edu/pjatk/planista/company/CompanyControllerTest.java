@@ -3,7 +3,7 @@ package edu.pjatk.planista.company;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.pjatk.planista.company.controllers.CompanyController;
 import edu.pjatk.planista.company.dto.CompanyRequest;
-import edu.pjatk.planista.company.dto.CompanyResponse;
+import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
 import edu.pjatk.planista.company.services.CompanyActionService;
 import edu.pjatk.planista.company.services.CompanyContactService;
 import edu.pjatk.planista.company.services.CompanyOrderService;

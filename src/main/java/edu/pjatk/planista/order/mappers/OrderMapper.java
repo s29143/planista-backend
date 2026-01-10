@@ -1,14 +1,14 @@
 package edu.pjatk.planista.order.mappers;
 
 import edu.pjatk.planista.company.mappers.CompanyMapper;
-import edu.pjatk.planista.company.repositories.CompanyRepository;
 import edu.pjatk.planista.contact.mappers.ContactMapper;
-import edu.pjatk.planista.contact.repositories.ContactRepository;
 import edu.pjatk.planista.order.dto.OrderRequest;
-import edu.pjatk.planista.order.dto.OrderResponse;
 import edu.pjatk.planista.order.models.Order;
 import edu.pjatk.planista.order.repositories.OrderStatusRepository;
 import edu.pjatk.planista.order.repositories.OrderTypeRepository;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
+import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
+import edu.pjatk.planista.shared.kernel.ports.ContactQueryPort;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,9 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class OrderMapper {
     private OrderStatusRepository statusRepository;
 
-    private CompanyRepository companyRepository;
+    private CompanyQueryPort companyQueryPort;
 
-    private ContactRepository contactRepository;
+    private ContactQueryPort contactQueryPort;
 
     private OrderTypeRepository typeRepository;
 
@@ -53,10 +53,10 @@ public abstract class OrderMapper {
             target.setStatus(statusRepository.getReferenceById(req.statusId()));
         }
         if (req.companyId() != null) {
-            target.setCompany(companyRepository.getReferenceById(req.companyId()));
+            target.setCompany(companyQueryPort.getReferenceById(req.companyId()));
         }
         if (req.contactId() != null) {
-            target.setContact(contactRepository.getReferenceById(req.contactId()));
+            target.setContact(contactQueryPort.getReferenceById(req.contactId()));
         }
         if (req.typeId() != null) {
             target.setType(typeRepository.getReferenceById(req.typeId()));
@@ -87,12 +87,12 @@ public abstract class OrderMapper {
             target.setStatus(null);
         }
         if (req.companyId() != null) {
-            target.setCompany(companyRepository.getReferenceById(req.companyId()));
+            target.setCompany(companyQueryPort.getReferenceById(req.companyId()));
         } else {
             target.setCompany(null);
         }
         if (req.contactId() != null) {
-            target.setContact(contactRepository.getReferenceById(req.contactId()));
+            target.setContact(contactQueryPort.getReferenceById(req.contactId()));
         } else {
             target.setContact(null);
         }
@@ -109,13 +109,13 @@ public abstract class OrderMapper {
     }
 
     @Autowired
-    public void setCompanyRepository(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
+    public void setCompanyQueryPort(CompanyQueryPort companyQueryPort) {
+        this.companyQueryPort = companyQueryPort;
     }
 
     @Autowired
-    public void setContactRepository(ContactRepository contactRepository) {
-        this.contactRepository = contactRepository;
+    public void setContactQueryPort(ContactQueryPort contactQueryPort) {
+        this.contactQueryPort = contactQueryPort;
     }
 
     @Autowired

@@ -2,7 +2,7 @@ package edu.pjatk.planista.action;
 
 import edu.pjatk.planista.action.dto.ActionFilter;
 import edu.pjatk.planista.action.dto.ActionRequest;
-import edu.pjatk.planista.action.dto.ActionResponse;
+import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
 import edu.pjatk.planista.action.mappers.ActionMapper;
 import edu.pjatk.planista.action.models.Action;
 import edu.pjatk.planista.action.repositories.ActionRepository;

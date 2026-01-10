@@ -2,7 +2,7 @@ package edu.pjatk.planista.action.controllers;
 
 import edu.pjatk.planista.action.services.ActionService;
 import edu.pjatk.planista.action.dto.ActionFilter;
-import edu.pjatk.planista.action.dto.ActionResponse;
+import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
 import edu.pjatk.planista.action.dto.ActionRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

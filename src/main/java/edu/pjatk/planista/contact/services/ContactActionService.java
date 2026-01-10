@@ -1,9 +1,8 @@
 package edu.pjatk.planista.contact.services;
 
-import edu.pjatk.planista.action.dto.ActionResponse;
-import edu.pjatk.planista.action.mappers.ActionMapper;
-import edu.pjatk.planista.action.repositories.ActionRepository;
 import edu.pjatk.planista.contact.repositories.ContactRepository;
+import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
+import edu.pjatk.planista.shared.kernel.ports.ActionQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,8 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ContactActionService {
     private final ContactRepository contactRepository;
-    private final ActionRepository actionRepository;
-    private final ActionMapper mapper;
+    private final ActionQueryPort actionQueryPort;
 
     @Transactional(readOnly = true)
     public Page<ActionResponse> getActions(Long contactId, Pageable pageable) {
@@ -25,8 +23,6 @@ public class ContactActionService {
             throw new EntityNotFoundException("Contact " + contactId + " not found");
         }
 
-        return actionRepository
-                .findByContactId(contactId, pageable)
-                .map(mapper::toResponse);
+        return actionQueryPort.findByContactId(contactId, pageable);
     }
 }
