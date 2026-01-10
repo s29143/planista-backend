@@ -69,4 +69,8 @@ public class Company extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private CompanyStatus status;
+
+    public String getName() {
+        return fullName + " (" + nip + ")";
+    }
 }

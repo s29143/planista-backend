@@ -1,12 +1,13 @@
 package edu.pjatk.planista.execution;
 
 import edu.pjatk.planista.execution.dto.ExecutionRequest;
-import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import edu.pjatk.planista.execution.mappers.ExecutionMapper;
 import edu.pjatk.planista.execution.models.Execution;
 import edu.pjatk.planista.execution.repositories.ExecutionRepository;
 import edu.pjatk.planista.execution.services.ExecutionService;
-import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
+import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
+import edu.pjatk.planista.shared.kernel.ports.ProcessQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,27 +27,15 @@ class ExecutionServiceTest {
 
     private ExecutionRepository executionRepository;
     private ExecutionMapper mapper;
+    private ProcessQueryPort processQueryPort;
     private ExecutionService service;
 
     @BeforeEach
     void setUp() {
         executionRepository = mock(ExecutionRepository.class);
         mapper = mock(ExecutionMapper.class);
-        service = new ExecutionService(executionRepository, mapper);
-    }
-
-    ProcessResponse processResponse() {
-        return new ProcessResponse(
-                10L,
-                25L,
-                1L,
-                Instant.now(),
-                Instant.now(),
-                null,
-                null,
-                null,
-                null
-        );
+        processQueryPort = mock(ProcessQueryPort.class);
+        service = new ExecutionService(executionRepository, mapper, processQueryPort);
     }
 
     @Test
@@ -57,7 +46,6 @@ class ExecutionServiceTest {
                 1L,
                 1L
         );
-        var process = processResponse();
         Execution entityToSave = new Execution();
         Execution saved = new Execution();
         saved.setId(42L);
@@ -68,7 +56,7 @@ class ExecutionServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                process
+                new DictItemDto(10L, "test")
         );
 
         given(mapper.toEntity(req)).willReturn(entityToSave);
@@ -89,7 +77,6 @@ class ExecutionServiceTest {
     void update_shouldUpdateManagedEntity_andReturnResponse() {
         //given
         Long id = 10L;
-        var process = processResponse();
         var req = new ExecutionRequest(
                 20L,
                 1L,
@@ -105,7 +92,7 @@ class ExecutionServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                process
+                new DictItemDto(10L, "test")
         );
 
         given(executionRepository.findById(id)).willReturn(Optional.of(existing));
@@ -143,14 +130,13 @@ class ExecutionServiceTest {
         Long id = 5L;
         Execution entity = new Execution();
         entity.setId(id);
-        var process = processResponse();
         ExecutionResponse resp = new ExecutionResponse(
                 5L,
                 20L,
                 1L,
                 Instant.now(),
                 Instant.now(),
-                process
+                new DictItemDto(10L, "test")
         );
         given(executionRepository.findById(id)).willReturn(Optional.of(entity));
         given(mapper.toResponse(entity)).willReturn(resp);
@@ -191,22 +177,20 @@ class ExecutionServiceTest {
         Execution e1 = new Execution(); e1.setId(1L);
         Execution e2 = new Execution(); e2.setId(2L);
         Page<Execution> page = new PageImpl<>(List.of(e1, e2), pageable, 2);
-        var process = processResponse();
-
         ExecutionResponse r1 = new ExecutionResponse(
                 1L,
                 20L,
                 1L,
                 Instant.now(),
                 Instant.now(),
-                process
-        );
+                new DictItemDto(10L, "test")
+                );
         ExecutionResponse r2 = new ExecutionResponse(2L,
                 20L,
                 1L,
                 Instant.now(),
                 Instant.now(),
-                process
+                new DictItemDto(10L, "test")
                 );
 
         given(executionRepository.findAll(eq(pageable))).willReturn(page);

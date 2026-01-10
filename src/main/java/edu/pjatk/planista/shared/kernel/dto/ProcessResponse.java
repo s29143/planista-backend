@@ -10,7 +10,7 @@ public record ProcessResponse(
         Long plannedTimeSeconds,
         Instant createdAt,
         Instant updatedAt,
-        OrderResponse order,
+        DictItemDto order,
         DictItemDto technology,
         DictItemDto workstation,
         DictItemDto status

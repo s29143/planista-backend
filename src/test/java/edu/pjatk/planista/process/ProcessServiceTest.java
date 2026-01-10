@@ -1,13 +1,17 @@
 package edu.pjatk.planista.process;
 
-import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import edu.pjatk.planista.process.dto.ProcessRequest;
-import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import edu.pjatk.planista.process.mappers.ProcessMapper;
 import edu.pjatk.planista.process.models.Process;
 import edu.pjatk.planista.process.repositories.ProcessRepository;
+import edu.pjatk.planista.process.repositories.ProcessStatusRepository;
 import edu.pjatk.planista.process.services.ProcessService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
+import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
+import edu.pjatk.planista.shared.kernel.ports.OrderQueryPort;
+import edu.pjatk.planista.shared.repositories.TechnologyRepository;
+import edu.pjatk.planista.shared.repositories.WorkstationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,12 +33,20 @@ class ProcessServiceTest {
     private ProcessRepository processRepository;
     private ProcessMapper mapper;
     private ProcessService service;
+    private ProcessStatusRepository statusRepository;
+    private WorkstationRepository workstationRepository;
+    private TechnologyRepository technologyRepository;
+    private OrderQueryPort orderQueryPort;
 
     @BeforeEach
     void setUp() {
         processRepository = mock(ProcessRepository.class);
         mapper = mock(ProcessMapper.class);
-        service = new ProcessService(processRepository, mapper);
+        statusRepository = mock(ProcessStatusRepository.class);
+        workstationRepository = mock(WorkstationRepository.class);
+        technologyRepository = mock(TechnologyRepository.class);
+        orderQueryPort = mock(OrderQueryPort.class);
+        service = new ProcessService(processRepository, mapper,  statusRepository, workstationRepository, technologyRepository, orderQueryPort);
     }
 
     OrderResponse orderResponse() {
@@ -72,7 +84,7 @@ class ProcessServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                order,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test"),
                 new DictItemDto(30L, "test")
@@ -115,7 +127,7 @@ class ProcessServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                order,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test"),
                 new DictItemDto(30L, "test")
@@ -166,7 +178,7 @@ class ProcessServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                order,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test"),
                 new DictItemDto(30L, "test")
@@ -218,7 +230,7 @@ class ProcessServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                order,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test"),
                 new DictItemDto(30L, "test")
@@ -228,7 +240,7 @@ class ProcessServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                order,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test"),
                 new DictItemDto(30L, "test")

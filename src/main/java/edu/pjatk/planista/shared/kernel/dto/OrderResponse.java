@@ -14,7 +14,7 @@ public record OrderResponse(
         Instant createdAt,
         Instant updatedAt,
         DictItemDto status,
-        CompanyResponse company,
-        ContactResponse contact,
+        DictItemDto company,
+        DictItemDto contact,
         DictItemDto type
 ) {}

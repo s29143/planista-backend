@@ -1,16 +1,16 @@
 package edu.pjatk.planista.order;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
-import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
-import edu.pjatk.planista.order.controllers.OrderController;
-import edu.pjatk.planista.order.dto.OrderRequest;
-import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
-import edu.pjatk.planista.order.services.OrderProcessService;
-import edu.pjatk.planista.order.services.OrderService;
 import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
+import edu.pjatk.planista.order.controllers.OrderController;
+import edu.pjatk.planista.order.dto.OrderRequest;
+import edu.pjatk.planista.order.services.OrderProcessService;
+import edu.pjatk.planista.order.services.OrderService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
+import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +79,7 @@ class OrdersControllerTest {
                 Instant.now(),
                 Instant.now(),
                 new DictItemDto(10L, "test"),
-                company,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test")
         );
 
@@ -92,8 +92,8 @@ class OrdersControllerTest {
                 Instant.now(),
                 Instant.now(),
                 new DictItemDto(30L, "test"),
-                company,
-                contact,
+                new DictItemDto(10L, "test"),
+                new DictItemDto(10L, "test"),
                 new DictItemDto(10L, "test")
         );
     }

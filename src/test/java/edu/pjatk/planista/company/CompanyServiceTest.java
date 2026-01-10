@@ -2,12 +2,17 @@ package edu.pjatk.planista.company;
 
 import edu.pjatk.planista.company.dto.CompanyFilter;
 import edu.pjatk.planista.company.dto.CompanyRequest;
-import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
 import edu.pjatk.planista.company.mappers.CompanyMapper;
 import edu.pjatk.planista.company.models.Company;
+import edu.pjatk.planista.company.repositories.CompanyAcquiredRepository;
 import edu.pjatk.planista.company.repositories.CompanyRepository;
+import edu.pjatk.planista.company.repositories.CompanyStatusRepository;
 import edu.pjatk.planista.company.services.CompanyService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
+import edu.pjatk.planista.shared.kernel.ports.UserQueryPort;
+import edu.pjatk.planista.shared.repositories.CountryRepository;
+import edu.pjatk.planista.shared.repositories.DistrictRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,13 +33,23 @@ class CompanyServiceTest {
 
     private CompanyRepository companyRepository;
     private CompanyMapper mapper;
+    private UserQueryPort userQueryPort;
+    private CompanyAcquiredRepository acquiredRepository;
+    private DistrictRepository districtRepository;
+    private CountryRepository countryRepository;
+    private CompanyStatusRepository statusRepository;
     private CompanyService service;
 
     @BeforeEach
     void setUp() {
         companyRepository = mock(CompanyRepository.class);
         mapper = mock(CompanyMapper.class);
-        service = new CompanyService(companyRepository, mapper);
+        userQueryPort = mock(UserQueryPort.class);
+        acquiredRepository = mock(CompanyAcquiredRepository.class);
+        districtRepository = mock(DistrictRepository.class);
+        countryRepository = mock(CountryRepository.class);
+        statusRepository = mock(CompanyStatusRepository.class);
+        service = new CompanyService(companyRepository, mapper, userQueryPort, acquiredRepository, districtRepository, countryRepository, statusRepository);
     }
 
     @Test

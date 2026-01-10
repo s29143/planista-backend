@@ -15,7 +15,7 @@ public record ActionResponse(
         Instant createdAt,
         Instant updatedAt,
         DictItemDto user,
-        CompanyResponse company,
-        ContactResponse contact,
+        DictItemDto company,
+        DictItemDto contact,
         DictItemDto type
 ) {}

@@ -1,5 +1,7 @@
 package edu.pjatk.planista.shared.kernel.dto;
 
+import edu.pjatk.planista.shared.dto.DictItemDto;
+
 import java.time.Instant;
 
 public record ExecutionResponse(
@@ -8,5 +10,5 @@ public record ExecutionResponse(
         Long timeInSeconds,
         Instant createdAt,
         Instant updatedAt,
-        ProcessResponse process
+        DictItemDto process
 ) {}

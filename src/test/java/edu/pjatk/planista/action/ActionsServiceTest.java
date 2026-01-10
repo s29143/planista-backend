@@ -2,12 +2,16 @@ package edu.pjatk.planista.action;
 
 import edu.pjatk.planista.action.dto.ActionFilter;
 import edu.pjatk.planista.action.dto.ActionRequest;
-import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
 import edu.pjatk.planista.action.mappers.ActionMapper;
 import edu.pjatk.planista.action.models.Action;
 import edu.pjatk.planista.action.repositories.ActionRepository;
+import edu.pjatk.planista.action.repositories.ActionTypeRepository;
 import edu.pjatk.planista.action.services.ActionService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
+import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
+import edu.pjatk.planista.shared.kernel.ports.ContactQueryPort;
+import edu.pjatk.planista.shared.kernel.ports.UserQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,12 +34,20 @@ class ActionsServiceTest {
     private ActionRepository repository;
     private ActionMapper mapper;
     private ActionService service;
+    private ActionTypeRepository typeRepository;
+    private UserQueryPort userQueryPort;
+    private CompanyQueryPort companyQueryPort;
+    private ContactQueryPort contactQueryPort;
 
     @BeforeEach
     void setUp() {
         repository = mock(ActionRepository.class);
         mapper = mock(ActionMapper.class);
-        service = new ActionService(repository, mapper);
+        typeRepository = mock(ActionTypeRepository.class);
+        userQueryPort = mock(UserQueryPort.class);
+        companyQueryPort = mock(CompanyQueryPort.class);
+        contactQueryPort = mock(ContactQueryPort.class);
+        service = new ActionService(repository, mapper,  typeRepository, userQueryPort, companyQueryPort, contactQueryPort);
     }
 
     @Test
@@ -47,7 +59,7 @@ class ActionsServiceTest {
                 true,
                 true,
                 false,
-                null,
+                1L,
                 null,
                 null,
                 null
@@ -95,7 +107,7 @@ class ActionsServiceTest {
                 true,
                 true,
                 false,
-                null,
+                1L,
                 null,
                 null,
                 null
@@ -142,7 +154,7 @@ class ActionsServiceTest {
                 true,
                 true,
                 false,
-                null,
+                1L,
                 null,
                 null,
                 null

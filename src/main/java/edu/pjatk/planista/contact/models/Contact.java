@@ -46,4 +46,8 @@ public class Contact extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")
     private ContactStatus status;
+
+    public String getName() {
+        return firstName + " " + lastName + " (" + company.getShortName() + ")";
+    }
 }

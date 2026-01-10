@@ -3,13 +3,11 @@ package edu.pjatk.planista.action;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.pjatk.planista.action.controllers.ActionController;
 import edu.pjatk.planista.action.dto.ActionRequest;
-import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
 import edu.pjatk.planista.action.services.ActionService;
-import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
-import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
 import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,34 +48,6 @@ class ActionsControllerTest {
     ActionService service;
 
     private ActionResponse sampleResponse() {
-        CompanyResponse company = new CompanyResponse(
-            10L,"N","F","1234567890",
-            null,null,null,null,null,null,null,null,
-            Instant.now(),
-            Instant.now(),
-            new DictItemDto(1L, "test"),
-            null,
-            null,
-            null,
-            null
-        );
-
-        ContactResponse contact = new ContactResponse(
-                1L,
-                "John",
-                "Doe",
-                "Salary man",
-                "22 23 23 13",
-                "123 123 123",
-                "jdoe@example.com",
-                true,
-                true,
-                Instant.now(),
-                Instant.now(),
-                new DictItemDto(10L, "test"),
-                company,
-                new DictItemDto(30L, "test")
-        );
 
         return new ActionResponse(
                 1L,
@@ -89,8 +59,8 @@ class ActionsControllerTest {
                 Instant.now(),
                 Instant.now(),
                 new DictItemDto(30L, "test"),
-                company,
-                contact,
+                new DictItemDto(10L, "test"),
+                new DictItemDto(1L, "test"),
                 new DictItemDto(10L, "test")
         );
     }

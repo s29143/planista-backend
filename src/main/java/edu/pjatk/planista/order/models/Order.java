@@ -43,4 +43,8 @@ public class Order extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")
     private OrderStatus status;
+
+    public String getName() {
+        return "#" + id + " " + product;
+    }
 }

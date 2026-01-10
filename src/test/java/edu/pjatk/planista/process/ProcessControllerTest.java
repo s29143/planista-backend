@@ -70,7 +70,7 @@ class ProcessControllerTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                order,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test"),
                 new DictItemDto(30L, "test")

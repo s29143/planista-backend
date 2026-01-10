@@ -17,6 +17,6 @@ public record ContactResponse(
         Instant createdAt,
         Instant updatedAt,
         DictItemDto user,
-        CompanyResponse company,
+        DictItemDto company,
         DictItemDto status
 ) {}

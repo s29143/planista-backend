@@ -39,4 +39,8 @@ public class Process extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workstation_id")
     private Workstation workstation;
+
+    public String getName() {
+        return "#" + id;
+    }
 }
