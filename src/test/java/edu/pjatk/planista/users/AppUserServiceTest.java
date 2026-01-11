@@ -1,13 +1,8 @@
 package edu.pjatk.planista.users;
 
-import edu.pjatk.planista.auth.AppUser;
-import edu.pjatk.planista.auth.AppUserMapper;
-import edu.pjatk.planista.auth.dto.UserDto;
-import edu.pjatk.planista.company.dto.CompanyFilter;
-import edu.pjatk.planista.company.dto.CompanyRequest;
-import edu.pjatk.planista.company.dto.CompanyResponse;
-import edu.pjatk.planista.company.models.Company;
-import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.models.AppUser;
+import edu.pjatk.planista.shared.mappers.AppUserMapper;
+import edu.pjatk.planista.shared.dto.UserDto;
 import edu.pjatk.planista.users.dto.UserRequest;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +11,6 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 

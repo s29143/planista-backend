@@ -1,9 +1,9 @@
 package edu.pjatk.planista.users;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pjatk.planista.auth.dto.UserDto;
-import edu.pjatk.planista.security.JwtAuthenticationFilter;
-import edu.pjatk.planista.security.JwtService;
+import edu.pjatk.planista.shared.dto.UserDto;
+import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.users.dto.UserRequest;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

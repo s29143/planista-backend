@@ -1,14 +1,17 @@
 package edu.pjatk.planista.contact;
 
-import edu.pjatk.planista.company.dto.CompanyResponse;
 import edu.pjatk.planista.contact.dto.ContactFilter;
 import edu.pjatk.planista.contact.dto.ContactRequest;
-import edu.pjatk.planista.contact.dto.ContactResponse;
 import edu.pjatk.planista.contact.mappers.ContactMapper;
 import edu.pjatk.planista.contact.models.Contact;
 import edu.pjatk.planista.contact.repositories.ContactRepository;
+import edu.pjatk.planista.contact.repositories.ContactStatusRepository;
 import edu.pjatk.planista.contact.services.ContactService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
+import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
+import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
+import edu.pjatk.planista.shared.kernel.ports.UserQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,12 +33,18 @@ class ContactsServiceTest {
     private ContactRepository ContactRepository;
     private ContactMapper mapper;
     private ContactService service;
+    private UserQueryPort userQueryPort;
+    private CompanyQueryPort companyQueryPort;
+    private ContactStatusRepository statusRepository;
 
     @BeforeEach
     void setUp() {
         ContactRepository = mock(ContactRepository.class);
         mapper = mock(ContactMapper.class);
-        service = new ContactService(ContactRepository, mapper);
+        userQueryPort = mock(UserQueryPort.class);
+        companyQueryPort = mock(CompanyQueryPort.class);
+        statusRepository = mock(ContactStatusRepository.class);
+        service = new ContactService(ContactRepository, mapper,  userQueryPort, companyQueryPort, statusRepository);
     }
 
     CompanyResponse companyResponse() {
@@ -68,7 +77,6 @@ class ContactsServiceTest {
                 20L,
                 30L
         );
-        var company = companyResponse();
         Contact entityToSave = new Contact();
         Contact saved = new Contact();
         saved.setId(42L);
@@ -86,7 +94,7 @@ class ContactsServiceTest {
                 Instant.now(),
                 Instant.now(),
                 new DictItemDto(10L, "test"),
-                company,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test")
         );
 
@@ -139,7 +147,7 @@ class ContactsServiceTest {
                 Instant.now(),
                 Instant.now(),
                 new DictItemDto(10L, "test"),
-                company,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test")
         );
 
@@ -200,7 +208,7 @@ class ContactsServiceTest {
                 Instant.now(),
                 Instant.now(),
                 new DictItemDto(10L, "test"),
-                company,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test")
         );
         given(ContactRepository.findById(id)).willReturn(Optional.of(entity));
@@ -249,14 +257,14 @@ class ContactsServiceTest {
                 Instant.now(),
                 Instant.now(),
                 new DictItemDto(1L, "test"),
-                company,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(1L, "test")
         );
         ContactResponse r2 = new ContactResponse(2L,null,null,null,null,null,null,false, false,
                 Instant.now(),
                 Instant.now(),
                 new DictItemDto(1L, "test"),
-                company,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(1L, "test")
                 );
 

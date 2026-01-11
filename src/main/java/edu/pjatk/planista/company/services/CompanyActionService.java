@@ -1,9 +1,8 @@
 package edu.pjatk.planista.company.services;
 
-import edu.pjatk.planista.action.dto.ActionResponse;
-import edu.pjatk.planista.action.mappers.ActionMapper;
-import edu.pjatk.planista.action.repositories.ActionRepository;
 import edu.pjatk.planista.company.repositories.CompanyRepository;
+import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
+import edu.pjatk.planista.shared.kernel.ports.ActionQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,8 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CompanyActionService {
     private final CompanyRepository companyRepository;
-    private final ActionRepository actionRepository;
-    private final ActionMapper mapper;
+    private final ActionQueryPort actionQueryPort;
 
     @Transactional(readOnly = true)
     public Page<ActionResponse> getActions(Long companyId, Pageable pageable) {
@@ -25,8 +23,6 @@ public class CompanyActionService {
             throw new EntityNotFoundException("Company " + companyId + " not found");
         }
 
-        return actionRepository
-                .findByCompanyId(companyId, pageable)
-                .map(mapper::toResponse);
+        return actionQueryPort.findByCompanyId(companyId, pageable);
     }
 }

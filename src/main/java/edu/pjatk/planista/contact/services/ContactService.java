@@ -2,10 +2,13 @@ package edu.pjatk.planista.contact.services;
 
 import edu.pjatk.planista.contact.dto.ContactFilter;
 import edu.pjatk.planista.contact.dto.ContactRequest;
-import edu.pjatk.planista.contact.dto.ContactResponse;
 import edu.pjatk.planista.contact.mappers.ContactMapper;
 import edu.pjatk.planista.contact.models.Contact;
 import edu.pjatk.planista.contact.repositories.ContactRepository;
+import edu.pjatk.planista.contact.repositories.ContactStatusRepository;
+import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
+import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
+import edu.pjatk.planista.shared.kernel.ports.UserQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +26,10 @@ public class ContactService {
 
     private final ContactRepository contactRepository;
     private final ContactMapper mapper;
+
+    private final UserQueryPort userQueryPort;
+    private final CompanyQueryPort companyQueryPort;
+    private final ContactStatusRepository statusRepository;
 
     @Transactional(readOnly = true)
     public Page<ContactResponse> list(Pageable pageable, ContactFilter filter) {
@@ -44,6 +51,7 @@ public class ContactService {
 
     public ContactResponse create(ContactRequest req) {
         Contact entity = mapper.toEntity(req);
+        applyRelations(entity, req);
         Contact saved = contactRepository.save(entity);
         return mapper.toResponse(saved);
     }
@@ -52,6 +60,7 @@ public class ContactService {
         Contact entity = contactRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Contact " + id + " not found"));
         mapper.updateEntity(entity, req);
+        applyRelations(entity, req);
         return mapper.toResponse(entity);
     }
 
@@ -60,5 +69,21 @@ public class ContactService {
             throw new EntityNotFoundException("Contact " + id + " not found");
         }
         contactRepository.deleteById(id);
+    }
+
+    private void applyRelations(Contact entity, ContactRequest req) {
+        if (req.companyId() != null) {
+            entity.setCompany(companyQueryPort.getReferenceById(req.companyId()));
+        } else {
+            throw new IllegalArgumentException("companyId is required");
+        }
+
+        entity.setUser(req.userId() != null
+                ? userQueryPort.getReferenceById(req.userId())
+                : null);
+
+        entity.setStatus(req.statusId() != null
+                ? statusRepository.getReferenceById(req.statusId())
+                : null);
     }
 }

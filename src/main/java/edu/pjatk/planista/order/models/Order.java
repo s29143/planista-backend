@@ -1,7 +1,7 @@
 package edu.pjatk.planista.order.models;
 
 import edu.pjatk.planista.company.models.Company;
-import edu.pjatk.planista.config.Auditable;
+import edu.pjatk.planista.config.common.Auditable;
 import edu.pjatk.planista.contact.models.Contact;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -43,4 +43,8 @@ public class Order extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")
     private OrderStatus status;
+
+    public String getName() {
+        return "#" + id + " " + product;
+    }
 }

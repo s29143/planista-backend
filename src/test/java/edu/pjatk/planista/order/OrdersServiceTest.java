@@ -2,12 +2,16 @@ package edu.pjatk.planista.order;
 
 import edu.pjatk.planista.order.dto.OrderFilter;
 import edu.pjatk.planista.order.dto.OrderRequest;
-import edu.pjatk.planista.order.dto.OrderResponse;
 import edu.pjatk.planista.order.mappers.OrderMapper;
 import edu.pjatk.planista.order.models.Order;
 import edu.pjatk.planista.order.repositories.OrderRepository;
+import edu.pjatk.planista.order.repositories.OrderStatusRepository;
+import edu.pjatk.planista.order.repositories.OrderTypeRepository;
 import edu.pjatk.planista.order.services.OrderService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
+import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
+import edu.pjatk.planista.shared.kernel.ports.ContactQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,11 +35,20 @@ class OrdersServiceTest {
     private OrderMapper mapper;
     private OrderService service;
 
+    private OrderStatusRepository statusRepository;
+    private OrderTypeRepository typeRepository;
+    private CompanyQueryPort companyQueryPort;
+    private ContactQueryPort contactQueryPort;
+
     @BeforeEach
     void setUp() {
         repository = mock(OrderRepository.class);
         mapper = mock(OrderMapper.class);
-        service = new OrderService(repository, mapper);
+        statusRepository = mock(OrderStatusRepository.class);
+        typeRepository = mock(OrderTypeRepository.class);
+        companyQueryPort = mock(CompanyQueryPort.class);
+        contactQueryPort = mock(ContactQueryPort.class);
+        service = new OrderService(repository, mapper,  statusRepository, typeRepository, companyQueryPort, contactQueryPort);
     }
 
     @Test

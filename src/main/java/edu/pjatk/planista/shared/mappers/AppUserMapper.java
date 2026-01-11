@@ -1,0 +1,41 @@
+package edu.pjatk.planista.shared.mappers;
+
+import edu.pjatk.planista.shared.dto.UserDto;
+import edu.pjatk.planista.shared.models.AppUser;
+import edu.pjatk.planista.users.dto.UserRequest;
+import org.mapstruct.*;
+
+@Mapper(
+        componentModel = "spring"
+)
+public abstract class AppUserMapper {
+    public abstract UserDto toResponse(AppUser entity);
+
+    @Mappings({
+            @Mapping(target = "password", ignore = true),
+            @Mapping(target = "enabled", ignore = true),
+            @Mapping(target = "authorities", ignore = true),
+            @Mapping(target = "role", ignore = true)
+    })
+    public abstract AppUser toEntity(UserDto req);
+
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "password", ignore = true),
+            @Mapping(target = "enabled", ignore = true),
+            @Mapping(target = "authorities", ignore = true),
+            @Mapping(target = "role", ignore = true)
+    })
+    public abstract AppUser toEntity(UserRequest req);
+
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "password", ignore = true),
+            @Mapping(target = "enabled", ignore = true),
+            @Mapping(target = "authorities", ignore = true),
+            @Mapping(target = "role", ignore = true)
+    })
+    public abstract void updateEntity(@MappingTarget AppUser target, UserRequest req);
+}

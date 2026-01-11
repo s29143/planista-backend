@@ -1,9 +1,10 @@
 package edu.pjatk.planista.contact.services;
 
 import edu.pjatk.planista.contact.repositories.ContactRepository;
-import edu.pjatk.planista.order.dto.OrderResponse;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import edu.pjatk.planista.order.mappers.OrderMapper;
 import edu.pjatk.planista.order.repositories.OrderRepository;
+import edu.pjatk.planista.shared.kernel.ports.OrderQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ContactOrderService {
     private final ContactRepository contactRepository;
-    private final OrderRepository orderRepository;
-    private final OrderMapper mapper;
+    private final OrderQueryPort orderQueryPort;
 
     @Transactional(readOnly = true)
     public Page<OrderResponse> getOrders(Long contactId, Pageable pageable) {
@@ -25,8 +25,6 @@ public class ContactOrderService {
             throw new EntityNotFoundException("Contact " + contactId + " not found");
         }
 
-        return orderRepository
-                .findByContactId(contactId, pageable)
-                .map(mapper::toResponse);
+        return orderQueryPort.findByContactId(contactId, pageable);
     }
 }

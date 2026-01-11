@@ -1,29 +1,17 @@
 package edu.pjatk.planista.execution.mappers;
 
 import edu.pjatk.planista.execution.dto.ExecutionRequest;
-import edu.pjatk.planista.execution.dto.ExecutionResponse;
 import edu.pjatk.planista.execution.models.Execution;
-import edu.pjatk.planista.process.mappers.ProcessMapper;
-import edu.pjatk.planista.process.repositories.ProcessRepository;
+import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import org.mapstruct.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(
         componentModel = "spring",
-        uses = { ProcessMapper.class }
+        uses = { ExecutionClassDtoMapper.class }
 )
-public abstract class ExecutionMapper {
-
-    @Autowired
-    protected ProcessMapper processMapper;
-
-    @Autowired
-    protected ProcessRepository processRepository;
-
-    @Mappings({
-            @Mapping(target = "process", source = "process"),
-    })
-    public abstract ExecutionResponse toResponse(Execution entity);
+public interface ExecutionMapper {
+    @Mapping(target = "process", source = "process", qualifiedByName = "processToDict")
+    ExecutionResponse toResponse(Execution entity);
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
@@ -35,16 +23,9 @@ public abstract class ExecutionMapper {
             @Mapping(target = "createdByUser", ignore = true),
             @Mapping(target = "updatedByUser", ignore = true)
     })
-    public abstract Execution toEntity(ExecutionRequest req);
+    Execution toEntity(ExecutionRequest req);
 
-    @AfterMapping
-    protected void afterToEntity(ExecutionRequest req, @MappingTarget Execution target) {
-        if (req.processId() != null) {
-            target.setProcess(processRepository.getReferenceById(req.processId()));
-        }
-    }
-
-    @BeanMapping(ignoreByDefault = false, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "process", ignore = true),
@@ -55,14 +36,5 @@ public abstract class ExecutionMapper {
             @Mapping(target = "createdByUser", ignore = true),
             @Mapping(target = "updatedByUser", ignore = true)
     })
-    public abstract void updateEntity(@MappingTarget Execution target, ExecutionRequest req);
-
-    @AfterMapping
-    protected void afterUpdateEntity(ExecutionRequest req, @MappingTarget Execution target) {
-        if (req.processId() != null) {
-            target.setProcess(processRepository.getReferenceById(req.processId()));
-        } else {
-            target.setProcess(null);
-        }
-    }
+    void updateEntity(@MappingTarget Execution target, ExecutionRequest req);
 }

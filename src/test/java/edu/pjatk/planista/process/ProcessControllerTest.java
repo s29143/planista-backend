@@ -1,14 +1,14 @@
 package edu.pjatk.planista.process;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pjatk.planista.order.dto.OrderResponse;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import edu.pjatk.planista.process.controllers.ProcessController;
 import edu.pjatk.planista.process.dto.ProcessRequest;
-import edu.pjatk.planista.process.dto.ProcessResponse;
+import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import edu.pjatk.planista.process.services.ProcessExecutionService;
 import edu.pjatk.planista.process.services.ProcessService;
-import edu.pjatk.planista.security.JwtAuthenticationFilter;
-import edu.pjatk.planista.security.JwtService;
+import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -21,7 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
@@ -71,7 +70,7 @@ class ProcessControllerTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                order,
+                new DictItemDto(10L, "test"),
                 new DictItemDto(10L, "test"),
                 new DictItemDto(30L, "test"),
                 new DictItemDto(30L, "test")

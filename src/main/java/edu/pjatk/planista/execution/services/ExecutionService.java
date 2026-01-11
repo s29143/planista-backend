@@ -1,10 +1,11 @@
 package edu.pjatk.planista.execution.services;
 
 import edu.pjatk.planista.execution.dto.ExecutionRequest;
-import edu.pjatk.planista.execution.dto.ExecutionResponse;
+import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import edu.pjatk.planista.execution.mappers.ExecutionMapper;
 import edu.pjatk.planista.execution.models.Execution;
 import edu.pjatk.planista.execution.repositories.ExecutionRepository;
+import edu.pjatk.planista.shared.kernel.ports.ProcessQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ public class ExecutionService {
 
     private final ExecutionRepository executionRepository;
     private final ExecutionMapper mapper;
+    private final ProcessQueryPort processQueryPort;
 
     @Transactional(readOnly = true)
     public Page<ExecutionResponse> list(Pageable pageable) {
@@ -35,6 +37,7 @@ public class ExecutionService {
 
     public ExecutionResponse create(ExecutionRequest req) {
         Execution entity = mapper.toEntity(req);
+        applyRelations(entity, req);
         Execution saved = executionRepository.save(entity);
         return mapper.toResponse(saved);
     }
@@ -43,6 +46,7 @@ public class ExecutionService {
         Execution entity = executionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Execution " + id + " not found"));
         mapper.updateEntity(entity, req);
+        applyRelations(entity, req);
         return mapper.toResponse(entity);
     }
 
@@ -51,5 +55,13 @@ public class ExecutionService {
             throw new EntityNotFoundException("Execution " + id + " not found");
         }
         executionRepository.deleteById(id);
+    }
+
+    private void applyRelations(Execution entity, ExecutionRequest req) {
+        if (req.processId() != null) {
+            entity.setProcess(processQueryPort.getReferenceById(req.processId()));
+        } else {
+            throw new IllegalArgumentException("processId is required");
+        }
     }
 }

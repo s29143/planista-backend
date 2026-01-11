@@ -1,7 +1,9 @@
 package edu.pjatk.planista.process.models;
 
-import edu.pjatk.planista.config.Auditable;
+import edu.pjatk.planista.config.common.Auditable;
 import edu.pjatk.planista.order.models.Order;
+import edu.pjatk.planista.shared.models.Technology;
+import edu.pjatk.planista.shared.models.Workstation;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,4 +39,8 @@ public class Process extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workstation_id")
     private Workstation workstation;
+
+    public String getName() {
+        return "#" + id;
+    }
 }

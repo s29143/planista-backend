@@ -1,9 +1,8 @@
 package edu.pjatk.planista.order.services;
 
 import edu.pjatk.planista.order.repositories.OrderRepository;
-import edu.pjatk.planista.process.dto.ProcessResponse;
-import edu.pjatk.planista.process.mappers.ProcessMapper;
-import edu.pjatk.planista.process.repositories.ProcessRepository;
+import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
+import edu.pjatk.planista.shared.kernel.ports.ProcessQueryPort;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,8 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class OrderProcessService {
     private final OrderRepository orderRepository;
-    private final ProcessRepository processRepository;
-    private final ProcessMapper mapper;
+    private final ProcessQueryPort processQueryPort;
 
     @Transactional(readOnly = true)
     public Page<ProcessResponse> getProcesses(Long orderId, Pageable pageable) {
@@ -25,8 +23,6 @@ public class OrderProcessService {
             throw new EntityNotFoundException("Order " + orderId + " not found");
         }
 
-        return processRepository
-                .findByOrderId(orderId, pageable)
-                .map(mapper::toResponse);
+        return processQueryPort.findByOrderId(orderId, pageable);
     }
 }

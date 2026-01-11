@@ -1,5 +1,6 @@
 package edu.pjatk.planista.auth;
 
+import edu.pjatk.planista.shared.models.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

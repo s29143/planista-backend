@@ -1,10 +1,10 @@
 package edu.pjatk.planista.users;
 
-import edu.pjatk.planista.auth.AppUser;
-import edu.pjatk.planista.auth.AppUserMapper;
 import edu.pjatk.planista.auth.UserRole;
-import edu.pjatk.planista.auth.dto.UserDto;
-import edu.pjatk.planista.company.models.Company;
+import edu.pjatk.planista.shared.dto.UserDto;
+import edu.pjatk.planista.shared.kernel.ports.UserQueryPort;
+import edu.pjatk.planista.shared.mappers.AppUserMapper;
+import edu.pjatk.planista.shared.models.AppUser;
 import edu.pjatk.planista.users.dto.UserRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import static edu.pjatk.planista.users.UserSpecs.searchLike;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AppUserService {
+public class AppUserService implements UserQueryPort {
     private final AppUserRepository appUserRepository;
     private final AppUserMapper mapper;
     private final PasswordEncoder passwordEncoder;
@@ -66,5 +66,10 @@ public class AppUserService {
             throw new EntityNotFoundException("User " + id + " not found");
         }
         appUserRepository.deleteById(id);
+    }
+
+    @Override
+    public AppUser getReferenceById(Long id) {
+        return appUserRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

@@ -1,8 +1,8 @@
 package edu.pjatk.planista.contact.models;
 
-import edu.pjatk.planista.auth.AppUser;
+import edu.pjatk.planista.shared.models.AppUser;
 import edu.pjatk.planista.company.models.Company;
-import edu.pjatk.planista.config.Auditable;
+import edu.pjatk.planista.config.common.Auditable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,4 +46,8 @@ public class Contact extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")
     private ContactStatus status;
+
+    public String getName() {
+        return firstName + " " + lastName + " (" + company.getShortName() + ")";
+    }
 }
