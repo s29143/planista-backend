@@ -53,8 +53,8 @@ public class ActionService {
 
     public ActionResponse create(ActionRequest req) {
         Action entity = mapper.toEntity(req);
-        Action saved = actionRepository.save(entity);
         applyRelations(entity, req);
+        Action saved = actionRepository.save(entity);
         return mapper.toResponse(saved);
     }
 
