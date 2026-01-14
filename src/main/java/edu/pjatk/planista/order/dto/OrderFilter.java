@@ -6,5 +6,5 @@ public record OrderFilter(
         List<Long> statusIds,
         String company,
         String product,
-        String search
+        List<Long> typeIds
 ) { }

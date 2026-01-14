@@ -35,9 +35,9 @@ public class OrderController {
                                                      @RequestParam(required = false) String product,
                                                      @RequestParam(required = false) List<Long> statusId,
                                                      @RequestParam(required = false) String company,
-                                                     @RequestParam(required = false) String search
+                                                     @RequestParam(required = false) List<Long> typeId
                                                       ) {
-        OrderFilter filter = new OrderFilter(statusId, company, product, search);
+        OrderFilter filter = new OrderFilter(statusId, company, product, typeId);
         return ResponseEntity.ok(service.list(pageable, filter));
     }
 

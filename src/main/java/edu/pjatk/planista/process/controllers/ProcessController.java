@@ -32,7 +32,7 @@ public class ProcessController {
         return ResponseEntity.ok(service.list(pageable));
     }
 
-    @GetMapping("/{processId}/orders")
+    @GetMapping("/{processId}/executions")
     public Page<ExecutionResponse> getProcessExecutions(
             @PathVariable Long processId,
             @PageableDefault(size = 20, sort = "id") Pageable pageable
