@@ -21,6 +21,6 @@ public class Execution extends Auditable {
     private Long timeInSeconds;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "process_id")
+    @JoinColumn(name = "process_id", nullable = false)
     private Process process;
 }

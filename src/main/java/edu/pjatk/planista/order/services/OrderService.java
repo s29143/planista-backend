@@ -39,7 +39,7 @@ public class OrderService {
                 searchProductLike(filter.product()),
                 statusIdIn(filter.statusIds()),
                 searchCompaniesLike(filter.company()),
-                searchLike(filter.search())
+                typeIdIn(filter.typeIds())
         );
         return orderRepository.findAll(spec, pageable).map(mapper::toResponse);
     }

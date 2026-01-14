@@ -34,6 +34,11 @@ public final class OrderSpecs {
         return (root, cq, cb) -> root.join("status").get("id").in(ids);
     }
 
+    public static Specification<Order> typeIdIn(Collection<Long> ids) {
+        if (ids == null || ids.isEmpty()) return null;
+        return (root, cq, cb) -> root.join("type").get("id").in(ids);
+    }
+
     public static Specification<Order> searchCompaniesLike(String search) {
         if (search == null || search.isBlank()) return null;
 

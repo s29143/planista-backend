@@ -42,7 +42,6 @@ public interface ProcessMapper {
             @Mapping(target = "technology", ignore = true),
             @Mapping(target = "order", ignore = true),
 
-            // audyt
             @Mapping(target = "createdAt", ignore = true),
             @Mapping(target = "updatedAt", ignore = true),
             @Mapping(target = "createdBy", ignore = true),
