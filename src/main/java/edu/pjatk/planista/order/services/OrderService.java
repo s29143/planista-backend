@@ -7,9 +7,11 @@ import edu.pjatk.planista.order.models.Order;
 import edu.pjatk.planista.order.repositories.OrderRepository;
 import edu.pjatk.planista.order.repositories.OrderStatusRepository;
 import edu.pjatk.planista.order.repositories.OrderTypeRepository;
+import edu.pjatk.planista.shared.kernel.dto.GanttItem;
 import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
 import edu.pjatk.planista.shared.kernel.ports.ContactQueryPort;
+import edu.pjatk.planista.shared.kernel.ports.GanttProvider;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,12 +20,15 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import static edu.pjatk.planista.order.specs.OrderSpecs.*;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class OrderService {
+public class OrderService implements GanttProvider {
 
     private final OrderRepository orderRepository;
     private final OrderMapper mapper;
@@ -89,5 +94,13 @@ public class OrderService {
         entity.setContact(req.contactId() != null
                 ? contactQueryPort.getReferenceById(req.contactId())
                 : null);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GanttItem> getItems(LocalDate from, LocalDate to) {
+        if (from.isAfter(to)) {
+            throw new IllegalArgumentException("from > to");
+        }
+        return orderRepository.findForGantt(from, to).stream().map(mapper::toGanttItem).toList();
     }
 }

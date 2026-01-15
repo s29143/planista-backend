@@ -4,10 +4,13 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.Duration;
+import java.time.LocalDate;
 
 public record ProcessRequest(
         @Min(value = 0, message = "validation.min")
         Long quantity,
+        LocalDate dateFrom,
+        LocalDate dateTo,
         @NotNull
         @Min(value = 1, message = "validation.min")
         Long plannedTimeSeconds,

@@ -2,8 +2,11 @@ package edu.pjatk.planista.process.mappers;
 
 import edu.pjatk.planista.process.dto.ProcessRequest;
 import edu.pjatk.planista.process.models.Process;
+import edu.pjatk.planista.shared.kernel.dto.GanttItem;
 import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import org.mapstruct.*;
+
+import java.time.LocalDate;
 
 @Mapper(
         componentModel = "spring",
@@ -50,4 +53,22 @@ public interface ProcessMapper {
             @Mapping(target = "updatedByUser", ignore = true)
     })
     void updateEntity(@MappingTarget Process target, ProcessRequest req);
+
+
+    @Mapping(target = "id", expression = "java(\"PROCESS-\" + entity.getId())")
+    @Mapping(target = "text", expression = "java(entity.getName())")
+    @Mapping(target = "start", source = "dateFrom")
+    @Mapping(target = "end", source = "entity", qualifiedByName = "processEnd")
+    @Mapping(target = "type", constant = "PROCESS")
+    @Mapping(target = "parentId", expression = "java(\"ORDER-\" + entity.getOrder().getId())")
+    GanttItem toGanttItem(Process entity);
+
+
+    @Named("processEnd")
+    default LocalDate processEnd(Process p) {
+        if (p.getDateFrom() == null) return null;
+        return p.getDateTo() != null
+                ? p.getDateTo()
+                : p.getDateFrom().plusDays(1);
+    }
 }

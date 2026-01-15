@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -22,6 +24,10 @@ public class Process extends Auditable {
 
     @Column(nullable = false)
     private Long plannedTimeSeconds;
+
+    private LocalDate dateFrom;
+
+    private LocalDate dateTo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
@@ -41,6 +47,6 @@ public class Process extends Auditable {
     private Workstation workstation;
 
     public String getName() {
-        return "#" + id;
+        return order.getName() + " / " + id;
     }
 }

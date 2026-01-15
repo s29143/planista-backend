@@ -5,7 +5,9 @@ import edu.pjatk.planista.process.mappers.ProcessMapper;
 import edu.pjatk.planista.process.models.Process;
 import edu.pjatk.planista.process.repositories.ProcessRepository;
 import edu.pjatk.planista.process.repositories.ProcessStatusRepository;
+import edu.pjatk.planista.shared.kernel.dto.GanttItem;
 import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
+import edu.pjatk.planista.shared.kernel.ports.GanttProvider;
 import edu.pjatk.planista.shared.kernel.ports.OrderQueryPort;
 import edu.pjatk.planista.shared.repositories.TechnologyRepository;
 import edu.pjatk.planista.shared.repositories.WorkstationRepository;
@@ -16,11 +18,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ProcessService {
+public class ProcessService implements GanttProvider {
 
     private final ProcessRepository processRepository;
     private final ProcessMapper mapper;
@@ -81,5 +86,12 @@ public class ProcessService {
                 : null);
 
         entity.setOrder(orderQueryPort.getReferenceById(req.orderId()));
+    }
+
+    @Override
+    public List<GanttItem> getItems(LocalDate from, LocalDate to) {
+        return processRepository.findForGantt(from, to).stream()
+                .map(mapper::toGanttItem)
+                .toList();
     }
 }

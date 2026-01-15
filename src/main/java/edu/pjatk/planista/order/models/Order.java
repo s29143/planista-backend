@@ -12,7 +12,13 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@Table(name = "commission")
+@Table(
+        name = "commission",
+        indexes = {
+                @Index(name = "idx_order_date_from", columnList = "dateFrom"),
+                @Index(name = "idx_order_date_to", columnList = "dateTo")
+        }
+)
 public class Order extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -2,8 +2,11 @@ package edu.pjatk.planista.order.mappers;
 
 import edu.pjatk.planista.order.dto.OrderRequest;
 import edu.pjatk.planista.order.models.Order;
+import edu.pjatk.planista.shared.kernel.dto.GanttItem;
 import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import org.mapstruct.*;
+
+import java.time.LocalDate;
 
 @Mapper(
         componentModel = "spring",
@@ -49,4 +52,18 @@ public interface OrderMapper {
             @Mapping(target = "updatedByUser", ignore = true)
     })
     void updateEntity(@MappingTarget Order target, OrderRequest req);
+
+    @Mapping(target = "id", expression = "java(\"ORDER-\" + entity.getId())")
+    @Mapping(target = "text", expression = "java(entity.getName())")
+    @Mapping(target = "start", source = "dateFrom")
+    @Mapping(target = "end", source = "entity", qualifiedByName = "orderToEnd")
+    @Mapping(target = "type", constant = "ORDER")
+    @Mapping(target = "parentId", ignore = true)
+    GanttItem toGanttItem(Order entity);
+
+    @Named("orderToEnd")
+    default LocalDate orderToEnd(Order o) {
+        if (o.getDateFrom() == null) return null;
+        return (o.getDateTo() != null) ? o.getDateTo() : o.getDateFrom().plusDays(1);
+    }
 }
