@@ -21,6 +21,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -51,6 +52,8 @@ class ExecutionControllerTest {
         ProcessResponse process = new ProcessResponse(
                 10L,
                 25L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 Instant.now(),
                 Instant.now(),

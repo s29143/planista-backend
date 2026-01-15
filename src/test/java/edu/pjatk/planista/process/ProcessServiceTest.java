@@ -7,7 +7,6 @@ import edu.pjatk.planista.process.repositories.ProcessRepository;
 import edu.pjatk.planista.process.repositories.ProcessStatusRepository;
 import edu.pjatk.planista.process.services.ProcessService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
-import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
 import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import edu.pjatk.planista.shared.kernel.ports.OrderQueryPort;
 import edu.pjatk.planista.shared.repositories.TechnologyRepository;
@@ -33,47 +32,31 @@ class ProcessServiceTest {
     private ProcessRepository processRepository;
     private ProcessMapper mapper;
     private ProcessService service;
-    private ProcessStatusRepository statusRepository;
-    private WorkstationRepository workstationRepository;
-    private TechnologyRepository technologyRepository;
-    private OrderQueryPort orderQueryPort;
 
     @BeforeEach
     void setUp() {
         processRepository = mock(ProcessRepository.class);
         mapper = mock(ProcessMapper.class);
-        statusRepository = mock(ProcessStatusRepository.class);
-        workstationRepository = mock(WorkstationRepository.class);
-        technologyRepository = mock(TechnologyRepository.class);
-        orderQueryPort = mock(OrderQueryPort.class);
-        service = new ProcessService(processRepository, mapper,  statusRepository, workstationRepository, technologyRepository, orderQueryPort);
+        ProcessStatusRepository statusRepository = mock(ProcessStatusRepository.class);
+        WorkstationRepository workstationRepository = mock(WorkstationRepository.class);
+        TechnologyRepository technologyRepository = mock(TechnologyRepository.class);
+        OrderQueryPort orderQueryPort = mock(OrderQueryPort.class);
+        service = new ProcessService(processRepository, mapper, statusRepository, workstationRepository, technologyRepository, orderQueryPort);
     }
-
-    OrderResponse orderResponse() {
-        return new OrderResponse(
-                10L,"N", LocalDate.now(), LocalDate.now(),
-                25L,
-                Instant.now(),
-                Instant.now(),
-                new DictItemDto(1L, "test"),
-                null,
-                null,
-                null
-        );
-    }
-
+    
     @Test
     void create_shouldMapAndSave_andReturnResponse() {
         //given
         var req = new ProcessRequest(
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 1L,
                 10L,
                 20L,
                 30L
         );
-        var order = orderResponse();
         Process entityToSave = new Process();
         Process saved = new Process();
         saved.setId(42L);
@@ -81,6 +64,8 @@ class ProcessServiceTest {
         ProcessResponse response = new ProcessResponse(
                 42L,
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 Instant.now(),
                 Instant.now(),
@@ -108,9 +93,10 @@ class ProcessServiceTest {
     void update_shouldUpdateManagedEntity_andReturnResponse() {
         //given
         Long id = 10L;
-        var order = orderResponse();
         var req = new ProcessRequest(
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 1L,
                 10L,
@@ -124,6 +110,8 @@ class ProcessServiceTest {
         ProcessResponse response = new ProcessResponse(
                 10L,
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 Instant.now(),
                 Instant.now(),
@@ -152,6 +140,8 @@ class ProcessServiceTest {
         Long id = 999L;
         var req = new ProcessRequest(
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 1L,
                 10L,
@@ -171,10 +161,11 @@ class ProcessServiceTest {
         Long id = 5L;
         Process entity = new Process();
         entity.setId(id);
-        var order = orderResponse();
         ProcessResponse resp = new ProcessResponse(
                 5L,
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 Instant.now(),
                 Instant.now(),
@@ -222,11 +213,11 @@ class ProcessServiceTest {
         Process e1 = new Process(); e1.setId(1L);
         Process e2 = new Process(); e2.setId(2L);
         Page<Process> page = new PageImpl<>(List.of(e1, e2), pageable, 2);
-        var order = orderResponse();
-
         ProcessResponse r1 = new ProcessResponse(
                 1L,
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 Instant.now(),
                 Instant.now(),
@@ -237,6 +228,8 @@ class ProcessServiceTest {
         );
         ProcessResponse r2 = new ProcessResponse(2L,
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 Instant.now(),
                 Instant.now(),

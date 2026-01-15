@@ -67,6 +67,8 @@ class ProcessControllerTest {
         return new ProcessResponse(
                 1L,
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 Instant.now(),
                 Instant.now(),
@@ -107,6 +109,8 @@ class ProcessControllerTest {
     void createReturnsCreatedProcess() throws Exception {
         var request = new ProcessRequest(
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 1L,
                 10L,
@@ -129,6 +133,8 @@ class ProcessControllerTest {
     void updateReturnsUpdatedProcess() throws Exception {
         var request = new ProcessRequest(
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 1L,
                 10L,
@@ -139,6 +145,8 @@ class ProcessControllerTest {
         var updated = new ProcessResponse(
                 1L,
                 20L,
+                LocalDate.now(),
+                LocalDate.now(),
                 1L,
                 Instant.now(),
                 Instant.now(),
