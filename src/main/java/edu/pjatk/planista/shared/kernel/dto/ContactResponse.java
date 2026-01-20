@@ -1,6 +1,7 @@
 package edu.pjatk.planista.shared.kernel.dto;
 
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 
 import java.time.Instant;
 
@@ -16,7 +17,7 @@ public record ContactResponse(
         boolean emailAgreement,
         Instant createdAt,
         Instant updatedAt,
-        DictItemDto user,
-        DictItemDto company,
+        IdNameDto user,
+        IdNameDto company,
         DictItemDto status
 ) {}

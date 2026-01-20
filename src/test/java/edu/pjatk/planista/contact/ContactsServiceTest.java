@@ -8,6 +8,7 @@ import edu.pjatk.planista.contact.repositories.ContactRepository;
 import edu.pjatk.planista.contact.repositories.ContactStatusRepository;
 import edu.pjatk.planista.contact.services.ContactService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
 import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
 import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
@@ -53,7 +54,7 @@ class ContactsServiceTest {
                 null,null,null,null,null,null,null,null,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
+                new IdNameDto(1L, "test"),
                 null,
                 null,
                 null,
@@ -93,9 +94,9 @@ class ContactsServiceTest {
                 true,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new IdNameDto(10L, "test"),
+                new DictItemDto(30L, "test", null)
         );
 
         given(mapper.toEntity(req)).willReturn(entityToSave);
@@ -146,9 +147,9 @@ class ContactsServiceTest {
                 true,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new IdNameDto(10L, "test"),
+                new DictItemDto(30L, "test", null)
         );
 
         given(ContactRepository.findById(id)).willReturn(Optional.of(existing));
@@ -207,9 +208,9 @@ class ContactsServiceTest {
                 true,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new IdNameDto(10L, "test"),
+                new DictItemDto(30L, "test", null)
         );
         given(ContactRepository.findById(id)).willReturn(Optional.of(entity));
         given(mapper.toResponse(entity)).willReturn(resp);
@@ -256,16 +257,16 @@ class ContactsServiceTest {
         ContactResponse r1 = new ContactResponse(1L,null,null,null,null,null,null,false, false,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(1L, "test")
+                new IdNameDto(1L, "test"),
+                new IdNameDto(10L, "test"),
+                new DictItemDto(1L, "test", null)
         );
         ContactResponse r2 = new ContactResponse(2L,null,null,null,null,null,null,false, false,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(1L, "test")
+                new IdNameDto(1L, "test"),
+                new IdNameDto(10L, "test"),
+                new DictItemDto(1L, "test", null)
                 );
 
         given(ContactRepository.findAll(any(Specification.class), eq(pageable))).willReturn(page);

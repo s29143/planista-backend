@@ -7,7 +7,7 @@ import edu.pjatk.planista.action.models.Action;
 import edu.pjatk.planista.action.repositories.ActionRepository;
 import edu.pjatk.planista.action.repositories.ActionTypeRepository;
 import edu.pjatk.planista.action.services.ActionService;
-import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
 import edu.pjatk.planista.shared.kernel.ports.CompanyQueryPort;
 import edu.pjatk.planista.shared.kernel.ports.ContactQueryPort;
@@ -77,7 +77,7 @@ class ActionsServiceTest {
                 false,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
+                new IdNameDto(10L, "test"),
                 null,
                 null,
                 null
@@ -125,7 +125,7 @@ class ActionsServiceTest {
                 false,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
+                new IdNameDto(10L, "test"),
                 null,
                 null,
                 null
@@ -181,7 +181,7 @@ class ActionsServiceTest {
                 false,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
+                new IdNameDto(10L, "test"),
                 null,
                 null,
                 null
@@ -235,7 +235,7 @@ class ActionsServiceTest {
                 false,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
+                new IdNameDto(10L, "test"),
                 null,
                 null,
                 null
@@ -248,7 +248,7 @@ class ActionsServiceTest {
                 false,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
+                new IdNameDto(10L, "test"),
                 null,
                 null,
                 null

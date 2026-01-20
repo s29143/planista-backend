@@ -1,6 +1,7 @@
 package edu.pjatk.planista.shared.kernel.dto;
 
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ public record OrderResponse(
         Instant createdAt,
         Instant updatedAt,
         DictItemDto status,
-        DictItemDto company,
-        DictItemDto contact,
+        IdNameDto company,
+        IdNameDto contact,
         DictItemDto type
 ) {}

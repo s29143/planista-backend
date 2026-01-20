@@ -6,7 +6,7 @@ import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.execution.controllers.ExecutionController;
 import edu.pjatk.planista.execution.dto.ExecutionRequest;
 import edu.pjatk.planista.execution.services.ExecutionService;
-import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import org.junit.jupiter.api.Test;
@@ -69,7 +69,7 @@ class ExecutionControllerTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test")
+                new IdNameDto(10L, "test")
         );
     }
 

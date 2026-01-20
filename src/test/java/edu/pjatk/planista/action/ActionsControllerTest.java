@@ -7,6 +7,7 @@ import edu.pjatk.planista.action.services.ActionService;
 import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import edu.pjatk.planista.shared.kernel.dto.ActionResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -58,10 +59,10 @@ class ActionsControllerTest {
                 false,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(30L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(1L, "test"),
-                new DictItemDto(10L, "test")
+                new IdNameDto(30L, "test"),
+                new IdNameDto(10L, "test"),
+                new IdNameDto(1L, "test"),
+                new DictItemDto(10L, "test", null)
         );
     }
 

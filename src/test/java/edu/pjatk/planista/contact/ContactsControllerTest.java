@@ -9,6 +9,7 @@ import edu.pjatk.planista.contact.services.ContactActionService;
 import edu.pjatk.planista.contact.services.ContactOrderService;
 import edu.pjatk.planista.contact.services.ContactService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -67,9 +68,9 @@ class ContactsControllerTest {
                 true,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new IdNameDto(10L, "test"),
+                new DictItemDto(30L, "test", null)
         );
     }
 
@@ -155,7 +156,7 @@ class ContactsControllerTest {
                 true,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
+                new IdNameDto(1L, "test"),
                 null,
                 null
         );

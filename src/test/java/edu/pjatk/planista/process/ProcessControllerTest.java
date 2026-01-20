@@ -1,15 +1,16 @@
 package edu.pjatk.planista.process;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
-import edu.pjatk.planista.process.controllers.ProcessController;
-import edu.pjatk.planista.process.dto.ProcessRequest;
-import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
-import edu.pjatk.planista.process.services.ProcessExecutionService;
-import edu.pjatk.planista.process.services.ProcessService;
 import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
+import edu.pjatk.planista.process.controllers.ProcessController;
+import edu.pjatk.planista.process.dto.ProcessRequest;
+import edu.pjatk.planista.process.services.ProcessExecutionService;
+import edu.pjatk.planista.process.services.ProcessService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
+import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
+import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ class ProcessControllerTest {
                 25L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
+                new DictItemDto(1L, "test", null),
                 null,
                 null,
                 null
@@ -72,10 +73,10 @@ class ProcessControllerTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new DictItemDto(10L, "test", null),
+                new DictItemDto(30L, "test", null),
+                new DictItemDto(30L, "test", null)
         );
     }
 
@@ -151,9 +152,9 @@ class ProcessControllerTest {
                 Instant.now(),
                 Instant.now(),
                 null,
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test"),
-                new DictItemDto(30L, "test")
+                new DictItemDto(10L, "test", null),
+                new DictItemDto(30L, "test", null),
+                new DictItemDto(30L, "test", null)
         );
 
         Mockito.when(service.update(eq(1L), any())).thenReturn(updated);

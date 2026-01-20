@@ -3,7 +3,6 @@ package edu.pjatk.planista.company;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.pjatk.planista.company.controllers.CompanyController;
 import edu.pjatk.planista.company.dto.CompanyRequest;
-import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
 import edu.pjatk.planista.company.services.CompanyActionService;
 import edu.pjatk.planista.company.services.CompanyContactService;
 import edu.pjatk.planista.company.services.CompanyOrderService;
@@ -11,6 +10,8 @@ import edu.pjatk.planista.company.services.CompanyService;
 import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
+import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,9 +75,9 @@ class CompanyControllerTest {
                 "Test comments",
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
+                new IdNameDto(10L, "test"),
                 null,
-                new DictItemDto(30L, "test"),
+                new DictItemDto(30L, "test", null),
                 null,
                 null
         );
@@ -177,7 +178,7 @@ class CompanyControllerTest {
                 "Updated comments",
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
+                new IdNameDto(1L, "test"),
                 null,
                 null,
                 null,

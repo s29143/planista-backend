@@ -76,10 +76,10 @@ class OrdersServiceTest {
                 50L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(30L, "test"),
+                new DictItemDto(30L, "test", null),
                 null,
                 null,
-                new DictItemDto(10L, "test")
+                new DictItemDto(10L, "test", null)
         );
 
         given(mapper.toEntity(req)).willReturn(entityToSave);
@@ -122,10 +122,10 @@ class OrdersServiceTest {
                 50L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(30L, "test"),
+                new DictItemDto(30L, "test", null),
                 null,
                 null,
-                new DictItemDto(10L, "test")
+                new DictItemDto(10L, "test", null)
         );
 
         given(repository.findById(id)).willReturn(Optional.of(existing));
@@ -176,10 +176,10 @@ class OrdersServiceTest {
                 50L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(30L, "test"),
+                new DictItemDto(30L, "test", null),
                 null,
                 null,
-                new DictItemDto(10L, "test")
+                new DictItemDto(10L, "test", null)
         );
         given(repository.findById(id)).willReturn(Optional.of(entity));
         given(mapper.toResponse(entity)).willReturn(resp);
@@ -229,10 +229,10 @@ class OrdersServiceTest {
                 50L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(30L, "test"),
+                new DictItemDto(30L, "test", null),
                 null,
                 null,
-                new DictItemDto(10L, "test")
+                new DictItemDto(10L, "test", null)
         );
         OrderResponse r2 = new OrderResponse(2L,
                 "Product",
@@ -241,10 +241,10 @@ class OrdersServiceTest {
                 50L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(30L, "test"),
+                new DictItemDto(30L, "test", null),
                 null,
                 null,
-                new DictItemDto(10L, "test")
+                new DictItemDto(10L, "test", null)
                 );
 
         given(repository.findAll(any(Specification.class), eq(pageable))).willReturn(page);

@@ -3,6 +3,7 @@ package edu.pjatk.planista.process.mappers;
 import edu.pjatk.planista.order.models.Order;
 import edu.pjatk.planista.process.models.ProcessStatus;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import edu.pjatk.planista.shared.models.Technology;
 import edu.pjatk.planista.shared.models.Workstation;
 import org.mapstruct.Named;
@@ -12,21 +13,21 @@ import org.springframework.stereotype.Component;
 public class ProcessClassDtoMappers {
     @Named("statusToDict")
     public DictItemDto statusToDict(ProcessStatus s) {
-        return s == null ? null : new DictItemDto(s.getId(), s.getName());
+        return s == null ? null : new DictItemDto(s.getId(), s.getName(), s.getColor());
     }
 
     @Named("technologyToDict")
     public DictItemDto technologyToDict(Technology s) {
-        return s == null ? null : new DictItemDto(s.getId(), s.getName());
+        return s == null ? null : new DictItemDto(s.getId(), s.getName(), s.getColor());
     }
 
     @Named("workstationToDict")
     public DictItemDto workstationToDict(Workstation s) {
-        return s == null ? null : new DictItemDto(s.getId(), s.getName());
+        return s == null ? null : new DictItemDto(s.getId(), s.getName(), s.getColor());
     }
 
     @Named("orderToDict")
-    public DictItemDto orderToDict(Order o) {
-        return o == null ? null : new DictItemDto(o.getId(), o.getName());
+    public IdNameDto orderToDict(Order o) {
+        return o == null ? null : new IdNameDto(o.getId(), o.getName());
     }
 }

@@ -2,6 +2,7 @@ package edu.pjatk.planista.execution.mappers;
 
 import edu.pjatk.planista.process.models.Process;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 
@@ -9,8 +10,8 @@ import org.mapstruct.Named;
 public class ExecutionClassDtoMapper {
 
     @Named("processToDict")
-    public DictItemDto processToDict(Process p) {
+    public IdNameDto processToDict(Process p) {
         if (p == null) return null;
-        return new DictItemDto(p.getId(), p.getName());
+        return new IdNameDto(p.getId(), p.getName());
     }
 }

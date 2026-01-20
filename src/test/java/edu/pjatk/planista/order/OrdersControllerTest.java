@@ -8,6 +8,7 @@ import edu.pjatk.planista.order.dto.OrderRequest;
 import edu.pjatk.planista.order.services.OrderProcessService;
 import edu.pjatk.planista.order.services.OrderService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
 import edu.pjatk.planista.shared.kernel.dto.ContactResponse;
 import edu.pjatk.planista.shared.kernel.dto.OrderResponse;
@@ -59,7 +60,7 @@ class OrdersControllerTest {
             null,null,null,null,null,null,null,null,
             Instant.now(),
             Instant.now(),
-            new DictItemDto(1L, "test"),
+            new IdNameDto(1L, "test"),
             null,
             null,
             null,
@@ -78,9 +79,9 @@ class OrdersControllerTest {
                 true,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new IdNameDto(10L, "test"),
+                new DictItemDto(30L, "test", null)
         );
 
         return new OrderResponse(
@@ -91,10 +92,10 @@ class OrdersControllerTest {
                 50L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(30L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test")
+                new DictItemDto(30L, "test", null),
+                new IdNameDto(10L, "test"),
+                new IdNameDto(10L, "test"),
+                new DictItemDto(10L, "test", null)
         );
     }
 
@@ -170,10 +171,10 @@ class OrdersControllerTest {
                 50L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(30L, "test"),
+                new DictItemDto(30L, "test", null),
                 null,
                 null,
-                new DictItemDto(10L, "test")
+                new DictItemDto(10L, "test", null)
         );
 
         Mockito.when(service.update(eq(1L), any())).thenReturn(updated);

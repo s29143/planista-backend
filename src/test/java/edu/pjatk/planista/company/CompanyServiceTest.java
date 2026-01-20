@@ -8,7 +8,7 @@ import edu.pjatk.planista.company.repositories.CompanyAcquiredRepository;
 import edu.pjatk.planista.company.repositories.CompanyRepository;
 import edu.pjatk.planista.company.repositories.CompanyStatusRepository;
 import edu.pjatk.planista.company.services.CompanyService;
-import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import edu.pjatk.planista.shared.kernel.dto.CompanyResponse;
 import edu.pjatk.planista.shared.kernel.ports.UserQueryPort;
 import edu.pjatk.planista.shared.repositories.CountryRepository;
@@ -68,7 +68,7 @@ class CompanyServiceTest {
                 "00-001","Street","1","2","123456789","a@b.com","https://acme.com","notes",
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
+                new IdNameDto(1L, "test"),
                 null,
                 null,
                 null,
@@ -105,7 +105,7 @@ class CompanyServiceTest {
                 null,null,null,null,null,null,null,null,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
+                new IdNameDto(1L, "test"),
                 null,
                 null,
                 null,
@@ -150,7 +150,7 @@ class CompanyServiceTest {
                 null,null,null,null,null,null,null,null,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
+                new IdNameDto(1L, "test"),
                 null,
                 null,
                 null,
@@ -202,7 +202,7 @@ class CompanyServiceTest {
                 null,null,null,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
+                new IdNameDto(1L, "test"),
                 null,
                 null,
                 null,
@@ -211,7 +211,7 @@ class CompanyServiceTest {
                 null,null,null,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(1L, "test"),
+                new IdNameDto(1L, "test"),
                 null,
                 null,
                 null,

@@ -5,7 +5,7 @@ import edu.pjatk.planista.execution.mappers.ExecutionMapper;
 import edu.pjatk.planista.execution.models.Execution;
 import edu.pjatk.planista.execution.repositories.ExecutionRepository;
 import edu.pjatk.planista.execution.services.ExecutionService;
-import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import edu.pjatk.planista.shared.kernel.dto.ExecutionResponse;
 import edu.pjatk.planista.shared.kernel.ports.ProcessQueryPort;
 import jakarta.persistence.EntityNotFoundException;
@@ -56,7 +56,7 @@ class ExecutionServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test")
+                new IdNameDto(10L, "test")
         );
 
         given(mapper.toEntity(req)).willReturn(entityToSave);
@@ -92,7 +92,7 @@ class ExecutionServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test")
+                new IdNameDto(10L, "test")
         );
 
         given(executionRepository.findById(id)).willReturn(Optional.of(existing));
@@ -136,7 +136,7 @@ class ExecutionServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test")
+                new IdNameDto(10L, "test")
         );
         given(executionRepository.findById(id)).willReturn(Optional.of(entity));
         given(mapper.toResponse(entity)).willReturn(resp);
@@ -183,14 +183,14 @@ class ExecutionServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test")
+                new IdNameDto(10L, "test")
                 );
         ExecutionResponse r2 = new ExecutionResponse(2L,
                 20L,
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test")
+                new IdNameDto(10L, "test")
                 );
 
         given(executionRepository.findAll(eq(pageable))).willReturn(page);

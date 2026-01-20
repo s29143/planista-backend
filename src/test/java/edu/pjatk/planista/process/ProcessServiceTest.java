@@ -7,6 +7,7 @@ import edu.pjatk.planista.process.repositories.ProcessRepository;
 import edu.pjatk.planista.process.repositories.ProcessStatusRepository;
 import edu.pjatk.planista.process.services.ProcessService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
+import edu.pjatk.planista.shared.dto.IdNameDto;
 import edu.pjatk.planista.shared.kernel.dto.ProcessResponse;
 import edu.pjatk.planista.shared.kernel.ports.OrderQueryPort;
 import edu.pjatk.planista.shared.repositories.TechnologyRepository;
@@ -69,10 +70,10 @@ class ProcessServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new DictItemDto(10L, "test", null),
+                new DictItemDto(30L, "test", null),
+                new DictItemDto(30L, "test", null)
         );
 
         given(mapper.toEntity(req)).willReturn(entityToSave);
@@ -115,10 +116,10 @@ class ProcessServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new DictItemDto(10L, "test", null),
+                new DictItemDto(30L, "test", null),
+                new DictItemDto(30L, "test", null)
         );
 
         given(processRepository.findById(id)).willReturn(Optional.of(existing));
@@ -169,10 +170,10 @@ class ProcessServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new DictItemDto(10L, "test", null),
+                new DictItemDto(30L, "test", null),
+                new DictItemDto(30L, "test", null)
         );
         given(processRepository.findById(id)).willReturn(Optional.of(entity));
         given(mapper.toResponse(entity)).willReturn(resp);
@@ -221,10 +222,10 @@ class ProcessServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new DictItemDto(10L, "test", null),
+                new DictItemDto(30L, "test", null),
+                new DictItemDto(30L, "test", null)
         );
         ProcessResponse r2 = new ProcessResponse(2L,
                 20L,
@@ -233,10 +234,10 @@ class ProcessServiceTest {
                 1L,
                 Instant.now(),
                 Instant.now(),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(10L, "test"),
-                new DictItemDto(30L, "test"),
-                new DictItemDto(30L, "test")
+                new IdNameDto(10L, "test"),
+                new DictItemDto(10L, "test", null),
+                new DictItemDto(30L, "test", null),
+                new DictItemDto(30L, "test", null)
                 );
 
         given(processRepository.findAll(eq(pageable))).willReturn(page);
