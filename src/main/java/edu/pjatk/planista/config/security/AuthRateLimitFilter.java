@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import edu.pjatk.planista.exception.RateLimitExceededException;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import jakarta.servlet.FilterChain;
@@ -13,22 +14,25 @@ import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpHeaders;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.Objects;
+import java.util.Arrays;
 
 public class AuthRateLimitFilter extends OncePerRequestFilter {
 
     private static final String LOGIN_PATH = "/api/v1/auth/login";
     private static final String REFRESH_PATH = "/api/v1/auth/refresh";
-
+    private static final String[] INTEGRATIONS_PATH = new String[]{
+            "/api/v1/integrations"
+    };
+    private final HandlerExceptionResolver handlerExceptionResolver;
     private final ObjectMapper objectMapper;
 
     private final Cache<String, Bucket> buckets = Caffeine.newBuilder()
@@ -46,8 +50,9 @@ public class AuthRateLimitFilter extends OncePerRequestFilter {
             .refillGreedy(30, Duration.ofMinutes(1))
             .build();
 
-    public AuthRateLimitFilter(ObjectMapper objectMapper) {
-        this.objectMapper = Objects.requireNonNull(objectMapper);
+    public AuthRateLimitFilter(HandlerExceptionResolver handlerExceptionResolver, ObjectMapper objectMapper) {
+        this.handlerExceptionResolver = handlerExceptionResolver;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -55,7 +60,11 @@ public class AuthRateLimitFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         String method = request.getMethod();
 
-        if (!HttpMethod.POST.matches(method)) return true;
+        if(Arrays.stream(INTEGRATIONS_PATH).anyMatch(path::startsWith))
+            return false;
+
+        if (!HttpMethod.POST.matches(method))
+            return true;
 
         return !(LOGIN_PATH.equals(path) || REFRESH_PATH.equals(path));
     }
@@ -63,8 +72,8 @@ public class AuthRateLimitFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
         String path = request.getRequestURI();
@@ -86,28 +95,20 @@ public class AuthRateLimitFilter extends OncePerRequestFilter {
         );
 
         var probe = bucket.tryConsumeAndReturnRemaining(1);
-        if (probe.isConsumed()) {
+        if (!probe.isConsumed()) {
             long limit = isLogin ? loginLimit.getCapacity() : refreshLimit.getCapacity();
-            response.setHeader("X-RateLimit-Limit", String.valueOf(limit));
-            response.setHeader("X-RateLimit-Remaining", String.valueOf(probe.getRemainingTokens()));
-            filterChain.doFilter(reqToUse, response);
+            long waitSeconds = Math.max(1, (probe.getNanosToWaitForRefill() + 999_999_999L) / 1_000_000_000L);
+
+            handlerExceptionResolver.resolveException(
+                    request,
+                    response,
+                    null,
+                    new RateLimitExceededException(waitSeconds, limit, 0)
+            );
             return;
         }
 
-        long waitSeconds = Math.max(1, probe.getNanosToWaitForRefill() / 1_000_000_000L);
-
-        response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-        response.setHeader(HttpHeaders.RETRY_AFTER, String.valueOf(waitSeconds));
-        response.setContentType("application/problem+json");
-        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        response.getWriter().write("""
-                {
-                  "type": "about:blank",
-                  "title": "Too many requests",
-                  "status": 429,
-                  "detail": "Rate limit exceeded. Try again later."
-                }
-                """);
+        filterChain.doFilter(reqToUse, response);
     }
 
     private String resolveKey(HttpServletRequest request, String path) {

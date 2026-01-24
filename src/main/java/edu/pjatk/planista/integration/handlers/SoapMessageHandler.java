@@ -1,4 +1,4 @@
-package edu.pjatk.planista.integrations.handlers;
+package edu.pjatk.planista.integration.handlers;
 
 import jakarta.xml.ws.handler.MessageContext;
 import jakarta.xml.ws.handler.soap.SOAPHandler;

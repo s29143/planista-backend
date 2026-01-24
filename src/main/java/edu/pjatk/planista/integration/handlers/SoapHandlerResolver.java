@@ -1,4 +1,4 @@
-package edu.pjatk.planista.integrations.handlers;
+package edu.pjatk.planista.integration.handlers;
 
 import jakarta.xml.ws.handler.Handler;
 import jakarta.xml.ws.handler.HandlerResolver;

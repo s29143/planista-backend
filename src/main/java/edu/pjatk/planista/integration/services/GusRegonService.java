@@ -1,13 +1,13 @@
-package edu.pjatk.planista.integrations.services;
+package edu.pjatk.planista.integration.services;
 
 import edu.pjatk.gusregon.soap.IUslugaBIRzewnPubl;
 import edu.pjatk.gusregon.soap.ObjectFactory;
 import edu.pjatk.gusregon.soap.ParametryWyszukiwania;
 import edu.pjatk.gusregon.soap.UslugaBIRzewnPubl;
-import edu.pjatk.planista.integrations.handlers.SoapHandlerResolver;
-import edu.pjatk.planista.integrations.handlers.SoapMessageHandler;
-import edu.pjatk.planista.integrations.models.CompanyFromRegonDto;
-import edu.pjatk.planista.integrations.models.GusRegonProperties;
+import edu.pjatk.planista.integration.handlers.SoapHandlerResolver;
+import edu.pjatk.planista.integration.handlers.SoapMessageHandler;
+import edu.pjatk.planista.integration.models.CompanyFromRegonDto;
+import edu.pjatk.planista.integration.models.GusRegonProperties;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.ws.BindingProvider;

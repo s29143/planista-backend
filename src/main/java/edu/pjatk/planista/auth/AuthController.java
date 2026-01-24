@@ -24,8 +24,12 @@ import java.util.Optional;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     private final AuthUserService userService;
+
     @Value("${app.jwt.refresh-expiration}")
     private Duration refreshExp;
+
+    @Value("${app.jwt.access-expiration}")
+    private Duration accessExp;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest req,
@@ -34,10 +38,19 @@ public class AuthController {
         boolean isWeb = "web".equalsIgnoreCase(client);
         AuthResponse authResponse = userService.login(req);
         if (isWeb) {
-            ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
+            ResponseCookie accessCookie = ResponseCookie.from("accessToken", authResponse.accessToken())
+                    .httpOnly(true)
+                    .secure(true)
+                    .sameSite("None")
+                    .path("/")
+                    .maxAge(accessExp)
+                    .build();
+            resp.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
+            ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
                     .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(refreshExp).build();
-            resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-            authResponse = new AuthResponse(authResponse.accessToken(), null);
+            resp.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
+
+            authResponse = new AuthResponse(null, null);
         }
         return ResponseEntity.ok(authResponse);
     }
@@ -54,10 +67,18 @@ public class AuthController {
         }
         AuthResponse authResponse = userService.refresh(refresh);
         if (isWeb) {
-            ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
+            ResponseCookie accessCookie = ResponseCookie.from("accessToken", authResponse.accessToken())
+                    .httpOnly(true)
+                    .secure(true)
+                    .sameSite("None")
+                    .path("/")
+                    .maxAge(accessExp)
+                    .build();
+            resp.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
+            ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
                     .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(refreshExp).build();
-            resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-            authResponse = new AuthResponse(authResponse.accessToken(), null);
+            resp.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
+            authResponse = new AuthResponse(null, null);
         }
         return ResponseEntity.ok(authResponse);
     }
@@ -79,9 +100,17 @@ public class AuthController {
         Optional<String> refresh = isWeb ? Optional.ofNullable(cookieRefresh) : ( req != null ? Optional.ofNullable(req.refreshToken()): Optional.empty());
         refresh.ifPresent(userService::logout);
         if(isWeb) {
-            ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
+            ResponseCookie accessCookie = ResponseCookie.from("accessToken", "")
+                    .httpOnly(true)
+                    .secure(true)
+                    .sameSite("None")
+                    .path("/")
+                    .maxAge(Duration.ZERO)
+                    .build();
+            resp.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
+            ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", "")
                     .httpOnly(true).secure(true).sameSite("None").path("/api/v1/auth").maxAge(Duration.ZERO).build();
-            resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+            resp.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
         }
         return ResponseEntity.noContent().build();
     }

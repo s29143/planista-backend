@@ -1,10 +1,10 @@
-package edu.pjatk.planista.integrations;
+package edu.pjatk.planista.integration;
 
 import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
-import edu.pjatk.planista.integrations.controllers.GusController;
-import edu.pjatk.planista.integrations.models.CompanyFromRegonDto;
-import edu.pjatk.planista.integrations.services.GusRegonService;
+import edu.pjatk.planista.integration.controllers.GusController;
+import edu.pjatk.planista.integration.models.CompanyFromRegonDto;
+import edu.pjatk.planista.integration.services.GusRegonService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

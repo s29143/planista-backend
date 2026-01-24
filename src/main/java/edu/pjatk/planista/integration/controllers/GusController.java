@@ -1,7 +1,7 @@
-package edu.pjatk.planista.integrations.controllers;
+package edu.pjatk.planista.integration.controllers;
 
-import edu.pjatk.planista.integrations.models.CompanyFromRegonDto;
-import edu.pjatk.planista.integrations.services.GusRegonService;
+import edu.pjatk.planista.integration.models.CompanyFromRegonDto;
+import edu.pjatk.planista.integration.services.GusRegonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,4 +1,4 @@
-package edu.pjatk.planista.integrations.models;
+package edu.pjatk.planista.integration.models;
 
 import lombok.Data;
 
