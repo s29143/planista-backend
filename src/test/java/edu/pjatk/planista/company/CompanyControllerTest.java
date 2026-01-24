@@ -7,7 +7,7 @@ import edu.pjatk.planista.company.services.CompanyActionService;
 import edu.pjatk.planista.company.services.CompanyContactService;
 import edu.pjatk.planista.company.services.CompanyOrderService;
 import edu.pjatk.planista.company.services.CompanyService;
-import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.filters.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
 import edu.pjatk.planista.shared.dto.IdNameDto;

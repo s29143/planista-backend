@@ -1,7 +1,7 @@
 package edu.pjatk.planista.order;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.filters.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.order.controllers.OrderController;
 import edu.pjatk.planista.order.dto.OrderRequest;

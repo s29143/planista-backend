@@ -1,5 +1,8 @@
 package edu.pjatk.planista.config.security;
 
+import edu.pjatk.planista.config.filters.AuthRateLimitFilter;
+import edu.pjatk.planista.config.filters.IntegrationRateLimitFilter;
+import edu.pjatk.planista.config.filters.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +29,7 @@ import java.util.Objects;
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthRateLimitFilter authRateLimitFilter;
+    private final IntegrationRateLimitFilter integrationRateLimitFilter;
     public static final String[] PUBLIC = {
             "/api/v1/auth/login",
             "/api/v1/auth/refresh",
@@ -49,6 +53,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(authRateLimitFilter, SecurityContextHolderFilter.class)
+                .addFilterBefore(integrationRateLimitFilter, SecurityContextHolderFilter.class)
                 .build();
     }
 

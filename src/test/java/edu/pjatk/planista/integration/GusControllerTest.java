@@ -1,6 +1,6 @@
 package edu.pjatk.planista.integration;
 
-import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.filters.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.integration.controllers.GusController;
 import edu.pjatk.planista.integration.models.CompanyFromRegonDto;

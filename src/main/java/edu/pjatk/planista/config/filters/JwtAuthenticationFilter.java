@@ -1,5 +1,6 @@
-package edu.pjatk.planista.config.security;
+package edu.pjatk.planista.config.filters;
 
+import edu.pjatk.planista.config.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

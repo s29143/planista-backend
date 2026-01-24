@@ -1,4 +1,4 @@
-package edu.pjatk.planista.config.security;
+package edu.pjatk.planista.config.filters;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,15 +23,11 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.Arrays;
 
 public class AuthRateLimitFilter extends OncePerRequestFilter {
 
     private static final String LOGIN_PATH = "/api/v1/auth/login";
     private static final String REFRESH_PATH = "/api/v1/auth/refresh";
-    private static final String[] INTEGRATIONS_PATH = new String[]{
-            "/api/v1/integrations"
-    };
     private final HandlerExceptionResolver handlerExceptionResolver;
     private final ObjectMapper objectMapper;
 
@@ -59,9 +55,6 @@ public class AuthRateLimitFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
         String method = request.getMethod();
-
-        if(Arrays.stream(INTEGRATIONS_PATH).anyMatch(path::startsWith))
-            return false;
 
         if (!HttpMethod.POST.matches(method))
             return true;
