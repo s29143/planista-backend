@@ -32,9 +32,9 @@ app:
     secret: ${JWT_SECRET}
     access-expiration: ${JWT_EXP_ACCESS:15m}
     refresh-expiration: ${JWT_EXP_REFRESH:7d}
-
-#logging:
-#  level:
-#    sql: debug
-#    root: debug
-#    web: debug
+gus:
+  regon:
+    apiKey: ${GUS_REGON_API_KEY}
+    mode: ${GUS_REGON_API_MODE:prod}
+    prodUrl: "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc"
+    testUrl: "https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc"
