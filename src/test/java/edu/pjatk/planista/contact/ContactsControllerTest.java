@@ -1,7 +1,7 @@
 package edu.pjatk.planista.contact;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.filters.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.contact.controllers.ContactController;
 import edu.pjatk.planista.contact.dto.ContactRequest;

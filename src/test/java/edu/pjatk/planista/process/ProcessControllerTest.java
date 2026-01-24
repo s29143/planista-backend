@@ -1,7 +1,7 @@
 package edu.pjatk.planista.process;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.filters.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.process.controllers.ProcessController;
 import edu.pjatk.planista.process.dto.ProcessRequest;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.pjatk.planista.action.controllers.ActionController;
 import edu.pjatk.planista.action.dto.ActionRequest;
 import edu.pjatk.planista.action.services.ActionService;
-import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.filters.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import edu.pjatk.planista.shared.dto.DictItemDto;
 import edu.pjatk.planista.shared.dto.IdNameDto;

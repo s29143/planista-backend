@@ -5,7 +5,7 @@ import edu.pjatk.planista.auth.dto.AuthResponse;
 import edu.pjatk.planista.auth.dto.LoginRequest;
 import edu.pjatk.planista.auth.dto.RefreshRequest;
 import edu.pjatk.planista.shared.dto.UserDto;
-import edu.pjatk.planista.config.security.JwtAuthenticationFilter;
+import edu.pjatk.planista.config.filters.JwtAuthenticationFilter;
 import edu.pjatk.planista.config.security.JwtService;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
@@ -94,7 +94,9 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(om.writeValueAsString(new LoginRequest("admin","admin123"))))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.accessToken").value("access-xxx"))
+                .andExpect(cookie().exists("accessToken"))
+                .andExpect(cookie().httpOnly("accessToken", true))
+                .andExpect(cookie().secure("accessToken", true))
                 .andExpect(cookie().exists("refreshToken"))
                 .andExpect(cookie().httpOnly("refreshToken", true))
                 .andExpect(cookie().secure("refreshToken", true));
@@ -107,6 +109,10 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .cookie(new Cookie("refreshToken", "refresh-xxx")))
                 .andExpect(status().isNoContent())
+                .andExpect(cookie().exists("accessToken"))
+                .andExpect(cookie().maxAge("accessToken", 0))
+                .andExpect(cookie().httpOnly("accessToken", true))
+                .andExpect(cookie().secure("accessToken", true))
                 .andExpect(cookie().exists("refreshToken"))
                 .andExpect(cookie().maxAge("refreshToken", 0))
                 .andExpect(cookie().httpOnly("refreshToken", true))

@@ -1,12 +1,13 @@
 package edu.pjatk.planista.common;
 
+import edu.pjatk.planista.exception.RateLimitExceededException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,22 @@ public class GlobalExceptionHandler {
         var pd = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
         pd.setTitle("Invalid credentials");
         pd.setDetail("Username or password is incorrect.");
+        return pd;
+    }
+
+    @ExceptionHandler(RateLimitExceededException.class)
+    public ProblemDetail handleTooManyRequests(RateLimitExceededException ex, Locale locale) {
+        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.TOO_MANY_REQUESTS);
+        pd.setTitle(messageSource.getMessage(
+                "error.tooManyRequests",
+                null,
+                "Too many requests",
+                locale
+        ));
+        pd.setProperty("retryAfter", ex.getRetryAfterSeconds());
+        pd.setProperty("remaining", ex.getRemaining());
+        pd.setProperty("limit", ex.getLimit());
+        pd.setDetail(ex.getMessage());
         return pd;
     }
 
