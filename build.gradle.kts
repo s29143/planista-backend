@@ -55,10 +55,6 @@ dependencies {
 
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-	testImplementation("org.testcontainers:testcontainers:2.0.3")
-	testImplementation ("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:postgresql")
-
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
 	implementation("com.bucket4j:bucket4j-core:8.10.1")

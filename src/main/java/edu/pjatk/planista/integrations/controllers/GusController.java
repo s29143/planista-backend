@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/integrations/gus")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
-class GusController {
+public class GusController {
 
     private final GusRegonService gusRegonService;
 
